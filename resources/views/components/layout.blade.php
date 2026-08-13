@@ -15,7 +15,7 @@
 
 <body>
     <div>
-        <div class="menu sm:hidden p-2 border border-base-300 fixed bg-white m-1 shadow w-100 rounded h-12" id="my-mobilemenu"
+        <div class="menu sm:hidden p-2 border border-base-300 fixed z-50 bg-white m-1 shadow w-100 rounded h-12" id="my-mobilemenu"
             popover>
             <div>
                 <button popovertarget="b1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="megamenu max-sm:hidden max-sm:megamenu-vertical p-2 border border-base-300 fixed bg-white m-1 shadow"
+        <div class="megamenu max-sm:hidden max-sm:megamenu-vertical p-2 border border-base-300 fixed z-50 bg-white m-1 shadow"
             id="my-megamenu-1" popover>
             <span class="megamenu-active"></span>
             <button popovertarget="a1">Services</button>
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <main class="mt-15 mb-2 ml-2 mr-2">
+    <main class="mt-18 mb-2 ml-2 mr-2">
         {{ $slot }}
     </main>
 
