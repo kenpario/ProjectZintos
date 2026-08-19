@@ -4,7 +4,7 @@
     </x-slot:title>
     <div class="flex flex-row gap-4 max-lg:flex-col">
         <div class="w-1/3 max-lg:w-full" id="posts">
-            <ul class="list bg-base-100 rounded-box shadow-md m-2">
+            <ul class="list bg-base-100 rounded-box shadow-md">
 
                 <li class="p-4 pb-2 text-s opacity-90 tracking-wide">Latest Posts</li>
                 @forelse ($latest_posts as $latest_post)
@@ -19,7 +19,7 @@
                 @endforelse
             </ul>
 
-            <ul class="list bg-base-100 rounded-box shadow-md m-2">
+            <ul class="list bg-base-100 rounded-box shadow-md mt-2">
 
                 <li class="p-4 pb-2 text-s opacity-90 tracking-wide">Hot Topics</li>
                 @forelse ($hot_topics as $hot_topic)
@@ -35,16 +35,19 @@
             </ul>
         </div>
         <div id="summary" class="w-full max-lg:w-full">
-            <div class="hero min-h-screen rounded-box"
-                style="background-image: url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp);">
-                <div class="hero-overlay"></div>
-                <div class="hero-content text-neutral-content text-center">
-                    <div class="max-w-md">
-                        <h1 class="mb-5 text-5xl font-bold">Hello there</h1>
-                        <p class="mb-5">
-                            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-                            quasi. In deleniti eaque aut repudiandae et a id nisi.
-                        </p>
+            <div class="aura aura-dual min-w-352 max-sm:min-w-50">
+                <div class="hero min-h-screen rounded-box shadow-xl overflow-hidden"
+                    style="background-image: url('/storage/media/background_gif.gif');">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content text-neutral-content text-center">
+                        <div class="max-w-md">
+                            <h1 class="mb-5 text-5xl font-bold">Hello there</h1>
+                            <p class="mb-5">
+                                Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
+                                exercitationem
+                                quasi. In deleniti eaque aut repudiandae et a id nisi.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

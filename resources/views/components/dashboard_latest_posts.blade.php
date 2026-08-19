@@ -4,23 +4,23 @@
     <div><img class="size-10 rounded-box" alt="Tailwind CSS list item"
             src="https://img.daisyui.com/images/profile/demo/1@94.webp" /></div>
     <div>
-        <div>{{ $latest_post->title }}</div>
-        <div class="text-xs uppercase font-semibold opacity-60">{{ $latest_post->message }}</div>
+        <div>{{ Str::limit($latest_post->title) }}</div>
+        <div class="text-xs uppercase font-semibold opacity-60">{{ Str::limit($latest_post->message) }}</div>
     </div>
-    <button class="btn btn-square btn-ghost"> {{ $latest_post->likes }}
-        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
-                <path d="M6 3L20 12 6 21 6 3z"></path>
-            </g>
+    <div class="flex items-center gap-1">
+        <span>{{ $latest_post->likes }}</span>
+        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Likes">
+            <path
+                d="M7 10v10H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3Zm0 10h9.5a2 2 0 0 0 1.94-1.53l1.5-6A2 2 0 0 0 18 10h-4.11l.58-3.48A2.98 2.98 0 0 0 11.53 3L7 10v10Z"
+                fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" />
         </svg>
-    </button>
-    <button class="btn btn-square btn-ghost"> {{ $latest_post->views }}
-        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
-                <path
-                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
-                </path>
-            </g>
+    </div>
+    <div class="flex items-center gap-1">
+        <span>{{ $latest_post->views }}</span>
+        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Views">
+            <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none" stroke="currentColor"
+                stroke-linejoin="round" stroke-width="2" />
+            <circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="2" />
         </svg>
-    </button>
+    </div>
 </li>
