@@ -34,8 +34,8 @@
                 @endforelse
             </ul>
         </div>
-        <div id="summary" class="w-full max-lg:w-full">
-            <div class="aura aura-dual min-w-352 max-sm:min-w-50">
+        <div id="summary" class="flex-1 min-w-0">
+            <div class="aura aura-dual w-full">
                 <div class="hero min-h-screen rounded-box shadow-xl overflow-hidden"
                     style="background-image: url('/storage/media/background_gif.gif');">
                     <div class="hero-overlay"></div>
