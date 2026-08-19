@@ -4,8 +4,8 @@
     <div><img class="size-10 rounded-box" alt="Tailwind CSS list item"
             src="https://img.daisyui.com/images/profile/demo/1@94.webp" /></div>
     <div>
-        <div>{{ Str::limit($latest_post->title) }}</div>
-        <div class="text-xs uppercase font-semibold opacity-60">{{ Str::limit($latest_post->message) }}</div>
+        <div>{{ Str::limit($latest_post->title,20) }}</div>
+        <div class="text-xs uppercase font-semibold opacity-60">{{ Str::limit($latest_post->message,50) }}</div>
     </div>
     <div class="flex items-center gap-1">
         <span>{{ $latest_post->likes }}</span>
