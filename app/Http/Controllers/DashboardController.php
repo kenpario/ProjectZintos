@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,7 +12,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $latest_posts = Post::with('user')->latest()->take(5)->get();
+
+        $hot_topics = Post::with('user')->latest()->take(5)->get();
+
+        return view('dashboard', ['latest_posts' => $latest_posts , 'hot_topics' => $hot_topics]);
     }
 
     /**
