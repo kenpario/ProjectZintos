@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Post_Category;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,9 +15,13 @@ class DashboardController extends Controller
     {
         $latest_posts = Post::with(['user', 'category'])->latest()->take(5)->get();
 
-        $hot_topics = Post::with(['user', 'category'])->latest()->take(5)->get();
+        $hot_topics = Post::with(['user', 'category'])->orderBy('likes', 'desc')->take(5)->get();
 
-        return view('dashboard', ['latest_posts' => $latest_posts, 'hot_topics' => $hot_topics]);
+        $all_posts = Post::with(['user', 'category'])->latest()->take(20)->get();
+
+        $post_categories = Post_Category::all();
+
+        return view('dashboard', ['latest_posts' => $latest_posts, 'hot_topics' => $hot_topics, 'post_categories' => $post_categories, 'all_posts' => $all_posts]);
     }
 
     /**

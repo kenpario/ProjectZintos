@@ -9,7 +9,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        //
+        $categories = Post_Category::with('posts')->latest()->paginate(10);
+
+        return view('categories.index', ['categories' => $categories]);
     }
     /**
      * Show the form for creating a new resource.

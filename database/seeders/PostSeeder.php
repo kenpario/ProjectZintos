@@ -13,76 +13,71 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::factory(4)->create();
+        $users = User::factory(20)->create();
         $timestamp = now();
+        $categoryNames = [
+            ['name' => 'Technology', 'description' => 'Tech discussions'],
+            ['name' => 'Travel', 'description' => 'Travel stories'],
+            ['name' => 'Food', 'description' => 'Recipes and reviews'],
+            ['name' => 'Photography', 'description' => 'Photos and techniques'],
+            ['name' => 'Gaming', 'description' => 'Games and releases'],
+        ];
 
-        $technologyCategoryId = DB::table('post_categories')->insertGetId([
-            'user_id' => $users[0]->id,
-            'name' => 'Technology',
-            'description' => 'Tech discussions',
-            'created_at' => $timestamp,
-            'updated_at' => $timestamp,
-        ]);
-
-        $travelCategoryId = DB::table('post_categories')->insertGetId([
-            'user_id' => $users[1]->id,
-            'name' => 'Travel',
-            'description' => 'Travel stories',
-            'created_at' => $timestamp,
-            'updated_at' => $timestamp,
-        ]);
-
-        $firstPostId = DB::table('posts')->insertGetId([
-            'user_id' => $users[0]->id,
-            'title' => 'My first post',
-            'message' => 'This is sample post content for testing.',
-            'post_category_id' => $technologyCategoryId,
-            'likes' => 2,
-            'views' => 3,
-            'created_at' => $timestamp,
-            'updated_at' => $timestamp,
-        ]);
-
-        $secondPostId = DB::table('posts')->insertGetId([
-            'user_id' => $users[1]->id,
-            'title' => 'A weekend in the mountains',
-            'message' => 'A short sample travel post for testing.',
-            'post_category_id' => $travelCategoryId,
-            'likes' => 1,
-            'views' => 2,
-            'created_at' => $timestamp,
-            'updated_at' => $timestamp,
-        ]);
-
-        DB::table('post_likes')->insert([
-            ['post_id' => $firstPostId, 'user_id' => $users[1]->id, 'created_at' => $timestamp, 'updated_at' => $timestamp],
-            ['post_id' => $firstPostId, 'user_id' => $users[2]->id, 'created_at' => $timestamp, 'updated_at' => $timestamp],
-            ['post_id' => $secondPostId, 'user_id' => $users[0]->id, 'created_at' => $timestamp, 'updated_at' => $timestamp],
-        ]);
-
-        DB::table('post_views')->insert([
-            ['post_id' => $firstPostId, 'user_id' => $users[1]->id, 'created_at' => $timestamp, 'updated_at' => $timestamp],
-            ['post_id' => $firstPostId, 'user_id' => $users[2]->id, 'created_at' => $timestamp, 'updated_at' => $timestamp],
-            ['post_id' => $firstPostId, 'user_id' => $users[3]->id, 'created_at' => $timestamp, 'updated_at' => $timestamp],
-            ['post_id' => $secondPostId, 'user_id' => $users[0]->id, 'created_at' => $timestamp, 'updated_at' => $timestamp],
-            ['post_id' => $secondPostId, 'user_id' => $users[2]->id, 'created_at' => $timestamp, 'updated_at' => $timestamp],
-        ]);
-
-        DB::table('post_comments')->insert([
-            [
-                'post_id' => $firstPostId,
-                'user_id' => $users[3]->id,
-                'message' => 'This is a sample comment.',
+        $categoryIds = collect($categoryNames)->map(function (array $category, int $index) use ($users, $timestamp): int {
+            return DB::table('post_categories')->insertGetId([
+                'user_id' => $users[$index]->id,
+                'name' => $category['name'],
+                'description' => $category['description'],
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
-            ],
-            [
-                'post_id' => $secondPostId,
-                'user_id' => $users[2]->id,
-                'message' => 'I would like to visit there too.',
-                'created_at' => $timestamp,
-                'updated_at' => $timestamp,
-            ],
-        ]);
+            ]);
+        });
+
+        for ($postNumber = 1; $postNumber <= 100; $postNumber++) {
+            $user = $users[($postNumber - 1) % $users->count()];
+            $categoryId = $categoryIds[($postNumber - 1) % $categoryIds->count()];
+            $likes = fake()->numberBetween(0, 50);
+            $views = fake()->numberBetween($likes, 500);
+            $postTimestamp = $timestamp->copy()->subDays(100 - $postNumber);
+
+            $postId = DB::table('posts')->insertGetId([
+                'user_id' => $user->id,
+                'title' => 'Sample post '.$postNumber,
+                'message' => fake()->paragraph(3),
+                'post_category_id' => $categoryId,
+                'likes' => $likes,
+                'views' => $views,
+                'created_at' => $postTimestamp,
+                'updated_at' => $postTimestamp,
+            ]);
+
+            for ($interaction = 0; $interaction < min($likes, 5); $interaction++) {
+                DB::table('post_likes')->insert([
+                    'post_id' => $postId,
+                    'user_id' => $users[($postNumber + $interaction) % $users->count()]->id,
+                    'created_at' => $postTimestamp,
+                    'updated_at' => $postTimestamp,
+                ]);
+            }
+
+            for ($interaction = 0; $interaction < min($views, 5); $interaction++) {
+                DB::table('post_views')->insert([
+                    'post_id' => $postId,
+                    'user_id' => $users[($postNumber + $interaction + 1) % $users->count()]->id,
+                    'created_at' => $postTimestamp,
+                    'updated_at' => $postTimestamp,
+                ]);
+            }
+
+            if ($postNumber % 3 === 0) {
+                DB::table('post_comments')->insert([
+                    'post_id' => $postId,
+                    'user_id' => $users[($postNumber + 2) % $users->count()]->id,
+                    'message' => fake()->sentence(),
+                    'created_at' => $postTimestamp,
+                    'updated_at' => $postTimestamp,
+                ]);
+            }
+        }
     }
 }

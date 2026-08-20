@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Zintos
+        Dashboard
     </x-slot:title>
     <div class="flex flex-row gap-4 max-lg:flex-col">
         <div class="w-1/3 max-lg:w-full" id="posts">
@@ -52,25 +52,31 @@
                 </div>
             </div>
             <div class="mt-2 mb-2">
-                <details class="collapse collapse-arrow bg-base-100 border border-base-300" name="my-accordion-det-1"
-                    open>
-                    <summary class="collapse-title font-semibold">How do I create an account?</summary>
-                    <div class="collapse-content text-sm">Click the "Sign Up" button in the top right corner and follow
-                        the
-                        registration process.</div>
-                </details>
-                <details class="collapse collapse-arrow bg-base-100 border border-base-300" name="my-accordion-det-2"
-                    open>
-                    <summary class="collapse-title font-semibold">I forgot my password. What should I do?</summary>
-                    <div class="collapse-content text-sm">Click on "Forgot Password" on the login page and follow the
-                        instructions sent to your email.</div>
-                </details>
-                <details class="collapse collapse-arrow bg-base-100 border border-base-300" name="my-accordion-det-3"
-                    open>
-                    <summary class="collapse-title font-semibold">How do I update my profile information?</summary>
-                    <div class="collapse-content text-sm">Go to "My Account" settings and select "Edit Profile" to make
-                        changes.</div>
-                </details>
+                @foreach($post_categories as $post_category)
+                    <details class="collapse collapse-arrow bg-base-100 border border-base-300"
+                        name="{{ $post_category->name }}" open>
+                        <summary class="collapse-title font-semibold">{{ Str::limit($post_category->name, 40) }}</summary>
+                        @forelse($all_posts->where('post_category_id', $post_category->id) as $post)
+                            <x-dashboard_categories :post="$post" />
+                        @empty
+                            <div class="collapse-content text-sm">
+                                <div class="max-lg:w-full" id="posts">
+
+                                    <ul class="list bg-base-100 rounded-box shadow-md mt-2">
+                                        <li class="list-row">
+                                            <div>
+                                                <div>Nothing here.</div>
+                                                <div class="text-xs uppercase font-semibold opacity-60">
+                                                    Nothing here as well.
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        @endforelse
+                    </details>
+                @endforeach
             </div>
         </div>
     </div>

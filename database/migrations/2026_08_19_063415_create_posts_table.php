@@ -58,10 +58,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_categories');
-        Schema::dropIfExists('posts');
         Schema::dropIfExists('post_likes');
         Schema::dropIfExists('post_views');
         Schema::dropIfExists('post_comments');
+        Schema::dropIfExists('posts');
+        Schema::dropIfExists('post_categories');
     }
 };
