@@ -15,7 +15,7 @@
 
 <body>
     <div>
-        <div class="menu sm:hidden p-2 border border-base-300 fixed z-50 bg-white m-1 shadow w-100 rounded h-12" id="my-mobilemenu"
+        <div class="menu sm:hidden sm:menu-vertical w-screen max-w-none p-2 border border-base-300 fixed z-50 bg-white m-0 shadow-md rounded" id="my-mobilemenu"
             popover>
             <div>
                 <button popovertarget="b1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -23,8 +23,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg></button>
-                <div class="mt-14 m-2 shadow rounded" id="b1" popover>
-                    <ul class="menu w-98">
+                <div class="mt-11 w-full shadow-xl rounded" id="b1" popover>
+                    <ul class="menu w-full">
                         <li><a>Enterprise</a></li>
                         <li><a>CRM software</a></li>
                         <li><a>Security</a></li>
@@ -73,8 +73,8 @@
                     </div>
                 </div>User
             </button>
-            <div id="a4" class="w-55" popover>
-                <ul class="menu">
+            <div id="a4" class="min-w-55" popover>
+                <ul class="menu min-w-54">
                     <li><a>Profile</a></li>
                     <li><a>Settings</a></li>
                     <li><a>Log Out</a></li>
