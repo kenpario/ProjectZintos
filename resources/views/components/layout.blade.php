@@ -40,7 +40,7 @@
             <div id="a1" class="menu-popover-categories" popover>
                 <ul class="menu w-full">
                     <li><a href="{{ route('categories') }}">All</a></li>
-                    <li><a>Add Category</a></li>
+                    <li><a href="{{ route('add_categories') }}">Add Category</a></li>
                 </ul>
             </div>
 
