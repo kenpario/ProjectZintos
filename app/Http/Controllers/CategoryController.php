@@ -2,23 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\Post_Category;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $latest_posts = Post::with(['user', 'category'])->latest()->take(5)->get();
-
-        $hot_topics = Post::with(['user', 'category'])->latest()->take(5)->get();
-
-        return view('dashboard', ['latest_posts' => $latest_posts, 'hot_topics' => $hot_topics]);
+        //
     }
-
     /**
      * Show the form for creating a new resource.
      */

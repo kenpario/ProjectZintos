@@ -4,7 +4,8 @@
     <div><img class="size-10 rounded-box" alt="Tailwind CSS list item"
             src="https://img.daisyui.com/images/profile/demo/1@94.webp" /></div>
     <div>
-        <div>{{ Str::limit($hot_topic->title,20) }}</div>
+        <div class="font-bold">{{ Str::limit($hot_topic->category->name, 40) }}</div>
+        <div>{{ Str::limit($hot_topic->title, 20) }}</div>
         <div class="text-xs uppercase font-semibold opacity-60">{{ Str::limit($hot_topic->message, 50)}}</div>
     </div>
     <div class="flex items-center gap-1">
