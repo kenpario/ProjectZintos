@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -10,12 +10,22 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <script>
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        const applySystemTheme = ({ matches }) => {
+            document.documentElement.dataset.theme = matches ? 'dark' : 'light';
+        };
+
+        applySystemTheme(systemTheme);
+        systemTheme.addEventListener('change', applySystemTheme);
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="min-h-screen flex flex-col">
     <div>
-        <div class="menu sm:hidden sm:menu-vertical w-screen max-w-none p-2 border border-base-300 fixed z-50 bg-white m-0 shadow-md rounded"
+        <div class="menu sm:hidden sm:menu-vertical w-screen max-w-none p-2 border border-base-300 fixed z-50 bg-base-200 text-base-content m-0 shadow-md rounded"
             id="my-mobilemenu" popover>
             <div>
                 <button popovertarget="b1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -31,16 +41,20 @@
                 </div>
             </div>
         </div>
-        <div class="megamenu max-sm:hidden max-sm:megamenu-vertical flex items-center gap-2 p-2 border border-base-300 fixed z-50 bg-white m-1 shadow"
+        <div class="megamenu max-sm:hidden max-sm:megamenu-vertical flex items-center gap-2 p-2 border border-base-300 fixed z-50 bg-base-200 text-base-content m-1 shadow"
             id="my-megamenu-1" popover>
             <span class="megamenu-active"></span>
             <a class="btn skeleton" href="{{ route('dashboard') }}">Dashboard</a>
 
             <button class="menu-trigger-categories" popovertarget="a1">Categories</button>
             <div id="a1" class="menu-popover-categories" popover>
-                <ul class="menu w-full">
+                <ul class="menu gap-1 w-full">
                     <li><a href="{{ route('categories') }}">All</a></li>
-                    <li><a href="{{ route('add_categories') }}">Add Category</a></li>
+                    @foreach ($category_names as $category_name)
+                        <li><a href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
+                        </li>
+                    @endforeach
+                    <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
                 </ul>
             </div>
 

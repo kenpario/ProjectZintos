@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Post_Category::with('posts')->latest()->paginate(10);
+        $categoryName = $request->query('category');
+
+        $categories = Post_Category::query()
+            ->with('posts')
+            ->when($categoryName, function ($query) use ($categoryName) {
+                $query->where('name', $categoryName);
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('categories.index', ['categories' => $categories]);
     }
@@ -33,7 +42,7 @@ class CategoryController extends Controller
 
         Post_Category::create($formFields);
 
-        return redirect('/categories')->with('success', 'Your category has been created!');
+        return redirect('/categories');
     }
 
     /**
