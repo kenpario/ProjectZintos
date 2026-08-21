@@ -2,21 +2,22 @@
     <x-slot:title>
         Add Category
     </x-slot:title>
-    <div class="flex min-h-full w-1/2 items-center justify-center">
-        <form method="POST" action="/categories" enctype="multipart/form-data">
+    <div class="min-h-full w-full">
+        <form method="POST" action="/categories" class="mx-auto w-full max-w-md" enctype="multipart/form-data">
             @csrf
-            <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+            <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
                 <legend class="fieldset-legend">Add Category</legend>
 
                 <label class="label">Name</label>
-                <input type="text" class="input" placeholder="Name" name="name" value="{{ old('name') }}" />
+                <input type="text" class="input h-12 w-full max-w-full" placeholder="Name" name="name"
+                    value="{{ old('name') }}" />
                 @error('name')
                     <div class="label">
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
                 @enderror
                 <label class="label">Description</label>
-                <textarea class="textarea" placeholder="Description"
+                <textarea class="textarea h-32 w-full max-w-full" placeholder="Description"
                     name="description">{{ old('description') }}</textarea>
                 @error('description')
                     <div class="label">
@@ -24,8 +25,8 @@
                     </div>
                 @enderror
                 <button type="submit" class="btn btn-neutral mt-4">Add Category</button>
-                <a class="btn" href="{{ route('dashboard') }}">Back</a>
+                <a class="btn" href="{{ url()->previous() }}" onclick="history.back(); return false;">Back</a>
             </fieldset>
+        </form>
     </div>
-    </form>
 </x-layout>
