@@ -55,7 +55,7 @@
                 @foreach($post_categories as $post_category)
                     <details class="collapse collapse-arrow bg-base-100 border border-base-300"
                         name="{{ $post_category->name }}" open>
-                        <summary class="collapse-title font-semibold">{{ Str::limit($post_category->name, 40) }}</summary>
+                        <summary class="collapse-title font-semibold">{{ Str::limit($post_category->name, 30) }} -- {{ Str::limit($post_category->description, 30) }}</summary>
                         @forelse($all_posts->where('post_category_id', $post_category->id) as $post)
                             <x-dashboard_categories :post="$post" />
                         @empty

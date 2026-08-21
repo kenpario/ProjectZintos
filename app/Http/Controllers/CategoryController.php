@@ -26,7 +26,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $formFields = $request->validate([
+            'name' => 'required|string|max:30|min:5',
+            'description' => 'required|string|max:30|min:5',
+        ]);
+
+        Post_Category::create($formFields);
+
+        return redirect('/categories')->with('success', 'Your category has been created!');
     }
 
     /**

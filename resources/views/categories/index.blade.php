@@ -2,10 +2,10 @@
     <x-slot:title>
         Categories
     </x-slot:title>
-    <div class="mt-2 mb-2">
+    <div class="m-2">
         @foreach($categories as $category)
             <details class="collapse collapse-arrow bg-base-100 border border-base-300" name="{{ $category->name }}" open>
-                <summary class="collapse-title font-semibold">{{ Str::limit($category->name, 40) }}</summary>
+                <summary class="collapse-title font-semibold">{{ Str::limit($category->name, 30) }} -- {{ Str::limit($category->description, 30) }}</summary>
                 @forelse($category->posts as $post_detail)
                         <div class="collapse-content text-sm">
                             <div class="max-lg:w-full">
@@ -64,7 +64,7 @@
         @endforeach
     </div>
 
-    <div class="mt-4">
+    <div class=" flex mt-4 join justify-center">
         {{ $categories->links() }}
     </div>
 </x-layout>
