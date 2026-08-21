@@ -25,29 +25,43 @@
 
 <body class="min-h-screen flex flex-col">
     <div>
-        <div class="menu sm:hidden sm:menu-vertical w-screen max-w-none p-2 border border-base-300 fixed z-50 bg-base-200 text-base-content m-0 shadow-md rounded"
-            id="my-mobilemenu" popover>
-            <div>
-                <button popovertarget="b1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        class="inline-block h-7 w-7 stroke-current">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg></button>
-                <div class="mt-11 w-full shadow-xl rounded gap-1" id="b1" popover>
-                    <ul class="menu w-full">
-                        <li><a href="{{ route('dashboard') }}" class="skeleton">Dashboard</a></li>
-                        <li><a href="{{ route('categories') }}">Categories</a></li>
-                    </ul>
-                </div>
+        <div class="flex justify-end">
+            <button class="mobile-menu-trigger btn sm:hidden fixed z-50 m-2 justify-start"
+                popovertarget="mobile_megamenu" aria-label="Open navigation menu">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    class="inline-block h-7 w-7 stroke-current">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+            <div class="mt-11 w-full rounded mobile-menu-popover sm:hidden fixed z-40 border border-base-300 bg-base-200 p-2 text-base-content shadow-md"
+                id="mobile_megamenu" popover>
+                <ul class="menu w-full">
+                    <li><a href="{{ route('dashboard') }}" class="skeleton">Dashboard</a></li>
+                    <li>
+                        <details>
+                            <summary>Categories</summary>
+                            <ul>
+                                <li><a href="{{ route('categories') }}">All</a></li>
+                                @foreach ($category_names as $category_name)
+                                    <li><a
+                                            href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
+                                    </li>
+                                @endforeach
+                                <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="megamenu max-sm:hidden max-sm:megamenu-vertical flex items-center gap-2 p-2 border border-base-300 fixed z-50 bg-base-200 text-base-content m-1 shadow"
-            id="my-megamenu-1" popover>
+            id="megamenu" popover>
             <span class="megamenu-active"></span>
             <a class="btn skeleton" href="{{ route('dashboard') }}">Dashboard</a>
 
-            <button class="menu-trigger-categories" popovertarget="a1">Categories</button>
-            <div id="a1" class="menu-popover-categories" popover>
+            <button class="menu-trigger-categories" popovertarget="categories_menu">Categories</button>
+            <div id="categories_menu" class="menu-popover-categories" popover>
                 <ul class="menu gap-1 w-full">
                     <li><a href="{{ route('categories') }}">All</a></li>
                     @foreach ($category_names as $category_name)
@@ -67,16 +81,7 @@
                 </ul>
             </div>
 
-            <button class="menu-trigger-cloud" popovertarget="a3">Cloud Solutions</button>
-            <div id="a3" class="menu-popover-cloud" popover>
-                <ul class="menu w-full">
-                    <li><a>Cloud computing</a></li>
-                    <li><a>Storage solutions</a></li>
-                    <li><a>Database services</a></li>
-                    <li><a>CDN performance</a></li>
-                </ul>
-            </div>
-            <button popovertarget="a4" class="menu-trigger-member ms-auto order-last">
+            <button popovertarget="user_menu" class="menu-trigger-member ms-auto order-last">
                 <span class="badge shadow">Member</span>
                 <div class="avatar">
                     <div class="w-8 rounded shadow">
@@ -85,7 +90,8 @@
                     </div>
                 </div>User
             </button>
-            <div id="a4" class="menu-popover-member min-w-55" popover>
+
+            <div id="user_menu" class="menu-popover-member min-w-55" popover>
                 <ul class="menu w-full">
                     <li><a>Profile</a></li>
                     <li><a>Settings</a></li>
@@ -99,7 +105,7 @@
         {{ $slot }}
     </main>
 
-    <footer class="footer footer-center bg-base-300 text-base-content p-4 rounded">
+    <footer class="footer footer-center relative z-10 bg-base-300 text-base-content p-4 rounded">
         <div>
             <p>Copyright ©{{  date('Y') }} - All right reserved by Project Zintos</p>
         </div>

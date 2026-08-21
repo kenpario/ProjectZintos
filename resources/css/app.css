@@ -8,6 +8,17 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+.mobile-menu-trigger {
+    width: calc(100% - 1rem);
+}
+
+.mobile-menu-popover {
+    inset: auto 0 auto 0;
+    top: 4rem;
+    width: 100%;
+    margin: 0;
+}
+
 .menu-trigger-categories {
     anchor-name: --categories-trigger;
 }
