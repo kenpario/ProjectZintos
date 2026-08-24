@@ -62,8 +62,14 @@
                 @foreach($post_categories as $post_category)
                     <details class="collapse collapse-arrow bg-base-200 border border-base-300 mb-2"
                         name="{{ $post_category->name }}" open>
-                        <summary class="collapse-title font-semibold bg-base-300 rounded">{{ Str::limit($post_category->name, 30) }} --
-                            {{ Str::limit($post_category->description, 30) }}
+                        <summary class="collapse-title font-semibold bg-base-300 rounded">
+                            <div class="flex items-center justify-between gap-2">
+                                <span>
+                                    {{ Str::limit($post_category->name, 30) }} --
+                                    {{ Str::limit($post_category->description, 30) }}
+                                </span>
+                                <x-categories_editdelete :category="$post_category" />
+                            </div>
                         </summary>
                         @forelse($all_posts->where('post_category_id', $post_category->id) as $post)
                             <x-dashboard_categories :post="$post" />

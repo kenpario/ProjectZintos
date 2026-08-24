@@ -10,14 +10,19 @@
                     <a class="btn skeleton shadow-md">New Post</a>
                 </div>
             </div>
-            <div class="m-2">
+            <div class="m-2" id="categories">
                 @foreach($categories as $category)
-                    <details class=" collapse collapse-arrow bg-base-200 border border-base-300 mb-2"
-                        name="{{ $category->name }}" open>
+                    <details class="collapse collapse-arrow bg-base-200 border border-base-300 mb-2"
+                        name="{{ $category->name }}" id="category-{{ $category->id }}" open>
                         <summary class="collapse-title bg-base-300 rounded font-semibold">
-                            {{ Str::limit($category->name, 30) }}
-                            --
-                            {{ Str::limit($category->description, 30) }}
+                            <div class="flex items-center justify-between gap-2">
+                                <span>
+                                    {{ Str::limit($category->name, 30) }}
+                                    --
+                                    {{ Str::limit($category->description, 30) }}
+                                </span>
+                                <x-categories_editdelete :category="$category" />
+                            </div>
                         </summary>
                         @forelse($category->posts as $post_detail)
                             <div class="collapse-content text-sm">
@@ -75,11 +80,16 @@
                                 </div>
                             </div>
                         @endforelse
+                        @if ($category->posts->hasPages())
+                            <div class="flex justify-end p-4">
+                                {{ $category->posts->links() }}
+                            </div>
+                        @endif
                     </details>
                 @endforeach
             </div>
 
-            <div class="flex m-2 mt-2 justify-center">
+            <div class="flex m-2 justify-center">
                 {{ $categories->links() }}
             </div>
         </div>

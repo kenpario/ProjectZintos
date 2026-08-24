@@ -12,13 +12,23 @@ class CategoryController extends Controller
         $categoryName = $request->query('category');
 
         $categories = Post_Category::query()
-            ->with('posts')
             ->when($categoryName, function ($query) use ($categoryName) {
                 $query->where('name', $categoryName);
             })
             ->latest()
-            ->paginate(10)
+            ->paginate(5)
             ->withQueryString();
+        $categories->getCollection()->transform(function (Post_Category $category) {
+            $category->setRelation(
+                'posts',
+                $category->posts()
+                    ->latest()
+                    ->paginate(5, ['*'], 'posts_page_' . $category->id)
+                    ->withQueryString()
+            );
+
+            return $category;
+        });
 
         return view('categories.index', ['categories' => $categories]);
     }
@@ -56,24 +66,33 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post_Category $category)
     {
-        //
+        return view('categories.edit', ['category' => $category]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post_Category $category)
     {
-        //
+        $formFields = $request->validate([
+            'name' => 'required|string|max:30|min:5',
+            'description' => 'required|string|max:30|min:5',
+        ]);
+
+        $category->update($formFields);
+
+        return redirect('/categories');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post_Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect('/categories');
     }
 }
