@@ -1,67 +1,25 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+
+    --animate-fade-out: fade-out 4s ease-in-out forwards;
 }
 
-.mobile-menu-trigger {
-    width: calc(100% - 1rem);
-}
-
-.mobile-menu-popover {
-    inset: auto 0 auto 0;
-    top: 4rem;
-    width: 100%;
-    margin: 0;
-}
-
-.menu-trigger-categories {
-    anchor-name: --categories-trigger;
-}
-
-.menu-trigger-ai {
-    anchor-name: --ai-trigger;
-}
-
-.menu-trigger-cloud {
-    anchor-name: --cloud-trigger;
-}
-
-.menu-trigger-member {
-    anchor-name: --member-trigger;
-}
-
-.menu-popover-categories,
-.menu-popover-ai,
-.menu-popover-cloud,
-.menu-popover-member {
-    inset: auto;
-    margin: 0;
-    position: absolute;
-    top: anchor(bottom);
-    width: anchor-size(width);
-}
-
-.menu-popover-categories {
-    position-anchor: --categories-trigger;
-    left: anchor(left);
-}
-
-.menu-popover-ai {
-    position-anchor: --ai-trigger;
-    left: anchor(left);
-}
-
-.menu-popover-cloud {
-    position-anchor: --cloud-trigger;
-    left: anchor(left);
-}
-
-.menu-popover-member {
-    position-anchor: --member-trigger;
-    right: anchor(right);
+@keyframes fade-out {
+    0%,
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
 }

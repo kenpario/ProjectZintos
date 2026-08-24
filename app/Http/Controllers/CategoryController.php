@@ -45,14 +45,23 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $formFields = $request->validate([
-            'name' => 'required|string|max:30|min:5',
-            'description' => 'required|string|max:30|min:5',
-        ]);
+        $formFields = $request->validate(
+            [
+                'name' => 'required|string|max:30|min:5',
+                'description' => 'required|string|max:30|min:5'
+            ],
+            [
+                'name.required' => 'Please write a name!',
+                'name.max' => 'Name must be 30 characters or less.',
+                'description.required' => 'Please write a description!',
+                'description.max' => 'Name must be 30 characters or less.'
+
+            ]
+        );
 
         Post_Category::create($formFields);
 
-        return redirect('/categories');
+        return redirect('/categories')->with('success', 'Your Category has been added!');
     }
 
     /**
@@ -76,14 +85,23 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Post_Category $category)
     {
-        $formFields = $request->validate([
-            'name' => 'required|string|max:30|min:5',
-            'description' => 'required|string|max:30|min:5',
-        ]);
+        $formFields = $request->validate(
+            [
+                'name' => 'required|string|max:30|min:5',
+                'description' => 'required|string|max:30|min:5'
+            ],
+            [
+                'name.required' => 'Please write a name!',
+                'name.max' => 'Name must be 30 characters or less.',
+                'description.required' => 'Please write a description!',
+                'description.max' => 'Name must be 30 characters or less.'
+
+            ]
+        );
 
         $category->update($formFields);
 
-        return redirect('/categories');
+        return redirect('/categories')->with('success', 'Your Category has been updated!');
     }
 
     /**
@@ -93,6 +111,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect('/categories');
+        return redirect('/categories')->with('success', 'Your Category has been deleted!');
     }
 }

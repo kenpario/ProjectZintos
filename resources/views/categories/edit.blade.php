@@ -4,7 +4,8 @@
     </x-slot:title>
     <div class="min-h-full w-full">
         <form method="POST" action="/categories/{{ $category->id }}" class="mx-auto w-full max-w-md"
-            enctype="multipart/form-data">
+            enctype="multipart/form-data"
+            onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Updating...';">
             @csrf
             @method('PUT')
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
