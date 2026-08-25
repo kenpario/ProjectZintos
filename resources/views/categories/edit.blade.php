@@ -31,7 +31,8 @@
                     <legend class="fieldset-legend">Comment Section</legend>
                     <label class="label">
                         <input type="hidden" name="can_comment" value="0" />
-                        <input type="checkbox" checked="checked" class="checkbox" name="can_comment" value="1" />
+                        <input type="checkbox" @checked(old('can_comment', $category->can_comment) == 1) class="checkbox"
+                            name="can_comment" value="1" />
                         Can members comment?
                     </label>
                 </fieldset>

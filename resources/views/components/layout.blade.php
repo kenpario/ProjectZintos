@@ -134,6 +134,13 @@
             </div>
         </div>
     @endif
+    @if (session('error'))
+        <div class="fixed z-40 toast toast-bottom toast-right">
+            <div class="alert alert-error animate-fade-out">
+                <span>{{ session('error') }}</span>
+            </div>
+        </div>
+    @endif
     <main class="mt-18 mb-2 ml-2 mr-2 flex-1">
         {{ $slot }}
     </main>

@@ -19,21 +19,27 @@ Route::middleware('guest')->group(function () {
     })->name('login');
 
     Route::get('/auth/callback', function (Request $request) {
-        $googleUser = Socialite::driver('google')->user();
+        try {
+            $googleUser = Socialite::driver('google')->user();
 
-        $user = User::updateOrCreate([
-            'google_id' => $googleUser->id,
-        ], [
-            'name' => $googleUser->name,
-            'email' => $googleUser->email,
-            'google_token' => $googleUser->token,
-            'google_refresh_token' => $googleUser->refreshToken,
-        ]);
+            $user = User::updateOrCreate([
+                'google_id' => $googleUser->id,
+            ], [
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'google_token' => $googleUser->token,
+                'google_refresh_token' => $googleUser->refreshToken,
+            ]);
 
-        Auth::login($user);
-        $request->session()->regenerate();
+            Auth::login($user);
+            $request->session()->regenerate();
 
-        return redirect('/dashboard')->with('success','Welcome back, '. Auth::user()->name . '!');
+            return redirect('/dashboard')->with('success', 'Welcome back, ' . Auth::user()->name . '!');
+        } catch (\Throwable $exception) {
+            report($exception);
+
+            return redirect('/')->with('error', 'Google sign-in could not be completed. Please try again.');
+        }
     });
 });
 Route::middleware('auth')->group(function () {
