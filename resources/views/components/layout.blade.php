@@ -36,68 +36,90 @@
             </button>
             <div class="mt-11 w-full rounded sm:hidden fixed z-40 border border-base-300 bg-base-200 p-2 text-base-content shadow-md"
                 id="mobile_megamenu" popover>
-                <ul class="menu w-full">
-                    <li><a href="{{ route('dashboard') }}" class="skeleton">Dashboard</a></li>
-                    <li>
-                        <details>
-                            <summary>Categories</summary>
-                            <ul>
-                                <li><a href="{{ route('categories') }}">All</a></li>
-                                @foreach ($category_names as $category_name)
-                                    <li><a
-                                            href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
-                                    </li>
-                                @endforeach
-                                <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
-                            </ul>
-                        </details>
-                    </li>
-                </ul>
+                @auth
+                    <ul class="menu w-full">
+                        <li><a href="{{ route('dashboard') }}" class="skeleton">Dashboard</a></li>
+                        <li>
+                            <details>
+                                <summary>Categories</summary>
+                                <ul>
+                                    <li><a href="{{ route('categories') }}">All</a></li>
+                                    @foreach ($category_names as $category_name)
+                                        <li><a
+                                                href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
+                                        </li>
+                                    @endforeach
+                                    <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                                </ul>
+                            </details>
+                        </li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                @else
+                    <a href="{{ route('login') }}" class="btn skeleton w-full">Register/Login</a>
+                @endauth
             </div>
         </div>
         <div class="megamenu max-sm:hidden max-sm:megamenu-vertical flex items-center gap-2 p-2 border border-base-300 fixed z-50 bg-base-200 text-base-content m-1 shadow"
             id="megamenu" popover>
-            <span class="megamenu-active"></span>
-            <a class="btn skeleton" href="{{ route('dashboard') }}">Dashboard</a>
+            @auth
+                <span class="megamenu-active"></span>
+                <a class="btn skeleton" href="{{ route('dashboard') }}">Dashboard</a>
 
-            <button popovertarget="categories_menu">Categories</button>
-            <div id="categories_menu" popover>
-                <ul class="menu gap-1 w-full">
-                    <li><a href="{{ route('categories') }}">All</a></li>
-                    @foreach ($category_names as $category_name)
-                        <li><a href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
+                <button popovertarget="categories_menu">Categories</button>
+                <div id="categories_menu" popover>
+                    <ul class="menu gap-1 w-full">
+                        <li><a href="{{ route('categories') }}">All</a></li>
+                        @foreach ($category_names as $category_name)
+                            <li><a href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
+                            </li>
+                        @endforeach
+                        <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                    </ul>
+                </div>
+
+                <button popovertarget="a2">AI</button>
+                <div id="a2" popover>
+                    <ul class="menu w-full">
+                        <li><a>AI infrastructure</a></li>
+                        <li><a>Image generation</a></li>
+                        <li><a>MCP servers</a></li>
+                    </ul>
+                </div>
+
+                <button popovertarget="user_menu" class="ms-auto order-last">
+                    <span class="badge shadow">Member</span>
+                    <div class="avatar">
+                        <div class="w-8 rounded shadow">
+                            <img alt="Tailwind-CSS-Avatar-component"
+                                src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
+                        </div>
+                    </div>{{ Auth::user()->name}}
+                </button>
+
+                <div id="user_menu" class="m-1 w-full" popover>
+                    <ul class="menu w-full">
+                        <li><a>Profile</a></li>
+                        <li><a>Settings</a></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                                @csrf
+                                <button type="submit" class="btn btn-sm skeleton w-full">Logout</button>
+                            </form>
                         </li>
-                    @endforeach
-                    <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
-                </ul>
-            </div>
-
-            <button popovertarget="a2">AI</button>
-            <div id="a2" popover>
-                <ul class="menu w-full">
-                    <li><a>AI infrastructure</a></li>
-                    <li><a>Image generation</a></li>
-                    <li><a>MCP servers</a></li>
-                </ul>
-            </div>
-
-            <button popovertarget="user_menu" class="ms-auto order-last">
-                <span class="badge shadow">Member</span>
-                <div class="avatar">
-                    <div class="w-8 rounded shadow">
-                        <img alt="Tailwind-CSS-Avatar-component"
-                            src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
-                    </div>
-                </div>User
-            </button>
-
-            <div id="user_menu" class=" min-w-55" popover>
-                <ul class="menu w-full">
-                    <li><a>Profile</a></li>
-                    <li><a>Settings</a></li>
-                    <li><a>Log Out</a></li>
-                </ul>
-            </div>
+                    </ul>
+                </div>
+            @endauth
+            @guest
+                <div id="register_login" class="hover-3d">
+                    <a href="{{ route('login') }}" class="btn skeleton">Register/Login</a>
+                </div>
+            @endguest
         </div>
     </nav>
     @if (session('success'))
