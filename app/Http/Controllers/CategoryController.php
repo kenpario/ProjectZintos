@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post_Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -60,6 +61,8 @@ class CategoryController extends Controller
             ]
         );
 
+        $formFields['user_id'] = Auth::user()->id;
+
         Post_Category::create($formFields);
 
         return redirect('/categories')->with('success', 'Your Category has been added!');
@@ -78,6 +81,9 @@ class CategoryController extends Controller
      */
     public function edit(Post_Category $category)
     {
+        if ($category->user_id != Auth::user()->id) {
+            abort(403, 'Unauthorized Action!');
+        }
         return view('categories.edit', ['category' => $category]);
     }
 
@@ -86,6 +92,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Post_Category $category)
     {
+        if ($category->user_id != Auth::user()->id) {
+            abort(403, 'Unauthorized Action!');
+        }
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',
@@ -111,6 +120,9 @@ class CategoryController extends Controller
      */
     public function destroy(Post_Category $category)
     {
+        if ($category->user_id != Auth::user()->id) {
+            abort(403, 'Unauthorized Action!');
+        }
         $category->delete();
 
         return redirect('/categories')->with('success', 'Your Category has been deleted!');

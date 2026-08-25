@@ -21,7 +21,9 @@
                                     --
                                     {{ Str::limit($category->description, 30) }}
                                 </span>
-                                <x-categories_editdelete :category="$category" />
+                                @if(Auth::user()->id == $category->user_id)
+                                    <x-categories_editdelete :category="$category" />
+                                @endif
                             </div>
                         </summary>
                         @forelse($category->posts as $post_detail)

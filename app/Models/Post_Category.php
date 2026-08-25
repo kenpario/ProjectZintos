@@ -10,6 +10,7 @@ class Post_Category extends Model
 {
     protected $table = 'post_categories';
     protected $fillable = ['user_id', 'name', 'description', 'can_comment'];
+    protected $hidden = ['user_id'];
     protected $casts = ['can_comment' => 'boolean'];
 
     public function posts(): HasMany
