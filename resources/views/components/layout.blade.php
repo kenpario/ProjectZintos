@@ -49,7 +49,9 @@
                                                 href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
                                         </li>
                                     @endforeach
-                                    <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                                    @if(Auth::user()->group?->is_admin)
+                                        <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                                    @endif
                                 </ul>
                             </details>
                         </li>
@@ -79,7 +81,9 @@
                             <li><a href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
                             </li>
                         @endforeach
-                        <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                        @if(Auth::user()->group?->is_admin)
+                            <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                        @endif
                     </ul>
                 </div>
 
@@ -93,7 +97,17 @@
                 </div>
 
                 <button popovertarget="user_menu" class="ms-auto order-last">
-                    <span class="badge shadow">Member</span>
+                    @if (Auth::user()->group?->is_admin)
+                        <div class="aura aura-silver">
+                            <span class="badge shadow">{{ Auth::user()->group?->name ?? 'No group' }}</span>
+                        </div>
+                    @elseif (Auth::user()->group?->is_premium)
+                        <div class="aura aura-gold">
+                            <span class="badge shadow">{{ Auth::user()->group?->name ?? 'No group' }}</span>
+                        </div>
+                    @else
+                        <span class="badge shadow">{{ Auth::user()->group?->name ?? 'No group' }}</span>
+                    @endif
                     <div class="avatar">
                         <div class="w-8 rounded shadow">
                             <img alt="Tailwind-CSS-Avatar-component"

@@ -21,7 +21,7 @@
                                     --
                                     {{ Str::limit($category->description, 30) }}
                                 </span>
-                                @if(Auth::user()->id == $category->user_id)
+                                @if(Auth::user()->id == $category->user_id || Auth::user()->group?->is_admin)
                                     <x-categories_editdelete :category="$category" />
                                 @endif
                             </div>

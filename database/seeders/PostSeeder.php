@@ -15,12 +15,35 @@ class PostSeeder extends Seeder
     {
         $users = User::factory(20)->create();
         $timestamp = now();
+
+        $groupNames = [
+            ['name' => 'Zintos Team', 'description' => 'Official Zintos community', 'is_admin' => true, 'is_premium' => true],
+            ['name' => 'Developers', 'description' => 'Software development team', 'is_admin' => false, 'is_premium' => false],
+            ['name' => 'Travelers', 'description' => 'Travel stories and advice', 'is_admin' => false, 'is_premium' => true],
+            ['name' => 'Creators', 'description' => 'Photography and creative work', 'is_admin' => false, 'is_premium' => false],
+            ['name' => 'Gamers', 'description' => 'Games and releases', 'is_admin' => false, 'is_premium' => false],
+        ];
+
+        foreach ($groupNames as $index => $group) {
+            $groupId = DB::table('groups')->insertGetId([
+                'user_id' => $users[$index]->id,
+                'name' => $group['name'],
+                'description' => $group['description'],
+                'is_admin' => $group['is_admin'],
+                'is_premium' => $group['is_premium'],
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp,
+            ]);
+
+            $users[$index]->update(['group_id' => $groupId]);
+        }
+
         $categoryNames = [
-            ['name' => 'Technology', 'description' => 'Tech discussions'],
-            ['name' => 'Travel', 'description' => 'Travel stories'],
-            ['name' => 'Food', 'description' => 'Recipes and reviews'],
-            ['name' => 'Photography', 'description' => 'Photos and techniques'],
-            ['name' => 'Gaming', 'description' => 'Games and releases'],
+            ['name' => 'Technology', 'description' => 'Tech discussions', 'can_comment' => true],
+            ['name' => 'Travel', 'description' => 'Travel stories', 'can_comment' => true],
+            ['name' => 'Food', 'description' => 'Recipes and reviews', 'can_comment' => false],
+            ['name' => 'Photography', 'description' => 'Photos and techniques', 'can_comment' => true],
+            ['name' => 'Gaming', 'description' => 'Games and releases', 'can_comment' => false],
         ];
 
         $categoryIds = collect($categoryNames)->map(function (array $category, int $index) use ($users, $timestamp): int {
@@ -28,6 +51,7 @@ class PostSeeder extends Seeder
                 'user_id' => $users[$index]->id,
                 'name' => $category['name'],
                 'description' => $category['description'],
+                'can_comment' => $category['can_comment'],
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ]);
