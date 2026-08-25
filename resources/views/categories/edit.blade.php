@@ -27,8 +27,16 @@
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
                 @enderror
+                <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+                    <legend class="fieldset-legend">Comment Section</legend>
+                    <label class="label">
+                        <input type="hidden" name="can_comment" value="0" />
+                        <input type="checkbox" checked="checked" class="checkbox" name="can_comment" value="1" />
+                        Can members comment?
+                    </label>
+                </fieldset>
                 <button type="submit" class="btn btn-neutral mt-4">Update</button>
-                <a class="btn" href="{{ url()->previous() }}" onclick="history.back(); return false;">Back</a>
+                <a class="btn" href="{{ route('categories') }}">Back</a>
             </fieldset>
         </form>
     </div>

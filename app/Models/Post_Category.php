@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Post_Category extends Model
 {
     protected $table = 'post_categories';
-    protected $fillable = ['user_id','name','description'];
+    protected $fillable = ['user_id', 'name', 'description', 'can_comment'];
+    protected $casts = ['can_comment' => 'boolean'];
 
     public function posts(): HasMany
     {

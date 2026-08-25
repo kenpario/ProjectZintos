@@ -118,7 +118,7 @@
 
     <footer class="footer footer-center relative z-10 bg-base-300 text-base-content p-4 rounded">
         <div>
-            <p>Copyright ©{{  date('Y') }} - All right reserved by Project Zintos</p>
+            <p>Copyright ©2026 - {{  date('Y') }} - All right reserved by Project Zintos</p>
         </div>
     </footer>
 </body>

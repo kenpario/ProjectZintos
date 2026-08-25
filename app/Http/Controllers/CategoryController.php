@@ -48,7 +48,8 @@ class CategoryController extends Controller
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',
-                'description' => 'required|string|max:30|min:5'
+                'description' => 'required|string|max:30|min:5',
+                'can_comment' => 'required|boolean'
             ],
             [
                 'name.required' => 'Please write a name!',
@@ -88,7 +89,8 @@ class CategoryController extends Controller
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',
-                'description' => 'required|string|max:30|min:5'
+                'description' => 'required|string|max:30|min:5',
+                'can_comment' => 'required|boolean'
             ],
             [
                 'name.required' => 'Please write a name!',
