@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\Logout;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Socialite;
@@ -53,6 +54,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('edit_categories');
     Route::put('/categories/{category}', [CategoryController::class, 'update']);
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+
+    Route::get('users/{user}', [UserController::class, 'index'])->name('user_profile');
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit_user_profile');
+    Route::put('/users/{user}', [UserController::class, 'update']);
 
     Route::post('logout', Logout::class)->name('logout');
 });

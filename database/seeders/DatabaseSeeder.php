@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
                 'name' => $group['name'],
                 'description' => $group['description'],
                 'is_admin' => $group['is_admin'],
+                'is_mod' => $group['is_mod'],
                 'is_premium' => $group['is_premium'],
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,

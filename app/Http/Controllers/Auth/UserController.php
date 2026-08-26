@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Models\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
+class UserController extends Controller
+{
+    /**
+     * Create a new class instance.
+     */
+    public function index(User $user)
+    {
+        return view('users.index', ['user' => $user]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(User $user)
+    {
+        if (Auth::user()->id !== $user->id && ! Auth::user()->group?->is_admin) {
+            abort(403, 'Unauthorized Action!');
+        }
+        return view('users.edit', ['user' => $user]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, User $user)
+    {
+        if (Auth::user()->id !== $user->id && ! Auth::user()->group?->is_admin) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $avatar = $request->file('avatar');
+
+        if ($avatar && ! $avatar->isValid()) {
+            return back()->withErrors([
+                'avatar' => $avatar->getErrorMessage(),
+            ])->withInput();
+        }
+
+        $formFields = $request->validate(
+            [
+                'name' => 'required|string|max:30|min:5',
+                'avatar' => 'nullable|file|image|mimes:jpg,jpeg,png,gif|max:2048',
+            ],
+            [
+                'name.required' => 'Please write a name!',
+                'name.max' => 'Name must be 30 characters or less.',
+                'avatar.mimes' => 'The avatar must be a JPG, PNG or GIF image.',
+                'avatar.max' => 'The avatar must be 2 MB or smaller.',
+            ]
+        );
+
+        if ($avatar) {
+            $oldAvatar = $user->avatar;
+            $formFields['avatar'] = $avatar->store('avatars', 'public');
+
+            if ($oldAvatar) {
+                Storage::disk('public')->delete($oldAvatar);
+            }
+        }
+
+        $user->update($formFields);
+
+        return redirect()->route('user_profile', ['user' => $user])
+            ->with('success', 'Your information has been updated!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}

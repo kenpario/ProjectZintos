@@ -114,16 +114,16 @@
                     @endif
                     <div class="avatar">
                         <div class="w-8 rounded shadow">
-                            <img alt="Tailwind-CSS-Avatar-component"
-                                src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
+                            <img alt="{{ Auth::user()->name }}'s avatar"
+                                src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}" />
                         </div>
                     </div>{{ Auth::user()->name}}
                 </button>
 
                 <div id="user_menu" class="m-1 w-full" popover>
                     <ul class="menu w-full">
-                        <li><a>Profile</a></li>
-                        <li><a>Settings</a></li>
+                        <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
+                        <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit Information</a></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf
