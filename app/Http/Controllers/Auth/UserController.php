@@ -64,12 +64,6 @@ class UserController extends Controller
 
         $avatar = $request->file('avatar');
 
-        if ($avatar && ! $avatar->isValid()) {
-            return back()->withErrors([
-                'avatar' => $avatar->getErrorMessage(),
-            ])->withInput();
-        }
-
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',
@@ -80,6 +74,7 @@ class UserController extends Controller
                 'name.max' => 'Name must be 30 characters or less.',
                 'avatar.mimes' => 'The avatar must be a JPG, PNG or GIF image.',
                 'avatar.max' => 'The avatar must be 2 MB or smaller.',
+                'avatar.uploaded' => 'The avatar must be 2 MB or smaller.',
             ]
         );
 
