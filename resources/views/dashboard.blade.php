@@ -68,7 +68,7 @@
                                     {{ Str::limit($post_category->name, 30) }} --
                                     {{ Str::limit($post_category->description, 30) }}
                                 </span>
-                                @if(Auth::user()->id == $post_category->user_id || Auth::user()->group?->is_admin)
+                                @if(Auth::user()->group?->is_admin)
                                     <x-categories_editdelete :category="$post_category" />
                                 @endif
                             </div>

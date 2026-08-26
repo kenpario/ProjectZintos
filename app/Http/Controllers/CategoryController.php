@@ -85,7 +85,7 @@ class CategoryController extends Controller
      */
     public function edit(Post_Category $category)
     {
-        if ($category->user_id !== Auth::id() && ! Auth::user()->group?->is_admin) {
+        if (! Auth::user()->group?->is_admin) {
             abort(403, 'Unauthorized Action!');
         }
         return view('categories.edit', ['category' => $category]);
@@ -96,7 +96,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Post_Category $category)
     {
-        if ($category->user_id !== Auth::id() && ! Auth::user()->group?->is_admin) {
+        if (! Auth::user()->group?->is_admin) {
             abort(403, 'Unauthorized Action!');
         }
         $formFields = $request->validate(
@@ -124,7 +124,7 @@ class CategoryController extends Controller
      */
     public function destroy(Post_Category $category)
     {
-        if ($category->user_id !== Auth::id() && ! Auth::user()->group?->is_admin) {
+        if (! Auth::user()->group?->is_admin) {
             abort(403, 'Unauthorized Action!');
         }
         $category->delete();

@@ -98,15 +98,19 @@
 
                 <button popovertarget="user_menu" class="ms-auto order-last">
                     @if (Auth::user()->group?->is_admin)
+                        <div class="aura aura-rainbow">
+                            <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
+                        </div>
+                    @elseif(Auth::user()->group?->is_mod)
                         <div class="aura aura-silver">
-                            <span class="badge shadow">{{ Auth::user()->group?->name ?? 'No group' }}</span>
+                            <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
                         </div>
                     @elseif (Auth::user()->group?->is_premium)
                         <div class="aura aura-gold">
-                            <span class="badge shadow">{{ Auth::user()->group?->name ?? 'No group' }}</span>
+                            <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
                         </div>
                     @else
-                        <span class="badge shadow">{{ Auth::user()->group?->name ?? 'No group' }}</span>
+                        <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
                     @endif
                     <div class="avatar">
                         <div class="w-8 rounded shadow">

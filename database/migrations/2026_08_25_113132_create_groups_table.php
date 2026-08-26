@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('name', 30);
             $table->string('description', 30);
             $table->boolean('is_admin')->default('0');
+            $table->boolean('is_mod')->default('0');
             $table->boolean('is_premium')->default('0');
             $table->timestamps();
         });
