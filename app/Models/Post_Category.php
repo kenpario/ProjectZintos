@@ -9,13 +9,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Post_Category extends Model
 {
     protected $table = 'post_categories';
+    protected $fillable = ['user_id', 'name', 'description', 'can_comment'];
+    protected $hidden = ['user_id'];
+    protected $casts = ['can_comment' => 'boolean'];
 
     public function posts(): HasMany
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class, 'post_category_id');
     }
     public function user(): BelongsTo
     {
-        return $this->BelongsTo(User::class);
+        return $this->BelongsTo(User::class, 'user_id');
     }
 }

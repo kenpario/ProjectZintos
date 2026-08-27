@@ -1,95 +1,171 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ isset($title) ? $title . ' - Forum' : 'Forum' }}</title>
-    <link rel="preconnect" href="<https://fonts.bunny.net>">
+    <title>{{ isset($title) ? $title . ' - Zintos' : 'Zintos' }}</title>
+    <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <script>
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        const applySystemTheme = ({ matches }) => {
+            document.documentElement.dataset.theme = matches ? 'dark' : 'light';
+        };
+
+        applySystemTheme(systemTheme);
+        systemTheme.addEventListener('change', applySystemTheme);
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
-    <div>
-        <div class="menu sm:hidden sm:menu-vertical w-screen max-w-none p-2 border border-base-300 fixed z-50 bg-white m-0 shadow-md rounded" id="my-mobilemenu"
-            popover>
-            <div>
-                <button popovertarget="b1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        class="inline-block h-7 w-7 stroke-current">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg></button>
-                <div class="mt-11 w-full shadow-xl rounded" id="b1" popover>
+<body class="min-h-screen flex flex-col">
+    <nav>
+        <div class="flex justify-end">
+            <button class="btn sm:hidden fixed z-50 m-2 justify-start" popovertarget="mobile_megamenu"
+                aria-label="Open navigation menu">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    class="inline-block h-7 w-7 stroke-current">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+            <div class="mt-11 w-full rounded sm:hidden fixed z-40 border border-base-300 bg-base-200 p-2 text-base-content shadow-md"
+                id="mobile_megamenu" popover>
+                @auth
                     <ul class="menu w-full">
-                        <li><a>Enterprise</a></li>
-                        <li><a>CRM software</a></li>
-                        <li><a>Security</a></li>
-                        <li><a>Consulting</a></li>
+                        <li><a href="{{ route('dashboard') }}" class="skeleton">Dashboard</a></li>
+                        <li>
+                            <details>
+                                <summary>Categories</summary>
+                                <ul>
+                                    <li><a href="{{ route('categories') }}">All</a></li>
+                                    @foreach ($category_names as $category_name)
+                                        <li><a
+                                                href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
+                                        </li>
+                                    @endforeach
+                                    @if(Auth::user()->group?->is_admin)
+                                        <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                                    @endif
+                                </ul>
+                            </details>
+                        </li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                @else
+                    <a href="{{ route('login') }}" class="btn skeleton w-full">Register/Login</a>
+                @endauth
+            </div>
+        </div>
+        <div class="megamenu max-sm:hidden max-sm:megamenu-vertical flex items-center gap-2 p-2 border border-base-300 fixed z-50 bg-base-200 text-base-content m-1 shadow"
+            id="megamenu" popover>
+            @auth
+                <span class="megamenu-active"></span>
+                <a class="btn skeleton" href="{{ route('dashboard') }}">Dashboard</a>
+
+                <button popovertarget="categories_menu">Categories</button>
+                <div id="categories_menu" popover>
+                    <ul class="menu gap-1 w-full">
+                        <li><a href="{{ route('categories') }}">All</a></li>
+                        @foreach ($category_names as $category_name)
+                            <li><a href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
+                            </li>
+                        @endforeach
+                        @if(Auth::user()->group?->is_admin)
+                            <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                        @endif
                     </ul>
                 </div>
+
+                <button popovertarget="a2">AI</button>
+                <div id="a2" popover>
+                    <ul class="menu w-full">
+                        <li><a>AI infrastructure</a></li>
+                        <li><a>Image generation</a></li>
+                        <li><a>MCP servers</a></li>
+                    </ul>
+                </div>
+
+                <button popovertarget="user_menu" class="ms-auto order-last">
+                    @if (Auth::user()->group?->is_admin)
+                        <div class="aura aura-rainbow">
+                            <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
+                        </div>
+                    @elseif(Auth::user()->group?->is_mod)
+                        <div class="aura aura-silver">
+                            <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
+                        </div>
+                    @elseif (Auth::user()->group?->is_premium)
+                        <div class="aura aura-gold">
+                            <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
+                        </div>
+                    @else
+                        <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
+                    @endif
+                    <div class="avatar">
+                        <div class="w-8 rounded shadow">
+                            <img alt="{{ Auth::user()->name }}'s avatar"
+                                src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}" />
+                        </div>
+                    </div>{{ Auth::user()->name}}
+                </button>
+
+                <div id="user_menu" class="m-1 w-full" popover>
+                    <ul class="menu w-full">
+                        <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
+                        <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit Information</a></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                                @csrf
+                                <button type="submit" class="btn btn-sm skeleton w-full">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            @endauth
+            @guest
+                <div id="register_login" class="hover-3d">
+                    <a href="{{ route('login') }}" class="btn skeleton">Register/Login</a>
+                </div>
+            @endguest
+        </div>
+    </nav>
+    @if (session('success'))
+        <div class="fixed z-40 toast toast-bottom toast-right">
+            <div class="alert alert-success animate-fade-out">
+                <svg xmlns="<http://www.w3.org/2000/svg>" class="h-6 w-6 shrink-0 stroke-current" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ session('success') }}</span>
             </div>
         </div>
-        <div class="megamenu max-sm:hidden max-sm:megamenu-vertical p-2 border border-base-300 fixed z-50 bg-white m-1 shadow"
-            id="my-megamenu-1" popover>
-            <span class="megamenu-active"></span>
-            <button popovertarget="a1">Services</button>
-            <div id="a1" popover>
-                <ul class="menu">
-                    <li><a>Enterprise</a></li>
-                    <li><a>CRM software</a></li>
-                    <li><a>Security</a></li>
-                    <li><a>Consulting</a></li>
-                </ul>
-            </div>
-
-            <button popovertarget="a2">AI</button>
-            <div id="a2" popover>
-                <ul class="menu">
-                    <li><a>AI infrastructure</a></li>
-                    <li><a>Image generation</a></li>
-                    <li><a>MCP servers</a></li>
-                </ul>
-            </div>
-
-            <button popovertarget="a3">Cloud Solutions</button>
-            <div id="a3" popover>
-                <ul class="menu">
-                    <li><a>Cloud computing</a></li>
-                    <li><a>Storage solutions</a></li>
-                    <li><a>Database services</a></li>
-                    <li><a>CDN performance</a></li>
-                </ul>
-            </div>
-            <button popovertarget="a4" class="ms-auto order-last">
-                <span class="badge shadow">Member</span>
-                <div class="avatar">
-                    <div class="w-8 rounded shadow">
-                        <img alt="Tailwind-CSS-Avatar-component"
-                            src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
-                    </div>
-                </div>User
-            </button>
-            <div id="a4" class="min-w-55" popover>
-                <ul class="menu min-w-54">
-                    <li><a>Profile</a></li>
-                    <li><a>Settings</a></li>
-                    <li><a>Log Out</a></li>
-                </ul>
+    @endif
+    @if (session('error'))
+        <div class="fixed z-40 toast toast-bottom toast-right">
+            <div class="alert alert-error animate-fade-out">
+                <span>{{ session('error') }}</span>
             </div>
         </div>
-    </div>
-
-    <main class="mt-18 mb-2 ml-2 mr-2">
+    @endif
+    <main class="mt-18 mb-2 ml-2 mr-2 flex-1">
         {{ $slot }}
     </main>
 
-    <footer class="footer footer-center bg-base-300 text-base-content p-4 rounded">
+    <footer class="footer footer-center relative z-10 bg-base-300 text-base-content p-4 rounded">
         <div>
-            <p>Copyright ©{{  date('Y') }} - All right reserved by Project Zintos</p>
+            <p>Copyright ©2026 - {{  date('Y') }} - All right reserved by Project Zintos</p>
         </div>
     </footer>
 </body>
