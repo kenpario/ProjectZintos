@@ -10,6 +10,11 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="{{ asset('storage/assets/img/favicon/icon.png') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('storage/assets/img/favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('storage/assets/img/favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('storage/assets/img/favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{ asset('storage/assets/img/favicon/site.webmanifest')}}">
     <script>
         const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
 

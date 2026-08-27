@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post_Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,9 @@ class CategoryController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        return view('categories.index', ['categories' => $categories]);
+        $all_posts = Post::with(['user'])->latest()->take(20)->get();
+
+        return view('categories.index', ['categories' => $categories, 'all_posts' => $all_posts]);
     }
 
     public function posts(Post_Category $category)

@@ -31,7 +31,7 @@
         <div id="summary" class="flex-1 min-w-0">
             <div class="aura aura-dual w-full">
                 <div class="hero min-h-screen rounded-box shadow-xl overflow-hidden"
-                    style="background-image: url('/storage/media/background_gif.gif');">
+                    style="background-image: url('{{ asset('storage/assets/img/items/background.gif') }}');">
                     <div class="hero-overlay"></div>
                     <div class="hero-content text-neutral-content text-center">
                         <div class="max-w-md">
@@ -76,7 +76,8 @@
                                     <ul class="list bg-base-100 rounded-box shadow-md mt-2">
                                         <li class="list-row">
                                             <div>
-                                                <div class="text-xs uppercase font-semibold opacity-60">There are no posts in this category.</div>
+                                                <div class="text-xs uppercase font-semibold opacity-60">There are no posts in
+                                                    this category.</div>
                                             </div>
                                         </li>
                                     </ul>
