@@ -22,7 +22,7 @@ class CategoryController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        $all_posts = Post::with(['user'])->latest()->take(20)->get();
+        $all_posts = Post::with(['user', 'category'])->latest()->take(20)->get();
 
         return view('categories.index', ['categories' => $categories, 'all_posts' => $all_posts]);
     }

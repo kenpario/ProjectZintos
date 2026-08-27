@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,13 @@ class UserController extends Controller
      */
     public function index(User $user)
     {
-        return view('users.index', ['user' => $user]);
+
+        $user_posts = $user->posts()
+            ->with(['user', 'category'])
+            ->latest()
+            ->paginate(10);
+
+        return view('users.index', ['user' => $user, 'user_posts' => $user_posts]);
     }
 
     /**

@@ -33,8 +33,9 @@
 
                                     <ul class="list bg-base-100 rounded-box shadow-md mt-2">
                                         <li class="list-row">
-                                            <div><img class="size-10 rounded-box" alt="Tailwind CSS list item"
-                                                    src="https://img.daisyui.com/images/profile/demo/1@94.webp" /></div>
+                                            <div><img
+                                                    src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
+                                                    alt="{{ $post->user?->name }}'s avatar" class="size-10 rounded-box" /></div>
                                             <div>
                                                 <div>{{ Str::limit($post->title, 20) }}</div>
                                                 <div class="text-xs uppercase font-semibold opacity-60">
@@ -85,8 +86,8 @@
                         <div class="flex justify-between collapse-content text-sm">
                             <a class="btn btn-md mt-2" href="{{ route('categories.posts', $category) }}">
                                 View all posts ({{ $category->posts_count }})
-                                {{ $categories->links() }}
                             </a>
+                            {{ $categories->links() }}
                         </div>
                     </details>
                 @endforeach
