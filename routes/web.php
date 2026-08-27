@@ -39,7 +39,9 @@ Route::middleware('guest')->group(function () {
                 $tokenFields['google_refresh_token'] = $googleUser->refreshToken;
             }
 
-            $user->update($tokenFields);
+            $updateEmail = ['email' => $googleUser->email];
+
+            $user->update($tokenFields, $updateEmail);
 
             Auth::login($user);
             $request->session()->regenerate();
@@ -57,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+    Route::get('/categories/{category}/posts', [CategoryController::class, 'posts'])->name('categories.posts');
     Route::get('/categories/add', [CategoryController::class, 'create'])->name('add_categories');
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('edit_categories');

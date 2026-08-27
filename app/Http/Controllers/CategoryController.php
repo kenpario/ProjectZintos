@@ -16,22 +16,23 @@ class CategoryController extends Controller
             ->when($categoryName, function ($query) use ($categoryName) {
                 $query->where('name', $categoryName);
             })
+            ->withCount('posts')
             ->latest()
             ->paginate(5)
             ->withQueryString();
-        $categories->getCollection()->transform(function (Post_Category $category) {
-            $category->setRelation(
-                'posts',
-                $category->posts()
-                    ->latest()
-                    ->paginate(5, ['*'], 'posts_page_' . $category->id)
-                    ->withQueryString()
-            );
-
-            return $category;
-        });
 
         return view('categories.index', ['categories' => $categories]);
+    }
+
+    public function posts(Post_Category $category)
+    {
+        $posts = $category->posts()
+            ->with('user')
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('categories.posts', ['category' => $category, 'posts' => $posts]);
     }
     /**
      * Show the form for creating a new resource.

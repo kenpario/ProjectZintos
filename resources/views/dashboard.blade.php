@@ -76,10 +76,7 @@
                                     <ul class="list bg-base-100 rounded-box shadow-md mt-2">
                                         <li class="list-row">
                                             <div>
-                                                <div>Nothing here.</div>
-                                                <div class="text-xs uppercase font-semibold opacity-60">
-                                                    Nothing here as well.
-                                                </div>
+                                                <div class="text-xs uppercase font-semibold opacity-60">There are no posts in this category.</div>
                                             </div>
                                         </li>
                                     </ul>

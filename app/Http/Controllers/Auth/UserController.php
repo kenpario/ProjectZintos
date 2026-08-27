@@ -80,16 +80,27 @@ class UserController extends Controller
             ]
         );
 
-        if ($avatar) {
-            $oldAvatar = $user->avatar;
-            $formFields['avatar'] = $avatar->store('avatars', 'public');
+        $newAvatar = null;
+        $oldAvatar = $user->avatar;
 
-            if ($oldAvatar) {
-                Storage::disk('public')->delete($oldAvatar);
-            }
+        if ($avatar) {
+            $newAvatar = $avatar->store('avatars', 'public');
+            $formFields['avatar'] = $newAvatar;
         }
 
-        $user->update($formFields);
+        try {
+            $user->update($formFields);
+        } catch (\Throwable $exception) {
+            if ($newAvatar) {
+                Storage::disk('public')->delete($newAvatar);
+            }
+
+            throw $exception;
+        }
+
+        if ($oldAvatar && $newAvatar) {
+            Storage::disk('public')->delete($oldAvatar);
+        }
 
         return redirect()->route('user_profile', ['user' => $user])
             ->with('success', 'Your information has been updated!');

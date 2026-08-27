@@ -11,9 +11,9 @@ class Group extends Model
     /**
      * Create a new class instance.
      */
-    protected $fillable = ['user_id', 'name', 'description', 'is_admin'];
+    protected $fillable = ['user_id', 'name', 'description', 'is_admin', 'is_mod', 'is_premium'];
     protected $hidden = ['user_id'];
-    protected $casts = ['is_admin' => 'boolean'];
+    protected $casts = ['is_admin' => 'boolean', 'is_mod' => 'boolean', 'is_premium' => 'boolean'];
 
     public function users(): HasMany
     {
