@@ -11,10 +11,7 @@
                     <x-dashboard_latest_posts :latest_post="$latest_post" />
                 @empty
                     <li class="list-row">
-                        <div>
-                            <div>Nothing here.</div>
-                            <div class="text-xs uppercase font-semibold opacity-60">Nothing here as well.</div>
-                        </div>
+                        <div class="text-xs uppercase font-semibold opacity-60">There are no new posts.</div>
                     </li>
                 @endforelse
             </ul>
@@ -26,10 +23,7 @@
                     <x-dashboard_hot_topics :hot_topic="$hot_topic" />
                 @empty
                     <li class="list-row">
-                        <div>
-                            <div>Nothing here.</div>
-                            <div class="text-xs uppercase font-semibold opacity-60 ">Nothing here as well.</div>
-                        </div>
+                        <div class="text-xs uppercase font-semibold opacity-60">There are no hot topics.</div>
                     </li>
                 @endforelse
             </ul>
@@ -44,7 +38,7 @@
                             <h1 class="mb-5 text-5xl font-bold"><span class="text-rotate text-7xl">
                                     <span class="justify-items-center">
                                         <span>Project</span>
-                                        <span>Zintos</span>
+                                        <span class="skeleton skeleton-text">Zintos</span>
                                         <span>Newest</span>
                                         <span>Forum</span>
                                     </span>

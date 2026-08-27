@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Edit Profile
+        Edit {{ $user->name }}'s Profile
     </x-slot:title>
     <div class="min-h-full w-full">
         <form method="POST" action="/users/{{ $user->id }}" class="mx-auto w-full max-w-md"
@@ -45,6 +45,14 @@
                 @enderror
                 <label class="label">Email</label>
                 <input type="text" placeholder="Email" class="input" disabled value="{{ $user->email }}" />
+                <label class="label">Biography</label>
+                <textarea class="textarea h-32 w-full max-w-full" placeholder="Biography"
+                    name="bio">{{ old('bio', $user->bio) }}</textarea>
+                @error('bio')
+                    <div class="label">
+                        <span class="label-text-alt text-error">{{ $message }}</span>
+                    </div>
+                @enderror
                 <button type="submit" class="btn btn-neutral mt-4">Update</button>
                 <a class="btn" href="{{ route('dashboard') }}">Back</a>
             </fieldset>

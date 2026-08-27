@@ -23,15 +23,23 @@ Route::middleware('guest')->group(function () {
         try {
             $googleUser = Socialite::driver('google')->user();
 
-            $user = User::updateOrCreate([
+            $user = User::firstOrCreate([
                 'google_id' => $googleUser->id,
             ], [
                 'name' => $googleUser->name,
                 'email' => $googleUser->email,
                 'google_token' => $googleUser->token,
                 'google_refresh_token' => $googleUser->refreshToken,
-                'group_id' => '4',
+                'group_id' => 4,
             ]);
+
+            $tokenFields = ['google_token' => $googleUser->token];
+
+            if ($googleUser->refreshToken !== null) {
+                $tokenFields['google_refresh_token'] = $googleUser->refreshToken;
+            }
+
+            $user->update($tokenFields);
 
             Auth::login($user);
             $request->session()->regenerate();

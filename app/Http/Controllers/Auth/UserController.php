@@ -68,10 +68,12 @@ class UserController extends Controller
             [
                 'name' => 'required|string|max:30|min:5',
                 'avatar' => 'nullable|file|image|mimes:jpg,jpeg,png,gif|max:2048',
+                'bio' => 'nullable|string|max:100|min:5',
             ],
             [
                 'name.required' => 'Please write a name!',
                 'name.max' => 'Name must be 30 characters or less.',
+                'bio.max' => 'Biography must be 100 characters or less.',
                 'avatar.mimes' => 'The avatar must be a JPG, PNG or GIF image.',
                 'avatar.max' => 'The avatar must be 2 MB or smaller.',
                 'avatar.uploaded' => 'The avatar must be 2 MB or smaller.',
