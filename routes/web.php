@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\Logout;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Socialite;
 use App\Models\User;
@@ -69,6 +70,8 @@ Route::middleware('auth')->group(function () {
     Route::get('users/{user}', [UserController::class, 'index'])->name('user_profile');
     Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit_user_profile');
     Route::put('/users/{user}', [UserController::class, 'update']);
+
+    Route::get('/posts/{post}', [PostController::class, 'index'])->name('posts');
 
     Route::post('logout', Logout::class)->name('logout');
 });

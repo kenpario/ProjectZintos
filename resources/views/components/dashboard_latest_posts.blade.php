@@ -1,8 +1,9 @@
 @props(['latest_post'])
 
 <li class="list-row">
-    <div><img class="size-10 rounded-box" alt="Tailwind CSS list item"
-            src="https://img.daisyui.com/images/profile/demo/1@94.webp" /></div>
+    <div><img
+            src="{{ $latest_post->user?->avatar ? asset('storage/' . $latest_post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
+            alt="{{ $latest_post->user?->name }}'s avatar" class="size-10 rounded-box" /></div>
     <div>
         <div class="font-bold">{{ Str::limit($latest_post->category->name, 40) }}</div>
         <div>{{ Str::limit($latest_post->title, 20) }}</div>

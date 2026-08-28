@@ -1,8 +1,9 @@
 @props(['hot_topic'])
 
 <li class="list-row">
-    <div><img class="size-10 rounded-box" alt="Tailwind CSS list item"
-            src="https://img.daisyui.com/images/profile/demo/1@94.webp" /></div>
+    <div><img
+            src="{{ $hot_topic->user?->avatar ? asset('storage/' . $hot_topic->user->avatar) : 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
+            alt="{{ $hot_topic->user?->name }}'s avatar" class="size-10 rounded-box" /></div>
     <div>
         <div class="font-bold">{{ Str::limit($hot_topic->category->name, 40) }}</div>
         <div>{{ Str::limit($hot_topic->title, 20) }}</div>

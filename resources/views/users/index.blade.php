@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="m-2">
-                            <p class="shadow">
+                            <p class="rounded-box shadow m-2 p-2">
                                 {{ $user->bio ? $user->bio : 'This user has not filled the biography yet.'}}
                             </p>
                         </div>
@@ -73,9 +73,8 @@
                                 </div>
                             </li>
                     @empty
-                            <li class="list-row rounded-box bg-base-100 shadow-md">
-                                <div class="text-xs uppercase font-semibold opacity-60">There are no posts yet.</div>
-                            </li>
+                            <div class="text-md uppercase font-semibold opacity-60 flex justify-center m-2">This user has no
+                                activity yet.</div>
                         @endforelse
                     </ul>
                     <div class="mt-4 flex justify-center">
