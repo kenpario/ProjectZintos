@@ -14,16 +14,15 @@
                 <label class="label" for="avatar">Avatar</label>
                 @if ($user->avatar)
                     <div class="mb-2 flex justify-center">
-                        <div class="w-20 rounded-full shadow">
-                            <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}'s avatar" width="200"
-                                height="200" class="rounded-full" />
-                        </div>
+                        <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}'s avatar"
+                            class="w-[150px] h-[150px] object-cover rounded-full shadow-md m-2" />
                     </div>
                 @else
                     <div class="mb-2 flex justify-center">
                         <div class="w-20 rounded-full shadow">
                             <img src="https://img.daisyui.com/images/profile/demo/superperson@192.webp"
-                                alt="{{ $user->name }}'s avatar" width="200" height="200" class="rounded-full" />
+                                alt="{{ $user->name }}'s avatar"
+                                class="w-[150px] h-[150px] object-cover rounded-full shadow-md m-2" />
                         </div>
                     </div>
                 @endif

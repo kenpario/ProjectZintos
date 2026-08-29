@@ -33,13 +33,17 @@
 
                                     <ul class="list bg-base-100 rounded-box shadow-md mt-2">
                                         <li class="list-row">
-                                            <div><img
-                                                    src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
-                                                    alt="{{ $post->user?->name }}'s avatar" class="size-10 rounded-box" /></div>
+                                            <div><a href="/users/{{ $post->user->id }}"><img
+                                                        src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
+                                                        alt="{{ $post->user?->name }}'s avatar"
+                                                        class="size-10 rounded-box" /></a>
+                                            </div>
                                             <div>
-                                                <div>{{ Str::limit($post->title, 20) }}</div>
-                                                <div class="text-xs uppercase font-semibold opacity-60">
-                                                    {{ Str::limit($post->message, 50) }}
+                                                <div><a href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
+                                                </div>
+                                                <div class="text-xs uppercase font-semibold opacity-60"><a
+                                                        href="/posts/{{ $post->id }}">
+                                                        {{ Str::limit($post->message, 50) }}</a>
                                                 </div>
                                             </div>
                                             <div class="flex items-center gap-1">
