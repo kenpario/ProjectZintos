@@ -74,7 +74,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/posts/add', [PostController::class, 'create'])->name('add_posts');
     Route::post('/posts', [PostController::class, 'store']);
-    Route::get('/posts/{post}', [PostController::class, 'index']);
+    Route::get('/posts/{post}', [PostController::class, 'index'])->name('posts');
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('edit_posts');
+    Route::put('/posts/{post}', [PostController::class, 'update']);
+    Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
     Route::post('logout', Logout::class)->name('logout');
 });

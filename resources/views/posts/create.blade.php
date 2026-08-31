@@ -9,8 +9,7 @@
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
                 <legend class="fieldset-legend">New Post</legend>
                 <label class="label" for="media">Media</label>
-                <input id="media" type="file" class="file-input w-full" name="media"
-                    accept="image/jpeg,image/png,image/gif,image/jpg,image/mp4" />
+                <input id="media" type="file" class="file-input w-full" name="media"/>
                 @error('media')
                     <div class="label">
                         <span class="label-text-alt text-error">{{ $message }}</span>
