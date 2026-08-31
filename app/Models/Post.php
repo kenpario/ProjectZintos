@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
 {
-    protected $fillable = ['user_id', 'title', 'message', 'post_category_id', 'likes', 'views', 'is_approved'];
+    protected $fillable = ['user_id', 'title', 'message', 'post_category_id', 'likes', 'views', 'is_approved', 'media'];
     protected $hidden = ['user_id', 'likes', 'views'];
     protected $casts = ['is_approved' => 'boolean'];
 

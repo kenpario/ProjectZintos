@@ -8,7 +8,7 @@
         <div class="relative z-10">
             <div class="flex m-2 justify-center">
                 <div class="hover-3d">
-                    <a class="btn skeleton shadow-md">New Post</a>
+                    <a href="{{ route('add_posts') }}" class="btn skeleton shadow-md">New Post</a>
                 </div>
             </div>
             <div class="m-2" id="{{ $category->name }} posts">

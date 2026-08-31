@@ -8,7 +8,7 @@
         <div class="relative z-10">
             <div class="flex m-2 justify-center">
                 <div class="hover-3d">
-                    <a class="btn skeleton shadow-md">New Post</a>
+                    <a href="{{ route('add_posts') }}" class="btn skeleton shadow-md">New Post</a>
                 </div>
             </div>
             <div class="m-2">
@@ -88,7 +88,7 @@
                             </div>
                         @endforelse
                         <div class="flex justify-between collapse-content text-sm">
-                            <a class="btn btn-md mt-2" href="{{ route('categories.posts', $category) }}">
+                            <a class="btn btn-md mt-2" href="{{ route('categories_posts', $category) }}">
                                 View all posts ({{ $category->posts_count }})
                             </a>
                             {{ $categories->links() }}

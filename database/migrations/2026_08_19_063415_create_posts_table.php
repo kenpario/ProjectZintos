@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('name', 30);
-            $table->string('description', 30);
+            $table->string('description', 50);
             $table->boolean('can_comment')->default(true);
             $table->timestamps();
         });
@@ -23,8 +23,9 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('title', 30);
-            $table->string('message', 900);
+            $table->string('title', 50);
+            $table->string('message', 8000);
+            $table->string('media')->nullable();
             $table->foreignId('post_category_id')->constrained('post_categories')->cascadeOnDelete();
             $table->integer('likes')->default('0');
             $table->integer('views')->default('0');
@@ -50,7 +51,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('post_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('message', 300);
+            $table->string('message', 8000);
+            $table->boolean('is_approved')->default('0');
             $table->timestamps();
         });
     }
