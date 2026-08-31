@@ -43,8 +43,8 @@
                     <div class="collapse-title font-semibold bg-base-300 rounded"> {{ $post->title }}
                     </div>
                     <div class="flex justify-between gap-2 m-2">
-                        <span class="text-xs uppercase font-semibold opacity-60"> Posted in
-                            {{ $post->category?->name }}
+                        <span class="text-xs uppercase font-semibold opacity-60"><a href="/categories/{{ $post->category->id }}/posts"> Posted in
+                            {{ $post->category?->name }}</a>
                         </span>
                         <span class="text-xs uppercase font-semibold opacity-60"> Posted
                             {{ $post->created_at->diffForHumans() }}

@@ -41,6 +41,7 @@ class PostController extends Controller
                 'name.max' => 'Name must be 50 characters or less.',
                 'message.required' => 'Please write a message!',
                 'message.max' => 'Message must be 8000 characters or less.',
+                'post_category_id.required' => 'Please select a category!',
                 'media.mimes' => 'The media must be a JPG, PNG, GIF or MP4 file.',
                 'media.max' => 'The media must be 2 MB or smaller.',
                 'media.uploaded' => 'The media must be 2 MB or smaller.',

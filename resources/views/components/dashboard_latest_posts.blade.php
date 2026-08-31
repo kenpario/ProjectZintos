@@ -3,7 +3,7 @@
 <li class="list-row">
     <div class="flex flex-col gap-2 list-col-grow">
         <div>
-            <div class="font-bold">{{ Str::limit($latest_post->category->name, 40) }}</div>
+            <div class="font-bold"><a href="/categories/{{ $latest_post->category->id }}/posts">{{ Str::limit($latest_post->category->name, 40) }}</a></div>
         </div>
         <div class="flex justify-between">
             <div class="flex gap-4">
