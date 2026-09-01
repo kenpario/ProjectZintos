@@ -73,7 +73,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        if (Auth::user() !== $post->user_id && ! Auth::user()->group?->is_admin) {
+        if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
 
@@ -87,7 +87,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if (Auth::user() !== $post->user_id && ! Auth::user()->group?->is_admin) {
+        if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
 
@@ -144,7 +144,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if (Auth::user() !== $post->user_id && ! Auth::user()->group?->is_admin) {
+        if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
 

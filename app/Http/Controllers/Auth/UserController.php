@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (Auth::user()->id !== $user->id && ! Auth::user()->group?->is_admin) {
+        if (! (Auth::user()->id === $user->id || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
         return view('users.edit', ['user' => $user]);
@@ -65,7 +65,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if (Auth::user()->id !== $user->id && ! Auth::user()->group?->is_admin) {
+        if (! (Auth::user()->id === $user->id || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
 
@@ -118,7 +118,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if (Auth::user() !== $user->user_id && ! Auth::user()->group?->is_admin) {
+        if (! (Auth::user()->id === $user->id || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
 
