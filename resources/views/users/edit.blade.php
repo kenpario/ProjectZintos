@@ -56,7 +56,8 @@
                         <a class="btn" href="{{ route('dashboard') }}">Back</a>
                     </div>
                 </form>
-                <form method="POST" action="/users/{{ $user->id }}" class="mt-2">
+                <form method="POST" action="/users/{{ $user->id }}" class="mt-2"
+                    onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Deleting...';">
                     @csrf
                     @method('DELETE')
                     <button type="submit" onclick="return confirm('Are you sure you want to delete your account?')"

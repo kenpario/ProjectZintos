@@ -11,8 +11,8 @@
     <div class="max-w-full py-12">
         <div class="mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="sm:flex max-sm:flex-col p-4 sm:p-8 shadow-md rounded-md">
-                <div class="flex justify-center">
-                    <div class="flex flex-col items-center shadow-md rounded-md p-2 text-center">
+                <div class="flex justify-center max-sm:w-full w-80">
+                    <div class="flex flex-col items-center shadow-md rounded-md p-2 text-center w-full">
                         <h1 class="m-2 text-xl font-semibold"><a
                                 href="/users/{{ $post->user->id }}">{{ $post->user?->name }}</a></h1>
                         <div class="divider"></div>

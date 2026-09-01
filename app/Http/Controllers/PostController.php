@@ -142,10 +142,14 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Request $request, Post $post)
     {
         if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
+        }
+
+        if ($post->media) {
+            Storage::disk('public')->delete($post->media);
         }
 
         $post->delete();

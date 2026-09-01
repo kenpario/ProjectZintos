@@ -122,6 +122,10 @@ class UserController extends Controller
             abort(403, 'Unauthorized Action!');
         }
 
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+
         $user->delete();
 
         return redirect('/')->with('success', 'Your account has been deleted!');
