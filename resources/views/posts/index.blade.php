@@ -46,9 +46,9 @@
                 </div>
                 <div class="divider lg:divider-horizontal"></div>
                 <div class="w-full">
-                    <div class="flex justify-between items-center collapse-title font-semibold bg-base-300 rounded">
+                    <div class="flex justify-between items-center font-semibold bg-base-300 rounded-box p-4">
                         <span> {{ $post->title }} </span>
-                        <div class="flex justify-end gap-2">
+                        <div class="flex gap-2">
                             <a href="{{ route('edit_posts', ['post' => $post]) }}">
                                 <button class="btn btn-square" aria-label="Edit Post" title="Edit Post">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -73,33 +73,35 @@
                             </form>
                         </div>
                     </div>
-                    <div class="flex justify-between gap-2 m-2">
-                        <span class="text-xs uppercase font-semibold opacity-60"><a
-                                href="/categories/{{ $post->category->id }}/posts"> Posted in
-                                {{ $post->category?->name }}</a>
-                        </span>
-                        <span class="text-xs uppercase font-semibold opacity-60"> Posted
-                            {{ $post->created_at->diffForHumans() }}
-                            @if ($post->updated_at->gt($post->created_at->addSeconds(5)))
-                                <span class="text-xs uppercase font-semibold">-</span>
-                                <span class="text-xs uppercase font-semibold">Edited</span>
-                            @endif
-                        </span>
-                    </div>
-                    <div class="flex flex-col m-2 w-full">
-                        <div class="flex justify-center w-full">
-                            @if ($post->media && $isVideo)
-                                <video controls class="w-[500px] h-[500px] object-cover rounded shadow-md">
-                                    <source src="{{ asset('storage/' . $post->media) }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            @else
-                                <img src="{{ $post->media ? asset('storage/' . $post->media) : '' }}" alt="Post Media"
-                                    class="w-[500px] h-[500px] object-cover rounded shadow-md" />
-                            @endif
+                    <div class="shadow-md rounded-box p-2 mt-2">
+                        <div class="flex justify-between gap-2 m-2">
+                            <span class="text-xs uppercase font-semibold opacity-60"><a
+                                    href="/categories/{{ $post->category->id }}/posts"> Posted in
+                                    {{ $post->category?->name }}</a>
+                            </span>
+                            <span class="text-xs uppercase font-semibold opacity-60"> Posted
+                                {{ $post->created_at->diffForHumans() }}
+                                @if ($post->updated_at->gt($post->created_at->addSeconds(5)))
+                                    <span class="text-xs uppercase font-semibold">-</span>
+                                    <span class="text-xs uppercase font-semibold">Edited</span>
+                                @endif
+                            </span>
                         </div>
-                        <div class="text-xs uppercase font-semibold opacity-60 mt-2">
-                            {{ $post->message }}
+                        <div class="flex flex-col m-2 w-full">
+                            <div class="flex justify-center w-full">
+                                @if ($post->media && $isVideo)
+                                    <video controls class="w-[500px] h-[500px] object-cover rounded shadow-md">
+                                        <source src="{{ asset('storage/' . $post->media) }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                @else
+                                    <img src="{{ $post->media ? asset('storage/' . $post->media) : '' }}" alt="Post Media"
+                                        class="w-[500px] h-[500px] object-cover rounded shadow-md" />
+                                @endif
+                            </div>
+                            <div class="text-xs uppercase font-semibold mt-2">
+                                {{ $post->message }}
+                            </div>
                         </div>
                     </div>
                 </div>

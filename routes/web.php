@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::get('users/{user}', [UserController::class, 'index'])->name('user_profile');
     Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit_user_profile');
     Route::put('/users/{user}', [UserController::class, 'update']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
 
     Route::get('/posts/add', [PostController::class, 'create'])->name('add_posts');

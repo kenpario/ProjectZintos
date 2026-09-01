@@ -53,6 +53,13 @@
                     </div>
                 @enderror
                 <button type="submit" class="btn btn-neutral mt-4">Update</button>
+                <form method="POST" action="/users/{{ $user->id }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete your account?')"
+                        class="btn btn-error">Delete
+                    </button>
+                </form>
                 <a class="btn" href="{{ route('dashboard') }}">Back</a>
             </fieldset>
         </form>

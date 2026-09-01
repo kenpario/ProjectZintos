@@ -116,8 +116,14 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        if (Auth::user() !== $user->user_id && ! Auth::user()->group?->is_admin) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $user->delete();
+
+        return redirect('/')->with('success', 'Your account has been deleted!');
     }
 }
