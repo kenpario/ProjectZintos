@@ -15,6 +15,30 @@ class PostController extends Controller
         return view('posts.index', ['post' => $post]);
     }
 
+    public function moderation(Post $post)
+    {
+        if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
+            abort(403, 'Unauthorized Action!');
+        }
+        $all_unapproved_posts = $post->where('is_approved', false)->paginate(20);
+
+        return view('posts.moderation', ['all_unapproved_posts' => $all_unapproved_posts]);
+    }
+
+    public function approve(Post $post)
+    {
+        if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $post->update([
+            'is_approved' => true,
+        ]);
+
+        return redirect()->route('mod_posts', ['post' => $post])
+            ->with('success', 'The post has been approved!');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

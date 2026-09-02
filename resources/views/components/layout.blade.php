@@ -60,9 +60,19 @@
                             </details>
                         </li>
                         <li>
-                            <form method="POST" action="{{ route('logout') }}">
+                            <details>
+                                <summary>{{ Auth::user()->name }}</summary>
+                                <ul>
+                                    <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
+                                    <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit
+                                            Information</a></li>
+                                </ul>
+                            </details>
+                        </li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}" class="flex w-full">
                                 @csrf
-                                <button type="submit">Logout</button>
+                                <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
                             </form>
                         </li>
                     </ul>
@@ -128,10 +138,20 @@
                     <ul class="menu w-full">
                         <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
                         <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit Information</a></li>
+                        @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
+                            <li>
+                                <details>
+                                    <summary>Moderation</summary>
+                                    <ul>
+                                        <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
+                                    </ul>
+                                </details>
+                            </li>
+                        @endif
                         <li>
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf
-                                <button type="submit" class="btn btn-sm skeleton w-full">Logout</button>
+                                <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
                             </form>
                         </li>
                     </ul>

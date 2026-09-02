@@ -49,6 +49,21 @@
                     <div class="flex justify-between items-center font-semibold bg-base-300 rounded-box p-4">
                         <span> {{ $post->title }} </span>
                         <div class="flex gap-2">
+                            @if(Auth::user()->group?->is_mod || Auth::user()->group->is_admin)
+                                <form method="POST" action="{{ route('approve_posts', $post) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit"
+                                        onclick="return confirm('Are you sure you want to approve this post?')"
+                                        class="btn btn-square" aria-label="Approve post" title="Approve post">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="2.5" stroke="currentColor" class="size-[1.2em]">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M4.5 12.75l6 6 9-13.5" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            @endif
                             <a href="{{ route('edit_posts', ['post' => $post]) }}">
                                 <button class="btn btn-square" aria-label="Edit Post" title="Edit Post">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -89,14 +104,16 @@
                         </div>
                         <div class="flex flex-col m-2 w-full">
                             <div class="flex justify-center w-full">
-                                @if ($post->media && $isVideo)
-                                    <video controls class="w-[500px] h-[500px] object-cover rounded shadow-md">
-                                        <source src="{{ asset('storage/' . $post->media) }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                @else
-                                    <img src="{{ $post->media ? asset('storage/' . $post->media) : '' }}" alt="Post Media"
-                                        class="w-[500px] h-[500px] object-cover rounded shadow-md" />
+                                @if($post->media)
+                                    @if ($post->media && $isVideo)
+                                        <video controls class="w-[500px] h-[500px] object-cover rounded shadow-md">
+                                            <source src="{{ asset('storage/' . $post->media) }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    @else
+                                        <img src="{{ $post->media ? asset('storage/' . $post->media) : '' }}" alt="Post Media"
+                                            class="w-[500px] h-[500px] object-cover rounded shadow-md" />
+                                    @endif
                                 @endif
                             </div>
                             <div class="text-xs uppercase font-semibold mt-2">

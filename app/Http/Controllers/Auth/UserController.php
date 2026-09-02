@@ -126,6 +126,12 @@ class UserController extends Controller
             Storage::disk('public')->delete($user->avatar);
         }
 
+        foreach ($user->posts as $post) {
+            if ($post->media) {
+                Storage::disk('public')->delete($post->media);
+            }
+        }
+
         $user->delete();
 
         return redirect('/')->with('success', 'Your account has been deleted!');
