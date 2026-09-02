@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +19,7 @@ class UserController extends Controller
         $user_posts = $user->posts()
             ->with(['user', 'category'])
             ->latest()
+            ->where('is_approved', true)
             ->paginate(10);
 
         return view('users.index', ['user' => $user, 'user_posts' => $user_posts]);

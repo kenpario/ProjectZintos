@@ -17,12 +17,14 @@ class CategoryController extends Controller
             ->when($categoryName, function ($query) use ($categoryName) {
                 $query->where('name', $categoryName);
             })
-            ->withCount('posts')
+            ->withCount(['posts' => function ($query) {
+                $query->where('is_approved', true);
+            }])
             ->latest()
             ->paginate(5)
             ->withQueryString();
 
-        $all_posts = Post::with(['user', 'category'])->latest()->take(20)->get();
+        $all_posts = Post::with(['user', 'category'])->latest()->take(20)->get()->where('is_approved', true);
 
         return view('categories.index', ['categories' => $categories, 'all_posts' => $all_posts]);
     }
@@ -32,6 +34,7 @@ class CategoryController extends Controller
         $posts = $category->posts()
             ->with('user')
             ->latest()
+            ->where('is_approved', true)
             ->paginate(10)
             ->withQueryString();
 

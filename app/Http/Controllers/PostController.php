@@ -12,6 +12,9 @@ class PostController extends Controller
 {
     public function index(Post $post)
     {
+        if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin || $post->is_approved)) {
+            abort(403, 'Unauthorized Action!');
+        }
         return view('posts.index', ['post' => $post]);
     }
 
@@ -97,7 +100,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin)) {
+        if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
             abort(403, 'Unauthorized Action!');
         }
 
@@ -111,7 +114,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin)) {
+        if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
             abort(403, 'Unauthorized Action!');
         }
 
@@ -168,7 +171,7 @@ class PostController extends Controller
      */
     public function destroy(Request $request, Post $post)
     {
-        if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin)) {
+        if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
             abort(403, 'Unauthorized Action!');
         }
 

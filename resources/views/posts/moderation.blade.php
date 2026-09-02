@@ -4,7 +4,10 @@
     </x-slot:title>
     <div class="max-w-full py-12">
         <div class="mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="sm:flex max-sm:flex-col p-4 sm:p-8 shadow-md rounded-md">
+            <div class="p-4 sm:p-8 shadow-md rounded-md">
+                <div class="font-semibold bg-base-300 rounded-box p-4">
+                    <span>Posts waiting for approval</span>
+                </div>
                 <div class="w-full">
                     @foreach ($all_unapproved_posts as $post)
                         <div class="shadow-md rounded-box p-2 mt-2">
