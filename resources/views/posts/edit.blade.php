@@ -1,9 +1,3 @@
-@php
-    $videoExtensions = ['mp4'];
-    $extension = $post->media ? pathinfo($post->media, PATHINFO_EXTENSION) : null;
-    $isVideo = in_array(strtolower($extension ?? ''), $videoExtensions);
-@endphp
-
 <x-layout>
     <x-slot:title>
         Edit {{ $post->title }}
@@ -18,7 +12,7 @@
                 <legend class="fieldset-legend">New Post</legend>
                 <div class="flex justify-center items-center">
                     @if ($post->media)
-                        @if ($post->media && $isVideo)
+                        @if ($post->isVideo())
                             <video controls class="w-[250px] h-[250px] object-cover rounded shadow-md">
                                 <source src="{{ asset('storage/' . $post->media) }}" type="video/mp4">
                                 Your browser does not support the video tag.

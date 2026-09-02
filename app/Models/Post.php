@@ -20,4 +20,17 @@ class Post extends Model
     {
         return $this->belongsTo(Post_Category::class, 'post_category_id');
     }
+
+    protected static array $videoExtensions = ['mp4'];
+
+    public function isVideo(): bool
+    {
+        if (! $this->media) {
+            return false;
+        }
+
+        $extension = pathinfo($this->media, PATHINFO_EXTENSION);
+
+        return in_array(strtolower($extension), static::$videoExtensions);
+    }
 }
