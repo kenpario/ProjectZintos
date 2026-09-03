@@ -84,6 +84,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
     Route::post('/posts/{post}', [CommentController::class, 'store'])->name('comment_posts');
+    Route::get('/comments/moderation', [CommentController::class, 'moderation'])->name('mod_comments');
+    Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('approve_comments');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
 
     Route::post('logout', Logout::class)->name('logout');
 });

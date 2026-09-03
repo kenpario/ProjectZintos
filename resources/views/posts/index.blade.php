@@ -93,10 +93,6 @@
                                 </span>
                                 <span class="text-xs uppercase font-semibold opacity-60"> Posted
                                     {{ $post->created_at->diffForHumans() }}
-                                    @if ($post->updated_at->gt($post->created_at->addSeconds(5)))
-                                        <span class="text-xs uppercase font-semibold">-</span>
-                                        <span class="text-xs uppercase font-semibold">Edited</span>
-                                    @endif
                                 </span>
                             </div>
                             <div class="flex flex-col m-2 w-full">
@@ -126,9 +122,11 @@
                         </div>
                         <div class="p-6 shadow-md rounded-md bg-base-300 font-semibold mb-2">Comment Section</div>
                     @endif
-                    <div>
-                        <x-comments_section :post_comments="$post_comments" />
-                    </div>
+                    @if (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin || $post_comments->is_approved)
+                        <div>
+                            <x-comments_section :post_comments="$post_comments" />
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

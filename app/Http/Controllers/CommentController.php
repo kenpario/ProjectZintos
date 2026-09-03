@@ -22,6 +22,31 @@ class CommentController extends Controller
         //
     }
 
+    public function moderation(Comment $comment)
+    {
+        if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $all_unapproved_comments = $comment->where('is_approved', false)->paginate(20);
+
+        return view('comments.moderation', ['all_unapproved_comments' => $all_unapproved_comments]);
+    }
+
+    public function approve(Comment $comment)
+    {
+        if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $comment->update([
+            'is_approved' => true,
+        ]);
+
+        return redirect()->route('mod_comments', ['comment' => $comment])
+            ->with('success', 'The comment has been approved!');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -75,8 +100,17 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Comment $comment)
     {
-        //
+        if (! (Auth::user()->id === $comment->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $postId = $comment->post_id;
+
+        $comment->delete();
+
+        return redirect()->route('posts', ['post' => $postId])
+            ->with('success', 'Your comment has been deleted!');
     }
 }

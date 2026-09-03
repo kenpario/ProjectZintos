@@ -144,6 +144,7 @@
                                     <summary>Moderation</summary>
                                     <ul>
                                         <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
+                                        <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
                                     </ul>
                                 </details>
                             </li>
