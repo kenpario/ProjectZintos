@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\Logout;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Socialite;
@@ -81,6 +82,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('edit_posts');
     Route::put('/posts/{post}', [PostController::class, 'update']);
     Route::delete('/posts/{post}', [PostController::class, 'destroy']);
+
+    Route::post('/posts/{post}', [CommentController::class, 'store'])->name('comment_posts');
 
     Route::post('logout', Logout::class)->name('logout');
 });

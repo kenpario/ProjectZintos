@@ -3,16 +3,18 @@
 <li class="list-row">
     <div class="flex flex-col gap-2 list-col-grow">
         <div>
-            <div class="font-bold"><a href="/categories/{{ $latest_post->category->id }}/posts">{{ Str::limit($latest_post->category->name, 40) }}</a></div>
+            <div class="font-bold"><a
+                    href="/categories/{{ $latest_post->category->id }}/posts">{{ Str::limit($latest_post->category->name, 40) }}</a>
+            </div>
         </div>
         <div class="flex justify-between">
             <div class="flex gap-4">
                 <div><a href="/users/{{ $latest_post->user->id }}"><img
-                        src="{{ $latest_post->user?->avatar ? asset('storage/' . $latest_post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
-                        alt="{{ $latest_post->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
+                            src="{{ $latest_post->user?->avatar ? asset('storage/' . $latest_post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
+                            alt="{{ $latest_post->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
                     <div><a href="/posts/{{ $latest_post->id }}">{{ Str::limit($latest_post->title, 20) }}</a></div>
-                    <div class="text-xs uppercase font-semibold opacity-60"><a
+                    <div class="text-xs font-semibold opacity-60"><a
                             href="/posts/{{ $latest_post->id }}">{{ Str::limit($latest_post->message, 50)}}</a>
                     </div>
                 </div>

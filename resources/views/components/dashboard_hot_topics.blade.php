@@ -14,7 +14,7 @@
                             alt="{{ $hot_topic->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
                     <div><a href="/posts/{{ $hot_topic->id }}">{{ Str::limit($hot_topic->title, 20) }}</a></div>
-                    <div class="text-xs uppercase font-semibold opacity-60"><a
+                    <div class="text-xs font-semibold opacity-60"><a
                             href="/posts/{{ $hot_topic->id }}">{{ Str::limit($hot_topic->message, 50)}}</a>
                     </div>
                 </div>

@@ -41,7 +41,7 @@
                                             <div>
                                                 <div><a href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
                                                 </div>
-                                                <div class="text-xs uppercase font-semibold opacity-60"><a
+                                                <div class="text-xs font-semibold opacity-60"><a
                                                         href="/posts/{{ $post->id }}">
                                                         {{ Str::limit($post->message, 50) }}</a>
                                                 </div>

@@ -31,9 +31,9 @@
                                             alt="{{ $post->user->name }}'s avatar" class="size-10 rounded-box mt-2" /></a>
                                 </div>
                                 <div class="flex flex-col m-2 w-full gap-2">
-                                    <div><a href="/posts/{{ $post->id }}"> {{ $post->title }} </a></div>
-                                    <div class="text-xs uppercase font-semibold">
-                                        <a href="/posts/{{ $post->id }}">{{ $post->message }} </a>
+                                    <div><a href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 30) }}</a></div>
+                                    <div class="text-xs opacity-60 font-semibold">
+                                        <a href="/posts/{{ $post->id }}">{{ Str::limit($post->message, 50) }}</a>
                                     </div>
                                 </div>
                             </div>

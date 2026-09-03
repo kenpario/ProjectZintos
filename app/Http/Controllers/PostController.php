@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Post_Category;
 use Illuminate\Http\Request;
@@ -15,7 +16,9 @@ class PostController extends Controller
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin || $post->is_approved)) {
             abort(403, 'Unauthorized Action!');
         }
-        return view('posts.index', ['post' => $post]);
+        $post_comments = Comment::all()->where('post_id', $post->id);
+
+        return view('posts.index', ['post' => $post, 'post_comments' => $post_comments]);
     }
 
     public function moderation(Post $post)
