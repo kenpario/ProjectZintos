@@ -69,8 +69,20 @@
                                 </ul>
                             </details>
                         </li>
+                        @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
+                            <li>
+                                <details>
+                                    <summary>Moderation</summary>
+                                    <ul>
+                                        <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
+                                        <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
+                                    </ul>
+                                </details>
+                            </li>
+                        @endif
                         <li>
-                            <form method="POST" action="{{ route('logout') }}" class="flex w-full">
+                            <form method="POST" action="{{ route('logout') }}" class="flex w-full"
+                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
                             </form>
@@ -150,7 +162,8 @@
                             </li>
                         @endif
                         <li>
-                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                            <form method="POST" action="{{ route('logout') }}" class="inline"
+                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
                             </form>

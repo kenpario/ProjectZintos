@@ -18,10 +18,6 @@
                                 </span>
                                 <span class="text-xs uppercase font-semibold opacity-60"> Submitted
                                     {{ $post->created_at->diffForHumans() }}
-                                    @if ($post->updated_at->gt($post->created_at->addSeconds(5)))
-                                        <span class="text-xs uppercase font-semibold">-</span>
-                                        <span class="text-xs uppercase font-semibold">Edited</span>
-                                    @endif
                                 </span>
                             </div>
                             <div class="flex items-center">
@@ -30,8 +26,11 @@
                                             src="{{ $post->user->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                             alt="{{ $post->user->name }}'s avatar" class="size-10 rounded-box mt-2" /></a>
                                 </div>
-                                <div class="flex flex-col m-2 w-full gap-2">
-                                    <div><a href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 30) }}</a></div>
+                                <div class="flex flex-col m-2 w-full gap-1">
+                                    <div class="text-xs font-semibold"><a href="/users/{{ $post->user->id }}">Submitted by
+                                            {{ $post->user->name }}</a></div>
+                                    <div class="text-xs opacity-60 font-semibold"><a
+                                            href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 30) }}</a></div>
                                     <div class="text-xs opacity-60 font-semibold">
                                         <a href="/posts/{{ $post->id }}">{{ Str::limit($post->message, 50) }}</a>
                                     </div>

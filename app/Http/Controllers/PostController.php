@@ -143,6 +143,8 @@ class PostController extends Controller
             ]
         );
 
+        $formFields['is_approved'] = 0;
+
         $newMedia = null;
         $oldMedia = $post->media;
 

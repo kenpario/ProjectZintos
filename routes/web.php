@@ -87,6 +87,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/comments/moderation', [CommentController::class, 'moderation'])->name('mod_comments');
     Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('approve_comments');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
+    Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('edit_comments');
+    Route::put('/comments/{comment}', [CommentController::class, 'update']);
 
     Route::post('logout', Logout::class)->name('logout');
 });

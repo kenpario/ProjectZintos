@@ -122,7 +122,7 @@
                         </div>
                         <div class="p-6 shadow-md rounded-md bg-base-300 font-semibold mb-2">Comment Section</div>
                     @endif
-                    @if (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin || $post_comments->is_approved)
+                    @if (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin || $post_comments->contains('is_approved', true))
                         <div>
                             <x-comments_section :post_comments="$post_comments" />
                         </div>

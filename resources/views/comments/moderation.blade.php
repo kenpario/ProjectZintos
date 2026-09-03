@@ -18,10 +18,6 @@
                                 </span>
                                 <span class="text-xs uppercase font-semibold opacity-60"> Submitted
                                     {{ $comment->created_at->diffForHumans() }}
-                                    @if ($comment->updated_at->gt($comment->created_at->addSeconds(5)))
-                                        <span class="text-xs uppercase font-semibold">-</span>
-                                        <span class="text-xs uppercase font-semibold">Edited</span>
-                                    @endif
                                 </span>
                             </div>
                             <div class="flex items-center">
@@ -32,7 +28,8 @@
                                             class="size-10 rounded-box mt-2" /></a>
                                 </div>
                                 <div class="flex flex-col m-2 w-full gap-2">
-                                    <span><a href="/users/{{ $comment->user->id }}">Submitted by
+                                    <span class="text-xs font-semibold"><a href="/users/{{ $comment->user->id }}">Submitted
+                                            by
                                             {{ $comment->user->name }}</a></span>
                                     <div class="text-xs opacity-60 font-semibold">
                                         <a href="/posts/{{ $comment->post_id }}">{{ Str::limit($comment->message, 50) }}</a>

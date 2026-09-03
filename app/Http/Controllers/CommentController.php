@@ -84,17 +84,39 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Comment $comment)
     {
-        //
+        if (! (Auth::user()->id === $comment->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        return view('comments.edit', ['comment' => $comment]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Comment $comment)
     {
-        //
+        $formFields = $request->validate(
+            [
+                'message' => 'required|string|max:8000|min:5',
+            ],
+            [
+                'message.required' => 'Please write a message!',
+                'message.max' => 'Name must be 8000 characters or less.',
+
+            ]
+        );
+
+        $formFields['is_approved'] = 0;
+
+        $comment->update($formFields);
+
+        $postId = $comment->post_id;
+
+        return redirect()->route('posts', ['post' => $postId])
+            ->with('success', 'Your comment has been posted!');
     }
 
     /**
