@@ -50,8 +50,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Post_Category::all();
-
+        if (Auth::user()->group?->is_admin) {
+            $categories = Post_Category::all();
+        } else {
+            $categories = Post_Category::all()->where('can_comment', true);
+        }
         return view('posts.create', ['categories' => $categories]);
     }
 
