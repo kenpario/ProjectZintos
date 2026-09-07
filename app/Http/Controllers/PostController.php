@@ -16,7 +16,14 @@ class PostController extends Controller
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin || $post->is_approved)) {
             abort(403, 'Unauthorized Action!');
         }
-        $post_comments = Comment::all()->where('post_id', $post->id);
+
+        $post->load(['user', 'category']);
+
+        $post_comments = Comment::query()
+            ->with('user')
+            ->where('post_id', $post->id)
+            ->latest()
+            ->get();
 
         return view('posts.index', ['post' => $post, 'post_comments' => $post_comments]);
     }
@@ -26,7 +33,10 @@ class PostController extends Controller
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
-        $all_unapproved_posts = $post->where('is_approved', false)->paginate(20);
+        $all_unapproved_posts = Post::query()
+            ->with(['user', 'category'])
+            ->where('is_approved', false)
+            ->paginate(20);
 
         return view('posts.moderation', ['all_unapproved_posts' => $all_unapproved_posts]);
     }
@@ -51,9 +61,11 @@ class PostController extends Controller
     public function create()
     {
         if (Auth::user()->group?->is_admin) {
-            $categories = Post_Category::all();
+            $categories = Post_Category::query()->get();
         } else {
-            $categories = Post_Category::all()->where('can_comment', true);
+            $categories = Post_Category::query()
+                ->where('can_comment', true)
+                ->get();
         }
         return view('posts.create', ['categories' => $categories]);
     }
@@ -67,7 +79,7 @@ class PostController extends Controller
             [
                 'title' => 'required|string|max:50|min:5',
                 'message' => 'required|string|max:8000|min:5',
-                'post_category_id' => 'required',
+                'post_category_id' => 'required|integer|exists:post_categories,id',
                 'media' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:2048',
             ],
             [
@@ -130,7 +142,7 @@ class PostController extends Controller
             [
                 'title' => 'required|string|max:50|min:5',
                 'message' => 'required|string|max:8000|min:5',
-                'post_category_id' => 'required',
+                'post_category_id' => 'required|integer|exists:post_categories,id',
                 'media' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:2048',
             ],
             [

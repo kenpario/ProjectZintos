@@ -28,7 +28,10 @@ class CommentController extends Controller
             abort(403, 'Unauthorized Action!');
         }
 
-        $all_unapproved_comments = $comment->where('is_approved', false)->paginate(20);
+        $all_unapproved_comments = Comment::query()
+            ->with(['user', 'post'])
+            ->where('is_approved', false)
+            ->paginate(20);
 
         return view('comments.moderation', ['all_unapproved_comments' => $all_unapproved_comments]);
     }
@@ -52,6 +55,12 @@ class CommentController extends Controller
      */
     public function store(Request $request, Post $post)
     {
+        $isModerator = Auth::user()->group?->is_mod || Auth::user()->group?->is_admin;
+
+        if (! $post->category?->can_comment || (! $post->is_approved && ! $isModerator)) {
+            abort(403, 'Comments are disabled for this category.');
+        }
+
         $formFields = $request->validate(
             [
                 'message' => 'required|string|max:8000|min:5',
@@ -98,6 +107,11 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
+
+        if (! (Auth::user()->id === $comment->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
         $formFields = $request->validate(
             [
                 'message' => 'required|string|max:8000|min:5',

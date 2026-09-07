@@ -24,7 +24,11 @@ class CategoryController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        $all_posts = Post::with(['user', 'category'])->latest()->take(20)->get()->where('is_approved', true);
+        $all_posts = Post::with(['user', 'category'])
+            ->where('is_approved', true)
+            ->latest()
+            ->take(20)
+            ->get();
 
         return view('categories.index', ['categories' => $categories, 'all_posts' => $all_posts]);
     }
@@ -57,6 +61,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if (! Auth::user()->group?->is_admin) {
+            abort(403, 'Unauthorized Action!');
+        }
+        
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',

@@ -1,11 +1,8 @@
 <?php
 
-use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\UserController;
-use App\Http\Controllers\Auth\Logout;
-use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -19,12 +16,6 @@ Route::middleware('guest')->group(function () {
         return view('welcome');
     });
 
-    Route::view('/register', 'auth.register')->name('register');
-    Route::post('/register', Register::class);
-
-    Route::view('/login', 'auth.login')->name('login');
-    Route::post('/login', Login::class);
-
     Route::get('/auth/redirect', function () {
         return Socialite::driver('google')->redirect();
     })->name('login_google');
@@ -33,15 +24,20 @@ Route::middleware('guest')->group(function () {
         try {
             $googleUser = Socialite::driver('google')->user();
 
-            $user = User::firstOrCreate([
-                'google_id' => $googleUser->id,
-            ], [
-                'name' => $googleUser->name,
-                'email' => $googleUser->email,
-                'google_token' => $googleUser->token,
-                'google_refresh_token' => $googleUser->refreshToken,
-                'group_id' => 4,
-            ]);
+            $user = User::query()
+                ->where('google_id', $googleUser->id)
+                ->orWhere('email', $googleUser->email)
+                ->first();
+
+            if (! $user) {
+                $user = User::create([
+                    'name' => $googleUser->name,
+                    'email' => $googleUser->email,
+                    'google_token' => $googleUser->token,
+                    'google_refresh_token' => $googleUser->refreshToken,
+                    'group_id' => 4,
+                ]);
+            }
 
             $tokenFields = ['google_token' => $googleUser->token];
 
@@ -49,9 +45,11 @@ Route::middleware('guest')->group(function () {
                 $tokenFields['google_refresh_token'] = $googleUser->refreshToken;
             }
 
-            $updateEmail = ['email' => $googleUser->email];
-
-            $user->update($tokenFields, $updateEmail);
+            $user->update([
+                ...$tokenFields,
+                'google_id' => $googleUser->id,
+                'email' => $googleUser->email,
+            ]);
 
             Auth::login($user);
             $request->session()->regenerate();
@@ -97,6 +95,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
     Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('edit_comments');
     Route::put('/comments/{comment}', [CommentController::class, 'update']);
-
-    Route::post('logout', Logout::class)->name('logout');
 });

@@ -64,6 +64,67 @@
                         class="btn btn-error w-full">Delete
                     </button>
                 </form>
+
+                @if (Auth::id() === $user->id)
+                    <div class="divider">Security</div>
+                    <section class="space-y-4" aria-labelledby="two-factor-heading">
+                        <label class="label" for="2fa">Two-factor</label>
+
+                        @if ($user->hasEnabledTwoFactorAuthentication())
+                            <p class="text-sm mb-2">Two-factor authentication is enabled.</p>
+
+                            @if (in_array(session('status'), ['two-factor-authentication-confirmed', 'recovery-codes-generated'], true))
+                                <div class="rounded-box border m-2 p-4">
+                                    <h3 class="font-semibold">Save your recovery codes</h3>
+                                    <p class="mt-1 text-sm">Use one of these codes if you lose access to your authenticator app.
+                                        Each code can only be used once.</p>
+                                    <div class="mt-3 grid grid-cols-2 gap-2 font-mono text-sm">
+                                        @foreach ($user->recoveryCodes() as $recoveryCode)
+                                            <code class="rounded bg-base-100 p-2 text-center">{{ $recoveryCode }}</code>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+
+                            <form method="POST" action="{{ route('two-factor.regenerate-recovery-codes') }}">
+                                @csrf
+                                <button type="submit" class="btn w-full">Generate new recovery codes</button>
+                            </form>
+
+                            <form method="POST" action="{{ route('two-factor.disable') }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-error w-full mt-2">Disable two-factor
+                                    authentication</button>
+                            </form>
+                        @else
+                            <p class="text-sm">Protect your account with an authenticator app.</p>
+
+                            @if ($user->two_factor_secret)
+                                <div class="space-y-3 m-2">
+                                    <div class="mx-auto w-fit rounded bg-white p-2" aria-label="Two-factor authentication QR code">
+                                        {!! $user->twoFactorQrCodeSvg() !!}
+                                    </div>
+                                    <form method="POST" action="{{ route('two-factor.confirm') }}">
+                                        @csrf
+                                        <label class="floating-label">
+                                            <input type="text" name="code" inputmode="numeric" autocomplete="one-time-code"
+                                                placeholder="123456" class="input mt-2 mb-2input-bordered w-full" required>
+                                            <span>Authenticator code</span>
+                                        </label>
+                                        <button type="submit" class="btn mt-3 w-full">Confirm two-factor
+                                            authentication</button>
+                                    </form>
+                                </div>
+                            @else
+                                <form method="POST" action="{{ route('two-factor.enable') }}">
+                                    @csrf
+                                    <button type="submit" class="btn w-full">Set up two-factor authentication</button>
+                                </form>
+                            @endif
+                        @endif
+                    </section>
+                @endif
             </fieldset>
         </div>
     </div>

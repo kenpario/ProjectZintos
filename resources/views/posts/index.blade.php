@@ -44,7 +44,7 @@
                         <div class="flex justify-between items-center font-semibold bg-base-300 rounded-box p-4">
                             <span> {{ $post->title }} </span>
                             <div class="flex gap-2">
-                                @if((Auth::user()->group?->is_mod || Auth::user()->group->is_admin) && !$post->is_approved)
+                                @if((Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) && !$post->is_approved)
                                     <form method="POST" action="{{ route('approve_posts', $post) }}">
                                         @csrf
                                         @method('PUT')

@@ -13,11 +13,23 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $latest_posts = Post::with(['user', 'category'])->latest()->take(5)->get()->where('is_approved',true);
+        $latest_posts = Post::with(['user', 'category'])
+            ->where('is_approved', true)
+            ->latest()
+            ->take(5)
+            ->get();
 
-        $hot_topics = Post::with(['user', 'category'])->orderBy('likes', 'desc')->take(5)->get()->where('is_approved',true);
+        $hot_topics = Post::with(['user', 'category'])
+            ->where('is_approved', true)
+            ->orderByDesc('likes')
+            ->take(5)
+            ->get();
 
-        $all_posts = Post::with(['user', 'category'])->latest()->take(20)->get()->where('is_approved',true);
+        $all_posts = Post::with(['user', 'category'])
+            ->where('is_approved', true)
+            ->latest()
+            ->take(20)
+            ->get();
 
         $post_categories = Post_Category::all();
 
