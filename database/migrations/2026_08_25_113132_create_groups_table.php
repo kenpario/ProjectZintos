@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->string('name', 30);
             $table->string('description', 30);
             $table->boolean('is_admin')->default('0');

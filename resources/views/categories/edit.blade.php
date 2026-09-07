@@ -27,7 +27,7 @@
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
                 @enderror
-                <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+                <fieldset class="fieldset bg-base-100 border-base-300 rounded-box border p-4">
                     <legend class="fieldset-legend">Comment Section</legend>
                     <label class="label">
                         <input type="hidden" name="can_comment" value="0" />

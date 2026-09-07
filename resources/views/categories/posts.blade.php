@@ -2,41 +2,79 @@
     <x-slot:title>
         {{ $category->name }} Posts
     </x-slot:title>
-
-    <div class="m-2">
-        <div class="mb-2 flex items-center justify-between gap-2">
-            <h1 class="text-xl font-semibold m-2">{{ $category->name }}</h1>
-            <a class="btn btn-sm m-2" href="{{ route('categories') }}">Back to categories</a>
-        </div>
-
-        <ul class="list bg-base-100 rounded-box shadow-md">
-            @forelse ($posts as $post)
-                <li class="list-row">
-                    <div>
-                        <div class="font-semibold">{{ Str::limit($post->title, 30) }}</div>
-                        <div class="text-xs uppercase font-semibold opacity-60">
-                            By {{ $post->user->name }}
-                        </div>
-                        <div>{{ Str::limit($post->message, 100) }}</div>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <span>{{ $post->likes }}</span>
-                        <span aria-label="Likes">likes</span>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <span>{{ $post->views }}</span>
-                        <span aria-label="Views">views</span>
-                    </div>
-                </li>
-            @empty
-                <li class="list-row">There are no posts in this category.</li>
-            @endforelse
-        </ul>
-
-        @if ($posts->hasPages())
-            <div class="mt-2 flex justify-center">
-                {{ $posts->links() }}
+    <div class="relative overflow-hidden rounded">
+        <img class="absolute opacity-60 rounded-md w-screen"
+            src="{{ asset('storage/assets/img/items/background.gif') }}">
+        <div class="relative z-10">
+            <div class="flex m-2 justify-center">
+                <div class="hover-3d">
+                    <a href="{{ route('add_posts') }}" class="btn skeleton shadow-md">New Post</a>
+                </div>
             </div>
-        @endif
+            <div class="m-2" id="{{ $category->name }} posts">
+                <details class="collapse collapse-arrow bg-base-200 border border-base-300 mb-2"
+                    name="{{ $category->name }}" id="category-{{ $category->name }}" open>
+                    <summary class="collapse-title bg-base-300 rounded font-semibold">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>
+                                {{ Str::limit($category->name, 30) }}
+                                --
+                                {{ Str::limit($category->description, 30) }}
+                            </span>
+                            @if(Auth::user()->group?->is_admin)
+                                <x-categories_editdelete :category="$category" />
+                            @endif
+                        </div>
+                    </summary>
+                    <div class="collapse-content">
+                        <ul class="list w-full gap-2">
+                            @forelse ($posts as $post)
+                                <li class="list-row rounded-box bg-base-100 shadow-sm">
+                                    <div><a href="/users/{{ $post->user->id }}"><img
+                                                src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
+                                                alt="{{ $post->user?->name }}'s avatar" class="size-10 rounded-box" /></a>
+                                    </div>
+                                    <div>
+                                        <div><a href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a></div>
+                                        <div class="text-xs font-semibold opacity-60"><a
+                                                href="/posts/{{ $post->id }}">
+                                                {{ Str::limit($post->message, 50) }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <span>{{ $post->likes }}</span>
+                                        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                            aria-label="Likes">
+                                            <path
+                                                d="M7 10v10H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3Zm0 10h9.5a2 2 0 0 0 1.94-1.53l1.5-6A2 2 0 0 0 18 10h-4.11l.58-3.48A2.98 2.98 0 0 0 11.53 3L7 10v10Z"
+                                                fill="none" stroke="currentColor" stroke-linejoin="round"
+                                                stroke-width="2" />
+                                        </svg>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <span>{{ $post->views }}</span>
+                                        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                            aria-label="Views">
+                                            <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none"
+                                                stroke="currentColor" stroke-linejoin="round" stroke-width="2" />
+                                            <circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor"
+                                                stroke-width="2" />
+                                        </svg>
+                                    </div>
+                                </li>
+                            @empty
+                                <li class="list-row rounded-box bg-base-100">There are no posts in this category.</li>
+                            @endforelse
+                        </ul>
+                        <div class="flex justify-between mt-2">
+                            <a class="btn btn-md" href="{{ route('categories') }}">
+                                Back to categories
+                            </a>
+                            {{ $posts->links() }}
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
     </div>
 </x-layout>

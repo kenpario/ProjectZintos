@@ -4,6 +4,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\Logout;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Socialite;
 use App\Models\User;
@@ -59,7 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-    Route::get('/categories/{category}/posts', [CategoryController::class, 'posts'])->name('categories.posts');
+    Route::get('/categories/{category}/posts', [CategoryController::class, 'posts'])->name('categories_posts');
     Route::get('/categories/add', [CategoryController::class, 'create'])->name('add_categories');
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('edit_categories');
@@ -69,6 +71,24 @@ Route::middleware('auth')->group(function () {
     Route::get('users/{user}', [UserController::class, 'index'])->name('user_profile');
     Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit_user_profile');
     Route::put('/users/{user}', [UserController::class, 'update']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
+
+
+    Route::get('/posts/add', [PostController::class, 'create'])->name('add_posts');
+    Route::post('/posts', [PostController::class, 'store']);
+    Route::get('/posts/moderation', [PostController::class, 'moderation'])->name('mod_posts');
+    Route::put('/posts/{post}/approve', [PostController::class, 'approve'])->name('approve_posts');
+    Route::get('/posts/{post}', [PostController::class, 'index'])->name('posts');
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('edit_posts');
+    Route::put('/posts/{post}', [PostController::class, 'update']);
+    Route::delete('/posts/{post}', [PostController::class, 'destroy']);
+
+    Route::post('/posts/{post}', [CommentController::class, 'store'])->name('comment_posts');
+    Route::get('/comments/moderation', [CommentController::class, 'moderation'])->name('mod_comments');
+    Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('approve_comments');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
+    Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('edit_comments');
+    Route::put('/comments/{comment}', [CommentController::class, 'update']);
 
     Route::post('logout', Logout::class)->name('logout');
 });

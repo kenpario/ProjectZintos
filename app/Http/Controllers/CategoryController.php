@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post_Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,12 +17,16 @@ class CategoryController extends Controller
             ->when($categoryName, function ($query) use ($categoryName) {
                 $query->where('name', $categoryName);
             })
-            ->withCount('posts')
+            ->withCount(['posts' => function ($query) {
+                $query->where('is_approved', true);
+            }])
             ->latest()
             ->paginate(5)
             ->withQueryString();
 
-        return view('categories.index', ['categories' => $categories]);
+        $all_posts = Post::with(['user', 'category'])->latest()->take(20)->get()->where('is_approved', true);
+
+        return view('categories.index', ['categories' => $categories, 'all_posts' => $all_posts]);
     }
 
     public function posts(Post_Category $category)
@@ -29,6 +34,7 @@ class CategoryController extends Controller
         $posts = $category->posts()
             ->with('user')
             ->latest()
+            ->where('is_approved', true)
             ->paginate(10)
             ->withQueryString();
 

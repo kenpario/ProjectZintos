@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
 {
+    protected $fillable = ['user_id', 'title', 'message', 'post_category_id', 'likes', 'views', 'is_approved', 'media'];
+    protected $hidden = ['user_id', 'likes', 'views'];
+    protected $casts = ['is_approved' => 'boolean'];
+
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -14,5 +19,18 @@ class Post extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Post_Category::class, 'post_category_id');
+    }
+
+    protected static array $videoExtensions = ['mp4'];
+
+    public function isVideo(): bool
+    {
+        if (! $this->media) {
+            return false;
+        }
+
+        $extension = pathinfo($this->media, PATHINFO_EXTENSION);
+
+        return in_array(strtolower($extension), static::$videoExtensions);
     }
 }

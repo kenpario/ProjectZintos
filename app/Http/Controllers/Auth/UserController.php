@@ -15,7 +15,14 @@ class UserController extends Controller
      */
     public function index(User $user)
     {
-        return view('users.index', ['user' => $user]);
+
+        $user_posts = $user->posts()
+            ->with(['user', 'category'])
+            ->latest()
+            ->where('is_approved', true)
+            ->paginate(10);
+
+        return view('users.index', ['user' => $user, 'user_posts' => $user_posts]);
     }
 
     /**
@@ -47,7 +54,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (Auth::user()->id !== $user->id && ! Auth::user()->group?->is_admin) {
+        if (! (Auth::user()->id === $user->id || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
         return view('users.edit', ['user' => $user]);
@@ -58,7 +65,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if (Auth::user()->id !== $user->id && ! Auth::user()->group?->is_admin) {
+        if (! (Auth::user()->id === $user->id || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
 
@@ -109,8 +116,24 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        if (! (Auth::user()->id === $user->id || Auth::user()->group?->is_admin)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+
+        foreach ($user->posts as $post) {
+            if ($post->media) {
+                Storage::disk('public')->delete($post->media);
+            }
+        }
+
+        $user->delete();
+
+        return redirect('/')->with('success', 'Your account has been deleted!');
     }
 }

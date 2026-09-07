@@ -10,6 +10,10 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('storage/assets/img/favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('storage/assets/img/favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('storage/assets/img/favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{ asset('storage/assets/img/favicon/site.webmanifest')}}">
     <script>
         const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -56,9 +60,31 @@
                             </details>
                         </li>
                         <li>
-                            <form method="POST" action="{{ route('logout') }}">
+                            <details>
+                                <summary>{{ Auth::user()->name }}</summary>
+                                <ul>
+                                    <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
+                                    <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit
+                                            Information</a></li>
+                                </ul>
+                            </details>
+                        </li>
+                        @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
+                            <li>
+                                <details>
+                                    <summary>Moderation</summary>
+                                    <ul>
+                                        <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
+                                        <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
+                                    </ul>
+                                </details>
+                            </li>
+                        @endif
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}" class="flex w-full"
+                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
                                 @csrf
-                                <button type="submit">Logout</button>
+                                <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
                             </form>
                         </li>
                     </ul>
@@ -124,10 +150,22 @@
                     <ul class="menu w-full">
                         <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
                         <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit Information</a></li>
+                        @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
+                            <li>
+                                <details>
+                                    <summary>Moderation</summary>
+                                    <ul>
+                                        <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
+                                        <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
+                                    </ul>
+                                </details>
+                            </li>
+                        @endif
                         <li>
-                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                            <form method="POST" action="{{ route('logout') }}" class="inline"
+                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
                                 @csrf
-                                <button type="submit" class="btn btn-sm skeleton w-full">Logout</button>
+                                <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
                             </form>
                         </li>
                     </ul>
