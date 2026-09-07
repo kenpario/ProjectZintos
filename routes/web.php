@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\Logout;
+use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -17,9 +19,15 @@ Route::middleware('guest')->group(function () {
         return view('welcome');
     });
 
+    Route::view('/register', 'auth.register')->name('register');
+    Route::post('/register', Register::class);
+
+    Route::view('/login', 'auth.login')->name('login');
+    Route::post('/login', Login::class);
+
     Route::get('/auth/redirect', function () {
         return Socialite::driver('google')->redirect();
-    })->name('login');
+    })->name('login_google');
 
     Route::get('/auth/callback', function (Request $request) {
         try {

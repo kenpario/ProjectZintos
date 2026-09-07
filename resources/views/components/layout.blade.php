@@ -89,7 +89,8 @@
                         </li>
                     </ul>
                 @else
-                    <a href="{{ route('login') }}" class="btn skeleton w-full">Register/Login</a>
+                    <a href="{{ route('register') }}" class="btn skeleton w-full">Register</a>
+                    <a href="{{ route('login') }}" class="btn skeleton w-full">Login</a>
                 @endauth
             </div>
         </div>
@@ -172,8 +173,9 @@
                 </div>
             @endauth
             @guest
-                <div id="register_login" class="hover-3d">
-                    <a href="{{ route('login') }}" class="btn skeleton">Register/Login</a>
+                <div id="register_login" class="flex justify-end w-full">
+                    <a href="{{ route('register') }}" class="btn skeleton">Register</a>
+                    <a href="{{ route('login') }}" class="btn skeleton">Login</a>
                 </div>
             @endguest
         </div>
