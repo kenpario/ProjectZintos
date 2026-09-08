@@ -22,7 +22,7 @@
                     </div>
                 @enderror
 
-                <button type="submit" class="btn w-full">Confirm password</button>
+                <button type="submit" class="btn btn-neutral w-full">Confirm password</button>
             </fieldset>
         </form>
     </div>

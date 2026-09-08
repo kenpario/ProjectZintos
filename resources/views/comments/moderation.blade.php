@@ -9,7 +9,7 @@
                     <span>Comments waiting for approval</span>
                 </div>
                 <div class="w-full">
-                    @foreach ($all_unapproved_comments as $comment)
+                    @forelse ($all_unapproved_comments as $comment)
                         <div class="shadow-md rounded-box p-2 mt-2">
                             <div class="flex justify-between gap-2 m-2">
                                 <span class="text-xs uppercase font-semibold opacity-60"><a
@@ -37,12 +37,14 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                    <div class="text-md uppercase font-semibold opacity-60 flex justify-center m-2">No comments to be approved.</div>
+                    @endforelse
                 </div>
                 <div class="mt-4 flex justify-center">
                     {{ $all_unapproved_comments->links() }}
-                </div>
             </div>
         </div>
+    </div>
     </div>
 </x-layout>

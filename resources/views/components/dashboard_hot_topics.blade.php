@@ -10,7 +10,7 @@
         <div class="flex justify-between">
             <div class="flex gap-4">
                 <div><a href="/users/{{ $hot_topic->user->id }}"><img
-                            src="{{ $hot_topic->user?->avatar ? asset('storage/' . $hot_topic->user->avatar) : 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
+                            src="{{ $hot_topic->user?->avatar ? asset('storage/' . $hot_topic->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                             alt="{{ $hot_topic->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
                     <div><a href="/posts/{{ $hot_topic->id }}">{{ Str::limit($hot_topic->title, 20) }}</a></div>

@@ -88,7 +88,7 @@
 
                             <form method="POST" action="{{ route('two-factor.regenerate-recovery-codes') }}">
                                 @csrf
-                                <button type="submit" class="btn w-full">Generate new recovery codes</button>
+                                <button type="submit" class="btn btn-neutral w-full">Generate new recovery codes</button>
                             </form>
 
                             <form method="POST" action="{{ route('two-factor.disable') }}">
@@ -112,14 +112,14 @@
                                                 placeholder="123456" class="input mt-2 mb-2input-bordered w-full" required>
                                             <span>Authenticator code</span>
                                         </label>
-                                        <button type="submit" class="btn mt-3 w-full">Confirm two-factor
+                                        <button type="submit" class="btn btn-neutral mt-3 w-full">Confirm two-factor
                                             authentication</button>
                                     </form>
                                 </div>
                             @else
                                 <form method="POST" action="{{ route('two-factor.enable') }}">
                                     @csrf
-                                    <button type="submit" class="btn w-full">Set up two-factor authentication</button>
+                                    <button type="submit" class="btn btn-neutral w-full">Set up two-factor authentication</button>
                                 </form>
                             @endif
                         @endif

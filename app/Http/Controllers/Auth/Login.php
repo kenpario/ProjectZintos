@@ -18,7 +18,7 @@ class Login extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect('/dashboard')->with('success', 'Welcome back, ' . Auth::user()->name . '!');
+            return redirect('/dashboard');
         }
 
         return back()

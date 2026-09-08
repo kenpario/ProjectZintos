@@ -33,7 +33,7 @@
                     </div>
                 @enderror
 
-                <button type="submit" class="btn btn-primary w-full">Verify and continue</button>
+                <button type="submit" class="btn btn-neutral w-full">Verify and continue</button>
             </fieldset>
         </form>
     </div>

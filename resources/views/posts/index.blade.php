@@ -122,7 +122,7 @@
                         </div>
                         <div class="p-6 shadow-md rounded-md bg-base-300 font-semibold mb-2">Comment Section</div>
                     @endif
-                    <div>
+                    <div class="bg-base-200 rounded-box">
                         <x-comments_section :post_comments="$post_comments" />
                     </div>
                 </div>

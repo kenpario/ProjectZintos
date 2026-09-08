@@ -34,7 +34,7 @@
                                     <ul class="list bg-base-100 rounded-box shadow-md mt-2">
                                         <li class="list-row">
                                             <div><a href="/users/{{ $post->user->id }}"><img
-                                                        src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
+                                                        src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                         alt="{{ $post->user?->name }}'s avatar"
                                                         class="size-10 rounded-box" /></a>
                                             </div>

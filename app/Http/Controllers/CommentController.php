@@ -130,7 +130,7 @@ class CommentController extends Controller
         $postId = $comment->post_id;
 
         return redirect()->route('posts', ['post' => $postId])
-            ->with('success', 'Your comment has been posted!');
+            ->with('success', 'Your comment has been updated!');
     }
 
     /**
