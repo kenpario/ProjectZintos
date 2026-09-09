@@ -86,4 +86,8 @@
 </script>
 <style data-cookie-consent>
     {!! file_get_contents(LCC_ROOT . '/dist/style.css') !!}
+
+    #cookies-policy.cookies {
+        bottom: 40px;
+    }
 </style>
