@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\Post_Category;
 use Illuminate\Http\Request;
@@ -25,10 +26,15 @@ class PostController extends Controller
             ->latest()
             ->get();
 
-        return view('posts.index', ['post' => $post, 'post_comments' => $post_comments]);
+        $post_likes = Like::query()
+            ->with('user')
+            ->where('post_id', $post->id)
+            ->get();
+
+        return view('posts.index', ['post' => $post, 'post_comments' => $post_comments, 'post_likes' => $post_likes]);
     }
 
-    public function moderation(Post $post)
+    public function moderation()
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');

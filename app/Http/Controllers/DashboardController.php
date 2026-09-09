@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\Post_Category;
 use Illuminate\Http\Request;
@@ -33,7 +34,9 @@ class DashboardController extends Controller
 
         $post_categories = Post_Category::all();
 
-        return view('dashboard', ['latest_posts' => $latest_posts, 'hot_topics' => $hot_topics, 'post_categories' => $post_categories, 'all_posts' => $all_posts]);
+        $post_likes = Like::with(['user', 'post'])->get();
+
+        return view('dashboard', ['latest_posts' => $latest_posts, 'hot_topics' => $hot_topics, 'post_categories' => $post_categories, 'all_posts' => $all_posts, 'post_likes' => $post_likes]);
     }
 
     /**

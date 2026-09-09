@@ -1,4 +1,4 @@
-@props(['hot_topic'])
+@props(['hot_topic', 'post_likes'])
 
 <li class="list-row">
     <div class="flex flex-col gap-2 list-col-grow">
@@ -21,7 +21,7 @@
             </div>
             <div class="flex gap-4">
                 <div class="flex items-center gap-1">
-                    <span>{{ $hot_topic->likes }}</span>
+                    <span>{{ $post_likes->where('post_id', $hot_topic->id)->count() }}</span>
                     <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Likes">
                         <path
                             d="M7 10v10H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3Zm0 10h9.5a2 2 0 0 0 1.94-1.53l1.5-6A2 2 0 0 0 18 10h-4.11l.58-3.48A2.98 2.98 0 0 0 11.53 3L7 10v10Z"
