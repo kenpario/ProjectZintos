@@ -25,6 +25,7 @@
         systemTheme.addEventListener('change', applySystemTheme);
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @cookieconsentscripts
 </head>
 
 <body class="min-h-screen flex flex-col">
@@ -202,6 +203,7 @@
     <main class="mt-18 mb-2 ml-2 mr-2 flex-1">
         {{ $slot }}
     </main>
+    @cookieconsentview
 
     <footer class="footer footer-center relative z-10 bg-base-300 text-base-content p-4 rounded">
         <div>

@@ -62,6 +62,10 @@ Route::middleware('guest')->group(function () {
             return redirect('/')->with('error', 'Google sign-in could not be completed. Please try again.');
         }
     });
+
+    Route::get('/cookies', function () {
+        return view('cookies');
+    });
 });
 Route::middleware('auth')->group(function () {
 
