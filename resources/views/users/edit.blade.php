@@ -65,7 +65,7 @@
                     </button>
                 </form>
 
-                @if (Auth::id() === $user->id)
+                @if (Auth::id() === $user->id && Auth::user()->password !== NULL)
                     <div class="divider">Security</div>
                     <section class="space-y-4" aria-labelledby="two-factor-heading">
                         <label class="label" for="2fa">Two-factor</label>
@@ -100,7 +100,7 @@
                         @else
                             <p class="text-sm">Protect your account with an authenticator app.</p>
 
-                            @if ($user->two_factor_secret)
+                            @if (session('status') === 'two-factor-authentication-enabled' && $user->two_factor_secret)
                                 <div class="space-y-3 m-2">
                                     <div class="mx-auto w-fit rounded bg-white p-2" aria-label="Two-factor authentication QR code">
                                         {!! $user->twoFactorQrCodeSvg() !!}

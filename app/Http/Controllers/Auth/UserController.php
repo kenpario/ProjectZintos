@@ -139,7 +139,7 @@ class UserController extends Controller
             }
         }
 
-        $user->delete();
+        User::destroy($user->id);
 
         return redirect('/')->with('success', 'Your account has been deleted!');
     }
