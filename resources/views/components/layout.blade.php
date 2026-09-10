@@ -90,6 +90,7 @@
                         </li>
                     </ul>
                 @else
+                    <a href="/" class="btn skeleton w-full">Home</a>
                     <a href="{{ route('register') }}" class="btn skeleton w-full">Register</a>
                     <a href="{{ route('login') }}" class="btn skeleton w-full">Login</a>
                 @endauth
@@ -174,9 +175,14 @@
                 </div>
             @endauth
             @guest
-                <div id="register_login" class="flex justify-end w-full">
-                    <a href="{{ route('register') }}" class="btn skeleton">Register</a>
-                    <a href="{{ route('login') }}" class="btn skeleton">Login</a>
+                <div class="flex justify-between w-full">
+                    <div id="home">
+                        <a href="/" class="btn skeleton">Home</a>
+                    </div>
+                    <div id="register_login">
+                        <a href="{{ route('register') }}" class="btn skeleton">Register</a>
+                        <a href="{{ route('login') }}" class="btn skeleton">Login</a>
+                    </div>
                 </div>
             @endguest
         </div>
@@ -206,8 +212,15 @@
     @cookieconsentview
 
     <footer class="footer footer-center relative z-10 bg-base-300 text-base-content p-4 rounded">
-        <div>
-            <p>Copyright ©2026 - {{  date('Y') }} - All right reserved by Project Zintos</p>
+        <div class="flex flex-col">
+            <div>
+                <p>Copyright ©2026 - {{  date('Y') }} - All right reserved by Project Zintos</p>
+            </div>
+            <div class="flex gap-2 justify-center">
+                <a class="link link-hover" href="/cookies">Cookie Policy</a>
+                <a class="link link-hover" href="/privacy">Privacy Policy</a>
+                <a class="link link-hover" href="/terms">Terms of Use</a>
+            </div>
         </div>
     </footer>
 </body>

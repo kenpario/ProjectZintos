@@ -23,10 +23,10 @@
                 aria-hidden="true">
                 <path
                     d="M14.7559 11.9782C15.0814 11.6527 15.0814 11.1251 14.7559 10.7996L10.5893 6.63297C10.433 6.47669 10.221 6.3889 10 6.38889C9.77899 6.38889 9.56703 6.47669 9.41075 6.63297L5.24408 10.7996C4.91864 11.1251 4.91864 11.6527 5.24408 11.9782C5.56951 12.3036 6.09715 12.3036 6.42259 11.9782L10 8.40074L13.5774 11.9782C13.9028 12.3036 14.4305 12.3036 14.7559 11.9782Z"
-                    fill="#2C2E30" />
+                    fill="currentColor" />
             </svg>
         </a>
-        <div class="cookies__expandable cookies__expandable--custom" id="cookies-policy-customize">
+        <div class="cookies__expandable" id="cookies-policy-customize">
             <form action="{{ route('cookieconsent.accept.configuration') }}" method="post" class="cookies__customize">
                 @csrf
                 <div class="cookies__sections">
@@ -88,6 +88,52 @@
     {!! file_get_contents(LCC_ROOT . '/dist/style.css') !!}
 
     #cookies-policy.cookies {
-        bottom: 40px;
+        bottom: 48px;
+    }
+
+    #cookies-policy.cookies--show .cookies__btn--customize {
+        border-bottom: none;
+    }
+
+    #cookies-policy .cookies__alert {
+        background: var(--color-base-300);
+        border: none;
+
+    }
+
+    #cookies-policy .cookies__btn--customize {
+        border-top: none;
+        color: var(--color-base-content);
+    }
+
+    #cookies-policy .cookies__section+.cookies__section {
+        border-top: none;
+
+    }
+
+    #cookies-policy .cookies__box:after {
+        background: color-mix(in srgb, var(--color-base-content) 20%, var(--color-base-300));
+    }
+
+    #cookies-policy .cookies__box:before {
+        background: var(--color-base-100);
+        border: none;
+    }
+
+    #cookies-policy .cookies__category input:checked+.cookies__box:after {
+        background: var(--color-base-content);
+    }
+
+    #cookies-policy .cookies__save {
+        border-top: none;
+    }
+
+    #cookies-policy .cookies__details {
+        color: var(--color-base-content);
+    }
+
+    #cookies-policy .cookies__details:hover {
+        color: var(--color-base-content);
+        text-decoration: underline;
     }
 </style>

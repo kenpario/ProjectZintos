@@ -66,6 +66,14 @@ Route::middleware('guest')->group(function () {
     Route::get('/cookies', function () {
         return view('cookies');
     });
+
+    Route::get('/privacy', function () {
+        return view('privacy');
+    });
+
+    Route::get('/terms', function () {
+        return view('terms');
+    });
 });
 Route::middleware('auth')->group(function () {
 
