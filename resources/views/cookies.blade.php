@@ -30,7 +30,7 @@
             @endforeach
         </div>
     </div>
-    <div class="flex justify-end">
+    <div class="flex justify-end m-2">
         @cookieconsentbutton(action: 'reset', label: 'Reset cookies', attributes: ['id' => 'reset-button', 'class' => 'btn btn-neutral'])
     </div>
 </x-layout>

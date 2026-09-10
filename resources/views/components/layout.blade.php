@@ -84,7 +84,7 @@
                                 <details>
                                     <summary>Administration</summary>
                                     <ul>
-                                        <li><a href="{{ route('analytics')}}">Analytics</a></li>
+                                        <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
                                     </ul>
                                 </details>
                             </li>
@@ -177,7 +177,7 @@
                                 <details>
                                     <summary>Administration</summary>
                                     <ul>
-                                        <li><a href="{{ route('analytics')}}">Analytics</a></li>
+                                        <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
                                     </ul>
                                 </details>
                             </li>
