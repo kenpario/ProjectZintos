@@ -27,6 +27,8 @@
                 </tbody>
             </table>
         @endforeach
-        @cookieconsentbutton(action: 'reset', label: 'Reset cookies', attributes: ['id' => 'reset-button', 'class' => 'btn btn-neutral'])
+        <div class="m-2">
+            @cookieconsentbutton(action: 'reset', label: 'Reset cookies', attributes: ['id' => 'reset-button', 'class' => 'btn btn-neutral'])
+        </div>
     </div>
 </x-layout>

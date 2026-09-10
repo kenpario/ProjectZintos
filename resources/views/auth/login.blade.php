@@ -63,7 +63,7 @@
         </a>
         <p class="text-center text-sm">
             Don't have an account?
-            <a href="{{ route('register') }}" class="link link-primary">Register</a>
+            <a href="{{ route('register') }}" class="link link-hover">Register</a>
         </p>
         </fieldset>
     </div>

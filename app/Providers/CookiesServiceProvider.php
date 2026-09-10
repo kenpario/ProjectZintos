@@ -12,18 +12,17 @@ class CookiesServiceProvider extends ServiceProvider
      */
     protected function registerCookies(): void
     {
-        if (app()->environment() === 'production') {
-            // Register Laravel's base cookies under the "required" cookies section:
-            Cookies::essentials()
-                ->session()
-                ->csrf();
 
-            // Register all Analytics cookies at once using one single shorthand method:
-            Cookies::analytics()
-                ->google(
-                    id: config('cookieconsent.google_analytics.id'),
-                    anonymizeIp: config('cookieconsent.google_analytics.anonymize_ip')
-                );
-        }
+        // Register Laravel's base cookies under the "required" cookies section:
+        Cookies::essentials()
+            ->session()
+            ->csrf();
+
+        // Register all Analytics cookies at once using one single shorthand method:
+        Cookies::analytics()
+            ->google(
+                id: config('cookieconsent.google_analytics.id'),
+                anonymizeIp: config('cookieconsent.google_analytics.anonymize_ip')
+            );
     }
 }

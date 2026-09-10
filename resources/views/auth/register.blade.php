@@ -73,7 +73,7 @@
         </a>
         <p class="text-center text-sm">
             Already have an account?
-            <a href="{{ route('login') }}" class="link link-primary">Login</a>
+            <a href="{{ route('login') }}" class="link link-hover">Login</a>
         </p>
     </div>
 </x-layout>
