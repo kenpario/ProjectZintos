@@ -79,6 +79,16 @@
                                 </details>
                             </li>
                         @endif
+                        @if(Auth::user()->group?->is_admin)
+                            <li>
+                                <details>
+                                    <summary>Administration</summary>
+                                    <ul>
+                                        <li><a href="{{ route('analytics')}}">Analytics</a></li>
+                                    </ul>
+                                </details>
+                            </li>
+                        @endif
                         <li>
                             <form method="POST" action="{{ route('logout') }}" class="flex w-full"
                                 onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
@@ -158,6 +168,16 @@
                                     <ul>
                                         <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
                                         <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
+                                    </ul>
+                                </details>
+                            </li>
+                        @endif
+                        @if(Auth::user()->group?->is_admin)
+                            <li>
+                                <details>
+                                    <summary>Administration</summary>
+                                    <ul>
+                                        <li><a href="{{ route('analytics')}}">Analytics</a></li>
                                     </ul>
                                 </details>
                             </li>

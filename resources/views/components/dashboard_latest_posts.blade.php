@@ -3,7 +3,7 @@
 <li class="list-row">
     <div class="flex flex-col gap-2 list-col-grow">
         <div>
-            <div class="font-bold"><a
+            <div class="font-bold"><a class="link link-hover" 
                     href="/categories/{{ $latest_post->category->id }}/posts">{{ Str::limit($latest_post->category->name, 40) }}</a>
             </div>
         </div>
@@ -13,8 +13,8 @@
                             src="{{ $latest_post->user?->avatar ? asset('storage/' . $latest_post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                             alt="{{ $latest_post->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
-                    <div><a href="/posts/{{ $latest_post->id }}">{{ Str::limit($latest_post->title, 20) }}</a></div>
-                    <div class="text-xs font-semibold opacity-60"><a
+                    <div><a class="link link-hover" href="/posts/{{ $latest_post->id }}">{{ Str::limit($latest_post->title, 20) }}</a></div>
+                    <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
                             href="/posts/{{ $latest_post->id }}">{{ Str::limit($latest_post->message, 50)}}</a>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\CommentController;
@@ -62,18 +63,6 @@ Route::middleware('guest')->group(function () {
             return redirect('/')->with('error', 'Google sign-in could not be completed. Please try again.');
         }
     });
-
-    Route::get('/cookies', function () {
-        return view('cookies');
-    });
-
-    Route::get('/privacy', function () {
-        return view('privacy');
-    });
-
-    Route::get('/terms', function () {
-        return view('terms');
-    });
 });
 Route::middleware('auth')->group(function () {
 
@@ -111,4 +100,18 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('like_posts');
     Route::delete('/likes/{like}', [LikeController::class, 'destroy']);
+
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
+});
+
+Route::get('/cookies', function () {
+    return view('cookies');
+});
+
+Route::get('/privacy', function () {
+    return view('privacy');
+});
+
+Route::get('/terms', function () {
+    return view('terms');
 });

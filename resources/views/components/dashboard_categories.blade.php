@@ -9,8 +9,8 @@
                             src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                             alt="{{ $post->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
-                    <div><a href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a></div>
-                    <div class="text-xs font-semibold opacity-60"><a href="/posts/{{ $post->id }}">
+                    <div><a class="link link-hover" href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a></div>
+                    <div class="text-xs font-semibold opacity-60"><a class="link link-hover" href="/posts/{{ $post->id }}">
                             {{ Str::limit($post->message, 50) }}</a>
                     </div>
                 </div>

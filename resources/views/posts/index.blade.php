@@ -7,7 +7,7 @@
             <div class="sm:flex max-sm:flex-col p-4 sm:p-8 shadow-md rounded-md">
                 <div class="flex justify-center max-sm:w-full w-80">
                     <div class="flex flex-col items-center shadow-md rounded-md p-2 text-center w-full">
-                        <h1 class="m-2 text-xl font-semibold"><a
+                        <h1 class="m-2 text-xl font-semibold"><a class="link link-hover"
                                 href="/users/{{ $post->user->id }}">{{ $post->user?->name }}</a></h1>
                         <div class="divider"></div>
                         <a href="/users/{{ $post->user->id }}"><img
@@ -49,15 +49,17 @@
                                     <form method="POST" action="{{ route('approve_posts', $post) }}">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit"
-                                            onclick="return confirm('Are you sure you want to approve this post?')"
-                                            class="btn btn-square" aria-label="Approve post" title="Approve post">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="2.5" stroke="currentColor" class="size-[1.2em]">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M4.5 12.75l6 6 9-13.5" />
-                                            </svg>
-                                        </button>
+                                        <div class="aura aura-dual">
+                                            <button type="submit"
+                                                onclick="return confirm('Are you sure you want to approve this post?')"
+                                                class="btn btn-square" aria-label="Approve post" title="Approve post">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="2.5" stroke="currentColor" class="size-[1.2em]">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M4.5 12.75l6 6 9-13.5" />
+                                                </svg>
+                                            </button>
+                                        </div>
                                     </form>
                                 @endif
                                 @if(Auth::user()->id === $post->user?->id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
@@ -88,7 +90,7 @@
                         </div>
                         <div class="shadow-md rounded-box p-2 mt-2">
                             <div class="flex justify-between gap-2 m-2">
-                                <span class="text-xs uppercase font-semibold opacity-60"><a
+                                <span class="text-xs uppercase font-semibold opacity-60"><a class="link link-hover"
                                         href="/categories/{{ $post->category->id }}/posts"> Posted in
                                         {{ $post->category?->name }}</a>
                                 </span>
@@ -125,6 +127,24 @@
                     @endif
                     <div class="bg-base-200 rounded-box">
                         <x-comments_section :post_comments="$post_comments" />
+                    </div>
+                    <div class="rounded-box shadow-md mt-2">
+                        <div class="m-2">
+                            <span class="text-sm font-bold m-2">Liked by:</span>
+                            @foreach ($post_likes as $post_like)
+                                <a class="link link-hover"
+                                    href="/users/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}, </a>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="rounded-box shadow-md mt-2">
+                        <div class="m-2">
+                            <span class="text-sm font-bold m-2">Viewed by:</span>
+                            @foreach ($post_likes as $post_like)
+                                <a class="link link-hover"
+                                    href="/users/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}, </a>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>

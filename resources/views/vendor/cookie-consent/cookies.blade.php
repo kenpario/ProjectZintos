@@ -87,10 +87,6 @@
 <style data-cookie-consent>
     {!! file_get_contents(LCC_ROOT . '/dist/style.css') !!}
 
-    #cookies-policy.cookies {
-        bottom: 48px;
-    }
-
     #cookies-policy.cookies--show .cookies__btn--customize {
         border-bottom: none;
     }
