@@ -133,16 +133,16 @@
                             <span class="text-sm font-bold m-2">Liked by:</span>
                             @foreach ($post_likes as $post_like)
                                 <a class="link link-hover"
-                                    href="/users/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}, </a>
+                                    href="/users/{{ $post_like->user?->id }}">{{ $post_like->user?->name }} </a>
                             @endforeach
                         </div>
                     </div>
                     <div class="rounded-box shadow-md mt-2">
                         <div class="m-2">
                             <span class="text-sm font-bold m-2">Viewed by:</span>
-                            @foreach ($post_likes as $post_like)
+                            @foreach ($post_views as $post_view)
                                 <a class="link link-hover"
-                                    href="/users/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}, </a>
+                                    href="/users/{{ $post_view->user?->id }}">{{ $post_view->user?->name }} </a>
                             @endforeach
                         </div>
                     </div>

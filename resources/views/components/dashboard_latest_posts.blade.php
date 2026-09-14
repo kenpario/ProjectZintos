@@ -1,9 +1,9 @@
-@props(['latest_post', 'post_likes'])
+@props(['latest_post', 'post_likes', 'post_views'])
 
 <li class="list-row">
     <div class="flex flex-col gap-2 list-col-grow">
         <div>
-            <div class="font-bold"><a class="link link-hover" 
+            <div class="font-bold"><a class="link link-hover"
                     href="/categories/{{ $latest_post->category->id }}/posts">{{ Str::limit($latest_post->category->name, 40) }}</a>
             </div>
         </div>
@@ -13,7 +13,8 @@
                             src="{{ $latest_post->user?->avatar ? asset('storage/' . $latest_post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                             alt="{{ $latest_post->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
-                    <div><a class="link link-hover" href="/posts/{{ $latest_post->id }}">{{ Str::limit($latest_post->title, 20) }}</a></div>
+                    <div><a class="link link-hover"
+                            href="/posts/{{ $latest_post->id }}">{{ Str::limit($latest_post->title, 20) }}</a></div>
                     <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
                             href="/posts/{{ $latest_post->id }}">{{ Str::limit($latest_post->message, 50)}}</a>
                     </div>
@@ -29,7 +30,7 @@
                     </svg>
                 </div>
                 <div class="flex items-center gap-1">
-                    <span>{{ $latest_post->views }}</span>
+                    <span>{{ $post_views->where('post_id', $latest_post->id)->count() }}</span>
                     <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Views">
                         <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none"
                             stroke="currentColor" stroke-linejoin="round" stroke-width="2" />

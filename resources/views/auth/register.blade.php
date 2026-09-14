@@ -69,7 +69,7 @@
                     </path>
                 </g>
             </svg>
-            Register with Google
+            Login with Google
         </a>
         <p class="text-center text-sm">
             Already have an account?

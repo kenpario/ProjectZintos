@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Like;
+use App\Models\View;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LikeController extends Controller
+class ViewController extends Controller
 {
     public function index()
     {
@@ -27,7 +27,7 @@ class LikeController extends Controller
      */
     public function store(Request $request, Post $post)
     {
-        if (! $post->is_approved) {
+        if (! $post->is_approved || ! Auth::user()) {
             abort(403, 'Unauthorized Action!');
         }
 
@@ -37,7 +37,7 @@ class LikeController extends Controller
 
         $formFields['post_id'] = $post->id;
 
-        Like::create($formFields);
+        View::create($formFields);
 
         return redirect()->route('posts', ['post' => $post])
             ->with('success', 'Your liked this post!');
@@ -64,17 +64,8 @@ class LikeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Like $like)
+    public function destroy(string $id)
     {
-        if (! Auth::user()->id === $like->user_id) {
-            abort(403, 'Unauthorized Action!');
-        }
-
-        $postId = $like->post_id;
-
-        $like->delete();
-
-        return redirect()->route('posts', ['post' => $postId])
-            ->with('success', 'Your took your like back!');
+        //
     }
 }

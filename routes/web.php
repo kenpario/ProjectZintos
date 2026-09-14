@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Socialite;
 use App\Models\User;
@@ -100,6 +101,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('like_posts');
     Route::delete('/likes/{like}', [LikeController::class, 'destroy']);
+
+    Route::post('/posts/{post}/view', [ViewController::class, 'store'])->name('view_posts');
 
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
 });

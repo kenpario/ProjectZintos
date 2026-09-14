@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Sign In
+        Login
     </x-slot:title>
     <div class="min-h-full w-full">
         <form method="POST" action="/login" class="mx-auto w-full max-w-md" enctype="multipart/form-data"

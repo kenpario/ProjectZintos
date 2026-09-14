@@ -1,4 +1,4 @@
-@props(['post', 'post_likes'])
+@props(['post', 'post_likes', 'post_views'])
 
 <div class="collapse-content text-sm">
     <div class="max-lg:w-full" id="posts">
@@ -9,8 +9,10 @@
                             src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                             alt="{{ $post->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
-                    <div><a class="link link-hover" href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a></div>
-                    <div class="text-xs font-semibold opacity-60"><a class="link link-hover" href="/posts/{{ $post->id }}">
+                    <div><a class="link link-hover" href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
+                    </div>
+                    <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
+                            href="/posts/{{ $post->id }}">
                             {{ Str::limit($post->message, 50) }}</a>
                     </div>
                 </div>
@@ -23,7 +25,7 @@
                     </svg>
                 </div>
                 <div class="flex items-center gap-1">
-                    <span>{{ $post->views }}</span>
+                    <span>{{ $post_views->where('post_id', $post->id)->count() }}</span>
                     <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Views">
                         <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none"
                             stroke="currentColor" stroke-linejoin="round" stroke-width="2" />

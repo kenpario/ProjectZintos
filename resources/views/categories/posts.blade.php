@@ -53,7 +53,7 @@
                                         </svg>
                                     </div>
                                     <div class="flex items-center gap-1">
-                                        <span>{{ $post->views }}</span>
+                                        <span>{{ $post_views->where('post_id', $post->id)->count() }}</span>
                                         <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             aria-label="Views">
                                             <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none"

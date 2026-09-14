@@ -8,7 +8,8 @@
 
                 <li class="p-4 pb-2 text-s opacity-90 tracking-wide bg-base-300 rounded">Latest Posts</li>
                 @forelse ($latest_posts as $latest_post)
-                    <x-dashboard_latest_posts :latest_post="$latest_post" :post_likes="$post_likes" />
+                    <x-dashboard_latest_posts :latest_post="$latest_post" :post_likes="$post_likes"
+                        :post_views="$post_views" />
                 @empty
                     <li class="list-row">
                         <div class="text-xs uppercase font-semibold opacity-60">There are no new posts.</div>
@@ -20,7 +21,7 @@
 
                 <li class="p-4 pb-2 text-s opacity-90 tracking-wide bg-base-300 rounded">Hot Topics</li>
                 @forelse ($hot_topics as $hot_topic)
-                    <x-dashboard_hot_topics :hot_topic="$hot_topic" :post_likes="$post_likes" />
+                    <x-dashboard_hot_topics :hot_topic="$hot_topic" :post_likes="$post_likes" :post_views="$post_views" />
                 @empty
                     <li class="list-row">
                         <div class="text-xs uppercase font-semibold opacity-60">There are no hot topics.</div>
@@ -68,7 +69,7 @@
                             </div>
                         </summary>
                         @forelse($all_posts->where('post_category_id', $post_category->id) as $post)
-                            <x-dashboard_categories :post="$post" :post_likes="$post_likes" />
+                            <x-dashboard_categories :post="$post" :post_likes="$post_likes" :post_views="$post_views" />
                         @empty
                             <div class="collapse-content text-sm">
                                 <div class="max-lg:w-full" id="posts">

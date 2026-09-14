@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Like;
-use App\Models\Post;
+use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +29,12 @@ class UserController extends Controller
             ->whereIn('post_id', $user->posts()->pluck('id'))
             ->get();
 
-        return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes]);
+        $post_views = View::query()
+            ->with('user')
+            ->whereIn('post_id', $user->posts()->pluck('id'))
+            ->get();
+
+        return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes, 'post_views' => $post_views]);
     }
 
     /**
