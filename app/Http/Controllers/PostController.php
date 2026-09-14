@@ -44,7 +44,9 @@ class PostController extends Controller
             ->where('post_id', $post->id)
             ->get();
 
-        return view('posts.index', ['post' => $post, 'post_comments' => $post_comments, 'post_likes' => $post_likes, 'post_views' => $post_views]);
+        $total_likes =  Like::query()->whereIn('post_id', Post::query()->where('user_id', $post->user->id)->pluck('id'))->count();
+
+        return view('posts.index', ['post' => $post, 'post_comments' => $post_comments, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes]);
     }
 
     public function moderation()

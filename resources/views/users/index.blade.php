@@ -34,6 +34,12 @@
                                 {{ $user->bio ? $user->bio : 'This user has not filled the biography yet.'}}
                             </p>
                         </div>
+                        <div class="m-2">
+                            <p class="rounded-box shadow m-2 p-2">
+                                Likes received:
+                                {{ $total_likes }}
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="divider lg:divider-horizontal"></div>

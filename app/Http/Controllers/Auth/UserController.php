@@ -34,7 +34,9 @@ class UserController extends Controller
             ->whereIn('post_id', $user->posts()->pluck('id'))
             ->get();
 
-        return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes, 'post_views' => $post_views]);
+        $total_likes =  Like::query()->whereIn('post_id', $user_posts->where('user_id', $user->id)->pluck('id'))->count();
+
+        return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes]);
     }
 
     /**

@@ -29,7 +29,7 @@
                     <div class="collapse-content">
                         <ul class="list w-full gap-2">
                             @forelse ($posts as $post)
-                                <li class="list-row rounded-box bg-base-100 shadow-sm">
+                                <li class="list-row rounded-box bg-base-100 mt-2 mb-2 shadow-md">
                                     <div><a href="/users/{{ $post->user->id }}"><img
                                                 src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                 alt="{{ $post->user?->name }}'s avatar" class="size-10 rounded-box" /></a>
@@ -67,7 +67,7 @@
                                 <li class="list-row rounded-box bg-base-100">There are no posts in this category.</li>
                             @endforelse
                         </ul>
-                        <div class="flex justify-between mt-2">
+                        <div class="flex justify-between mt-4">
                             <a class="btn btn-md" href="{{ route('categories') }}">
                                 Back to categories
                             </a>
