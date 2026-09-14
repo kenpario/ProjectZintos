@@ -203,24 +203,26 @@
             </div>
         </div>
     </div>
+
+
+    @push('js')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+        {!! $charts['line']->script() !!}
+        {!! $charts['bar']->script() !!}
+        {!! $charts['country_bar']->script() !!}
+        {!! $charts['referrer_pie']->script() !!}
+        {!! $charts['browser_bar']->script() !!}
+        {!! $charts['device_doughnut']->script() !!}
+        {!! $charts['visits_users_trend_line']->script() !!}
+
+        <script>
+            // Show/hide custom date fields based on selection
+            document.getElementById('date_range_select').addEventListener('change', function () {
+                if (this.value !== 'custom') {
+                    this.form.submit();
+                }
+            });
+        </script>
+    @endpush
+
 </x-layout>
-
-@push('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
-    {!! $charts['line']->script() !!}
-    {!! $charts['bar']->script() !!}
-    {!! $charts['country_bar']->script() !!}
-    {!! $charts['referrer_pie']->script() !!}
-    {!! $charts['browser_bar']->script() !!}
-    {!! $charts['device_doughnut']->script() !!}
-    {!! $charts['visits_users_trend_line']->script() !!}
-
-    <script>
-        // Show/hide custom date fields based on selection
-        document.getElementById('date_range_select').addEventListener('change', function () {
-            if (this.value !== 'custom') {
-                this.form.submit();
-            }
-        });
-    </script>
-@endpush

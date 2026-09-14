@@ -241,6 +241,7 @@
             </div>
         </div>
     </footer>
+    @stack('js')
 </body>
 
 </html>
