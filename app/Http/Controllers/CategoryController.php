@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Post_Category;
 use App\Models\Post;
+use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +32,14 @@ class CategoryController extends Controller
             ->take(20)
             ->get();
 
-        return view('categories.index', ['categories' => $categories, 'all_posts' => $all_posts]);
+        $post_likes = Like::with(['user', 'post'])
+            ->get();
+
+        $post_views = View::with(['user', 'post'])
+            ->get();
+
+
+        return view('categories.index', ['categories' => $categories, 'all_posts' => $all_posts, 'post_likes' => $post_likes, 'post_views' => $post_views]);
     }
 
     public function posts(Post_Category $category)
@@ -42,7 +51,13 @@ class CategoryController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('categories.posts', ['category' => $category, 'posts' => $posts]);
+        $post_likes = Like::with(['user', 'post'])
+            ->get();
+
+        $post_views = View::with(['user', 'post'])
+            ->get();
+
+        return view('categories.posts', ['category' => $category, 'posts' => $posts, 'post_likes' => $post_likes, 'post_views' => $post_views]);
     }
     /**
      * Show the form for creating a new resource.
@@ -64,7 +79,7 @@ class CategoryController extends Controller
         if (! Auth::user()->group?->is_admin) {
             abort(403, 'Unauthorized Action!');
         }
-        
+
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',

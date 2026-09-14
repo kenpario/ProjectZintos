@@ -58,7 +58,7 @@ class CommentController extends Controller
         $isModerator = Auth::user()->group?->is_mod || Auth::user()->group?->is_admin;
 
         if (! $post->category?->can_comment || (! $post->is_approved && ! $isModerator)) {
-            abort(403, 'Comments are disabled for this category.');
+            abort(403, 'Unauthorized Action!');
         }
 
         $formFields = $request->validate(

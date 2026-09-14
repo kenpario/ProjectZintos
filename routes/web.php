@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Socialite;
 use App\Models\User;
@@ -89,10 +92,29 @@ Route::middleware('auth')->group(function () {
     Route::put('/posts/{post}', [PostController::class, 'update']);
     Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
-    Route::post('/posts/{post}', [CommentController::class, 'store'])->name('comment_posts');
+    Route::post('/posts/{post}/comment', [CommentController::class, 'store'])->name('comment_posts');
     Route::get('/comments/moderation', [CommentController::class, 'moderation'])->name('mod_comments');
     Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('approve_comments');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
     Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('edit_comments');
     Route::put('/comments/{comment}', [CommentController::class, 'update']);
+
+    Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('like_posts');
+    Route::delete('/likes/{like}', [LikeController::class, 'destroy']);
+
+    Route::post('/posts/{post}/view', [ViewController::class, 'store'])->name('view_posts');
+
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
+});
+
+Route::get('/cookies', function () {
+    return view('cookies');
+});
+
+Route::get('/privacy', function () {
+    return view('privacy');
+});
+
+Route::get('/terms', function () {
+    return view('terms');
 });

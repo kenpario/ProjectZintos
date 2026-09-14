@@ -29,20 +29,21 @@
                     <div class="collapse-content">
                         <ul class="list w-full gap-2">
                             @forelse ($posts as $post)
-                                <li class="list-row rounded-box bg-base-100 shadow-sm">
+                                <li class="list-row rounded-box bg-base-100 mt-2 mb-2 shadow-md">
                                     <div><a href="/users/{{ $post->user->id }}"><img
                                                 src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                 alt="{{ $post->user?->name }}'s avatar" class="size-10 rounded-box" /></a>
                                     </div>
                                     <div>
-                                        <div><a href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a></div>
-                                        <div class="text-xs font-semibold opacity-60"><a
+                                        <div><a class="link link-hover"
+                                                href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a></div>
+                                        <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
                                                 href="/posts/{{ $post->id }}">
                                                 {{ Str::limit($post->message, 50) }}</a>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-1">
-                                        <span>{{ $post->likes }}</span>
+                                        <span>{{ $post_likes->where('post_id', $post->id)->count() }}</span>
                                         <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             aria-label="Likes">
                                             <path
@@ -52,7 +53,7 @@
                                         </svg>
                                     </div>
                                     <div class="flex items-center gap-1">
-                                        <span>{{ $post->views }}</span>
+                                        <span>{{ $post_views->where('post_id', $post->id)->count() }}</span>
                                         <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             aria-label="Views">
                                             <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none"
@@ -66,7 +67,7 @@
                                 <li class="list-row rounded-box bg-base-100">There are no posts in this category.</li>
                             @endforelse
                         </ul>
-                        <div class="flex justify-between mt-2">
+                        <div class="flex justify-between mt-4">
                             <a class="btn btn-md" href="{{ route('categories') }}">
                                 Back to categories
                             </a>

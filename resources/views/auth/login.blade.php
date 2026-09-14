@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Sign In
+        Login
     </x-slot:title>
     <div class="min-h-full w-full">
         <form method="POST" action="/login" class="mx-auto w-full max-w-md" enctype="multipart/form-data"
@@ -63,7 +63,7 @@
         </a>
         <p class="text-center text-sm">
             Don't have an account?
-            <a href="{{ route('register') }}" class="link link-primary">Register</a>
+            <a href="{{ route('register') }}" class="link link-hover">Register</a>
         </p>
         </fieldset>
     </div>

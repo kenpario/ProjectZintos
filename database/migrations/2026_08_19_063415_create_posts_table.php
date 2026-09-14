@@ -27,8 +27,6 @@ return new class extends Migration
             $table->string('message', 8000);
             $table->string('media')->nullable();
             $table->foreignId('post_category_id')->constrained('post_categories')->cascadeOnDelete();
-            $table->integer('likes')->default('0');
-            $table->integer('views')->default('0');
             $table->boolean('is_approved')->default('0');
             $table->timestamps();
         });

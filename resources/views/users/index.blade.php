@@ -10,7 +10,8 @@
                         <h1 class="m-2 text-xl font-semibold">{{ $user->name }}</h1>
                         <div class="divider"></div>
                         <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
-                            alt="{{ $user->name }}'s avatar" class="w-[150px] h-[150px] object-cover rounded-full shadow-md m-2"/>
+                            alt="{{ $user->name }}'s avatar"
+                            class="w-[150px] h-[150px] object-cover rounded-full shadow-md m-2" />
                         @if ($user->group?->is_admin)
                             <div class="aura aura-rainbow m-2">
                                 <span class="badge badge-xl shadow">{{ $user->group?->name }}</span>
@@ -33,6 +34,12 @@
                                 {{ $user->bio ? $user->bio : 'This user has not filled the biography yet.'}}
                             </p>
                         </div>
+                        <div class="m-2">
+                            <p class="rounded-box shadow m-2 p-2">
+                                Likes received:
+                                {{ $total_likes }}
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="divider lg:divider-horizontal"></div>
@@ -43,14 +50,16 @@
                         <ul class="list rounded-box gap-2">
                             <li class="list-row rounded-box shadow-md gap-2">
                                 <div>
-                                    <div><a href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a></div>
+                                    <div><a class="link link-hover"
+                                            href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a></div>
                                     <div class="text-xs font-semibold opacity-60">
-                                        <a href="/posts/{{ $post->id }}">{{ Str::limit($post->message, 50) }}</a>
+                                        <a class="link link-hover"
+                                            href="/posts/{{ $post->id }}">{{ Str::limit($post->message, 50) }}</a>
                                     </div>
                                 </div>
                                 <div class="flex justify-end gap-4">
                                     <div class="flex items-center gap-1">
-                                        <span>{{ $post->likes }}</span>
+                                        <span>{{ $post_likes->where('post_id', $post->id)->count() }}</span>
                                         <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             aria-label="Likes">
                                             <path
@@ -60,7 +69,7 @@
                                         </svg>
                                     </div>
                                     <div class="flex items-center gap-1">
-                                        <span>{{ $post->views }}</span>
+                                        <span>{{ $post_views->where('post_id', $post->id)->count() }}</span>
                                         <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             aria-label="Views">
                                             <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none"

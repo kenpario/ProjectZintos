@@ -12,7 +12,7 @@
                     @forelse ($all_unapproved_posts as $post)
                         <div class="shadow-md rounded-box p-2 mt-2">
                             <div class="flex justify-between gap-2 m-2">
-                                <span class="text-xs uppercase font-semibold opacity-60"><a
+                                <span class="text-xs uppercase font-semibold opacity-60"><a class="link link-hover"
                                         href="/categories/{{ $post->category->id }}/posts"> Submitted for
                                         {{ $post->category?->name }}</a>
                                 </span>
@@ -27,18 +27,21 @@
                                             alt="{{ $post->user->name }}'s avatar" class="size-10 rounded-box mt-2" /></a>
                                 </div>
                                 <div class="flex flex-col m-2 w-full gap-1">
-                                    <div class="text-xs font-semibold"><a href="/users/{{ $post->user->id }}">Submitted by
+                                    <div class="text-xs font-semibold"><a class="link link-hover"
+                                            href="/users/{{ $post->user->id }}">Submitted by
                                             {{ $post->user->name }}</a></div>
-                                    <div class="text-xs opacity-60 font-semibold"><a
+                                    <div class="text-xs opacity-60 font-semibold"><a class="link link-hover"
                                             href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 30) }}</a></div>
                                     <div class="text-xs opacity-60 font-semibold">
-                                        <a href="/posts/{{ $post->id }}">{{ Str::limit($post->message, 50) }}</a>
+                                        <a class="link link-hover"
+                                            href="/posts/{{ $post->id }}">{{ Str::limit($post->message, 50) }}</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     @empty
-                        <div class="text-md uppercase font-semibold opacity-60 flex justify-center m-2">No posts to be approved.</div>
+                        <div class="text-md uppercase font-semibold opacity-60 flex justify-center m-2">No posts to be
+                            approved.</div>
                     @endforelse
                 </div>
                 <div class="mt-4 flex justify-center">

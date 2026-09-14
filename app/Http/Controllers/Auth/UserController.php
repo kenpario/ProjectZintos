@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Like;
+use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +24,19 @@ class UserController extends Controller
             ->where('is_approved', true)
             ->paginate(10);
 
-        return view('users.index', ['user' => $user, 'user_posts' => $user_posts]);
+        $post_likes = Like::query()
+            ->with('user')
+            ->whereIn('post_id', $user->posts()->pluck('id'))
+            ->get();
+
+        $post_views = View::query()
+            ->with('user')
+            ->whereIn('post_id', $user->posts()->pluck('id'))
+            ->get();
+
+        $total_likes =  Like::query()->whereIn('post_id', $user_posts->where('user_id', $user->id)->pluck('id'))->count();
+
+        return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes]);
     }
 
     /**
@@ -132,7 +146,7 @@ class UserController extends Controller
             }
         }
 
-        $user->delete();
+        User::destroy($user->id);
 
         return redirect('/')->with('success', 'Your account has been deleted!');
     }

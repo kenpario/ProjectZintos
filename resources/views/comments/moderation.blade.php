@@ -12,7 +12,7 @@
                     @forelse ($all_unapproved_comments as $comment)
                         <div class="shadow-md rounded-box p-2 mt-2">
                             <div class="flex justify-between gap-2 m-2">
-                                <span class="text-xs uppercase font-semibold opacity-60"><a
+                                <span class="text-xs uppercase font-semibold opacity-60"><a class="link link-hover"
                                         href="/posts/{{ $comment->post->id }}"> Submitted for
                                         {{ Str::limit($comment->post->title, 30)}}</a>
                                 </span>
@@ -28,23 +28,26 @@
                                             class="size-10 rounded-box mt-2" /></a>
                                 </div>
                                 <div class="flex flex-col m-2 w-full gap-2">
-                                    <span class="text-xs font-semibold"><a href="/users/{{ $comment->user->id }}">Submitted
+                                    <span class="text-xs font-semibold"><a class="link link-hover"
+                                            href="/users/{{ $comment->user->id }}">Submitted
                                             by
                                             {{ $comment->user->name }}</a></span>
                                     <div class="text-xs opacity-60 font-semibold">
-                                        <a href="/posts/{{ $comment->post_id }}">{{ Str::limit($comment->message, 50) }}</a>
+                                        <a class="link link-hover"
+                                            href="/posts/{{ $comment->post_id }}">{{ Str::limit($comment->message, 50) }}</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     @empty
-                    <div class="text-md uppercase font-semibold opacity-60 flex justify-center m-2">No comments to be approved.</div>
+                        <div class="text-md uppercase font-semibold opacity-60 flex justify-center m-2">No comments to be
+                            approved.</div>
                     @endforelse
                 </div>
                 <div class="mt-4 flex justify-center">
                     {{ $all_unapproved_comments->links() }}
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </x-layout>

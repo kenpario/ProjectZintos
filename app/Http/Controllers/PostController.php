@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\Post_Category;
+use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +19,13 @@ class PostController extends Controller
             abort(403, 'Unauthorized Action!');
         }
 
+        if (Auth::user() && $post->is_approved) {
+            View::firstOrCreate([
+                'post_id' => $post->id,
+                'user_id' => Auth::user()->id,
+            ]);
+        }
+
         $post->load(['user', 'category']);
 
         $post_comments = Comment::query()
@@ -25,10 +34,22 @@ class PostController extends Controller
             ->latest()
             ->get();
 
-        return view('posts.index', ['post' => $post, 'post_comments' => $post_comments]);
+        $post_likes = Like::query()
+            ->with('user')
+            ->where('post_id', $post->id)
+            ->get();
+
+        $post_views = View::query()
+            ->with('user')
+            ->where('post_id', $post->id)
+            ->get();
+
+        $total_likes =  Like::query()->whereIn('post_id', Post::query()->where('user_id', $post->user->id)->pluck('id'))->count();
+
+        return view('posts.index', ['post' => $post, 'post_comments' => $post_comments, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes]);
     }
 
-    public function moderation(Post $post)
+    public function moderation()
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');

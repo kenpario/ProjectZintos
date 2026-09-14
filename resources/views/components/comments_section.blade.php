@@ -10,13 +10,15 @@
                             <form method="POST" action="{{ route('approve_comments', $post_comment) }}">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" onclick="return confirm('Are you sure you want to approve this comment?')"
-                                    class="btn btn-square" aria-label="Approve post" title="Approve post">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                                        stroke="currentColor" class="size-[1.2em]">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                    </svg>
-                                </button>
+                                <div class="aura aura-dual">
+                                    <button type="submit" onclick="return confirm('Are you sure you want to approve this comment?')"
+                                        class="btn btn-square" aria-label="Approve comment" title="Approve comment">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                                            stroke="currentColor" class="size-[1.2em]">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     @endif
@@ -55,7 +57,7 @@
                     <div class="flex w-full">
                         <div class="flex flex-col text-xs font-semibold gap-2 w-full">
                             <div class="flex justify-between uppercase gap-2 opacity-60">
-                                <a href="/users/{{ $post_comment->user->id }}"><span>By
+                                <a class="link link-hover" href="/users/{{ $post_comment->user->id }}"><span>By
                                         {{ $post_comment->user->name }}</span></a>
                                 <span>Commented
                                     {{ $post_comment->created_at->diffForHumans() }}

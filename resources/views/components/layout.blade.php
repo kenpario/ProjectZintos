@@ -8,8 +8,6 @@
     <title>{{ isset($title) ? $title . ' - Zintos' : 'Zintos' }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('storage/assets/img/favicon/apple-touch-icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('storage/assets/img/favicon/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('storage/assets/img/favicon/favicon-16x16.png')}}">
@@ -25,6 +23,7 @@
         systemTheme.addEventListener('change', applySystemTheme);
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @cookieconsentscripts
 </head>
 
 <body class="min-h-screen flex flex-col">
@@ -80,6 +79,16 @@
                                 </details>
                             </li>
                         @endif
+                        @if(Auth::user()->group?->is_admin)
+                            <li>
+                                <details>
+                                    <summary>Administration</summary>
+                                    <ul>
+                                        <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
+                                    </ul>
+                                </details>
+                            </li>
+                        @endif
                         <li>
                             <form method="POST" action="{{ route('logout') }}" class="flex w-full"
                                 onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
@@ -89,6 +98,7 @@
                         </li>
                     </ul>
                 @else
+                    <a href="/" class="btn skeleton w-full">Home</a>
                     <a href="{{ route('register') }}" class="btn skeleton w-full">Register</a>
                     <a href="{{ route('login') }}" class="btn skeleton w-full">Login</a>
                 @endauth
@@ -162,6 +172,16 @@
                                 </details>
                             </li>
                         @endif
+                        @if(Auth::user()->group?->is_admin)
+                            <li>
+                                <details>
+                                    <summary>Administration</summary>
+                                    <ul>
+                                        <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
+                                    </ul>
+                                </details>
+                            </li>
+                        @endif
                         <li>
                             <form method="POST" action="{{ route('logout') }}" class="inline"
                                 onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
@@ -173,9 +193,14 @@
                 </div>
             @endauth
             @guest
-                <div id="register_login" class="flex justify-end w-full">
-                    <a href="{{ route('register') }}" class="btn skeleton">Register</a>
-                    <a href="{{ route('login') }}" class="btn skeleton">Login</a>
+                <div class="flex justify-between w-full">
+                    <div id="home">
+                        <a href="/" class="btn skeleton">Home</a>
+                    </div>
+                    <div id="register_login">
+                        <a href="{{ route('register') }}" class="btn skeleton">Register</a>
+                        <a href="{{ route('login') }}" class="btn skeleton">Login</a>
+                    </div>
                 </div>
             @endguest
         </div>
@@ -202,12 +227,21 @@
     <main class="mt-18 mb-2 ml-2 mr-2 flex-1">
         {{ $slot }}
     </main>
+    @cookieconsentview
 
     <footer class="footer footer-center relative z-10 bg-base-300 text-base-content p-4 rounded">
-        <div>
-            <p>Copyright ©2026 - {{  date('Y') }} - All right reserved by Project Zintos</p>
+        <div class="flex flex-col">
+            <div>
+                <p>Copyright ©2026 - {{  date('Y') }} - All right reserved by Project Zintos</p>
+            </div>
+            <div class="flex gap-2 justify-center">
+                <a class="link link-hover" href="/cookies">Cookie Policy</a>
+                <a class="link link-hover" href="/privacy">Privacy Policy</a>
+                <a class="link link-hover" href="/terms">Terms of Use</a>
+            </div>
         </div>
     </footer>
+    @stack('js')
 </body>
 
 </html>
