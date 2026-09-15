@@ -52,7 +52,7 @@
                         </div>
                     @enderror
                     <div class="flex flex-col w-full gap-2">
-                        <button type="submit" class="btn btn-neutral mt-4">Update</button>
+                        <button type="submit" class="btn bg-base-300 shadow-md mt-4">Update</button>
                         <a class="btn" href="{{ route('dashboard') }}">Back</a>
                     </div>
                 </form>
@@ -88,7 +88,7 @@
 
                             <form method="POST" action="{{ route('two-factor.regenerate-recovery-codes') }}">
                                 @csrf
-                                <button type="submit" class="btn btn-neutral w-full">Generate new recovery codes</button>
+                                <button type="submit" class="btn bg-base-300 w-full">Generate new recovery codes</button>
                             </form>
 
                             <form method="POST" action="{{ route('two-factor.disable') }}">
@@ -112,14 +112,14 @@
                                                 placeholder="123456" class="input mt-2 mb-2input-bordered w-full" required>
                                             <span>Authenticator code</span>
                                         </label>
-                                        <button type="submit" class="btn btn-neutral mt-3 w-full">Confirm two-factor
+                                        <button type="submit" class="btn bg-base-300 shadow-md mt-3 w-full">Confirm two-factor
                                             authentication</button>
                                     </form>
                                 </div>
                             @else
                                 <form method="POST" action="{{ route('two-factor.enable') }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-neutral w-full">Set up two-factor authentication</button>
+                                    <button type="submit" class="btn bg-base-300 shadow-md w-full">Set up two-factor authentication</button>
                                 </form>
                             @endif
                         @endif

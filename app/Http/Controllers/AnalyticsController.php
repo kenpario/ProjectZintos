@@ -157,7 +157,7 @@ class AnalyticsController extends Controller
     private function prepareCharts(array $data): array
     {
         $charts = [];
-        $colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6', '#1abc9c'];
+        $colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#CD49E4', '#1abc9c', '#798686', '#FF1491', '#C5E845', '#0F0E20'];
 
         // Line Chart: Visits Trend
         $lineChart = new Chart;

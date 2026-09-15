@@ -1,10 +1,9 @@
 @props(['post', 'post_likes', 'post_views'])
 
-<div class="collapse-content text-sm">
-    <div class="max-lg:w-full" id="posts">
-
-        <ul class="list bg-base-100 rounded-box shadow-md mt-2">
-            <li class="list-row">
+<div class="collapse-content text-sm flex mt-2 sm:p-4">
+    <div class="max-lg:w-full hover-3d w-full" id="posts">
+        <ul class="list bg-base-100 rounded-box shadow-md">
+            <li class="list-row w-full p-0 sm:p-4">
                 <div><a href="/users/{{ $post->user->id }}"><img
                             src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                             alt="{{ $post->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
