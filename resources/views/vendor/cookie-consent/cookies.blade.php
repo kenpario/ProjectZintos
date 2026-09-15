@@ -11,8 +11,8 @@
                     @endif
                 </div>
                 <div class="cookies__actions">
-                    @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'btn btn-neutral cookiesBtn cookiesBtn--essentials'])
-                    @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'btn btn-neutral cookiesBtn cookiesBtn--accept'])
+                    @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'btn bg-base-300 skeleton shadow-md cookiesBtn cookiesBtn--essentials'])
+                    @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'btn bg-base-300 skeleton shadow-md cookiesBtn cookiesBtn--accept'])
                 </div>
                 <div class="divider p-2"></div>
             </div>
@@ -72,7 +72,7 @@
                     @endforeach
                 </div>
                 <div class="cookies__save">
-                    <button type="submit" class="btn btn-neutral w-full">@lang('cookieConsent::cookies.save')</button>
+                    <button type="submit" class="btn bg-base-300 shadow-md skeleton w-full">@lang('cookieConsent::cookies.save')</button>
                 </div>
             </form>
         </div>
@@ -92,7 +92,7 @@
     }
 
     #cookies-policy .cookies__alert {
-        background: var(--color-base-300);
+        background: var(--color-base-200);
         border: none;
 
     }

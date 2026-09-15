@@ -31,6 +31,6 @@
         </div>
     </div>
     <div class="flex justify-end m-2">
-        @cookieconsentbutton(action: 'reset', label: 'Reset cookies', attributes: ['id' => 'reset-button', 'class' => 'btn btn-neutral'])
+        @cookieconsentbutton(action: 'reset', label: 'Reset cookies', attributes: ['id' => 'reset-button', 'class' => 'btn bg-base-300 shadow-md'])
     </div>
 </x-layout>

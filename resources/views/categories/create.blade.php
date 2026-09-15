@@ -33,7 +33,7 @@
                         Can members comment?
                     </label>
                 </fieldset>
-                <button type="submit" class="btn btn-neutral mt-4">Add Category</button>
+                <button type="submit" class="btn bg-base-300 shadow-md mt-4">Add Category</button>
                 <a class="btn" href="{{ route('categories') }}">Back</a>
             </fieldset>
         </form>

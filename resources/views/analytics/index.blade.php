@@ -3,18 +3,19 @@
         Analytics
     </x-slot:title>
 
-    <div class="mx-auto max-w-7xl px-4 py-10">
+    <div class="mx-auto max-w-7xl px-4 py-10 rounded-box shadow-md m-2">
         <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">Insights</p>
+                <h1 class="mt-2 text-3xl font-bold text-base-content">Google</h1>
                 <h1 class="mt-2 text-3xl font-bold text-base-content">{{ ucfirst($currentRange) }} Analytics</h1>
             </div>
 
             <div class="card w-full max-w-2xl bg-base-100 shadow-md">
-                <div class="card-body p-4">
+                <div class="card-body p-4 w-full">
                     <form method="GET" action="{{ route('analytics') }}"
-                        class="flex flex-col gap-3 sm:flex-row sm:items-end">
-                        <label class="form-control w-full sm:max-w-xs">
+                        class="flex flex-col gap-3 sm:flex-row sm:items-end w-full">
+                        @csrf
+                        <label class="form-control w-full">
                             <span
                                 class="label-text mb-1 text-xs font-medium uppercase tracking-wide text-base-content/70">Date
                                 range</span>
@@ -44,7 +45,7 @@
                                     <input type="date" name="end_date" class="input w-full border-0 shadow-md"
                                         value="{{ $endDate }}" required>
                                 </label>
-                                <button type="submit" class="btn btn-neutral mt-4">Apply</button>
+                                <button type="submit" class="btn bg-base-300 shadow-md">Apply</button>
                             </div>
                         @endif
                     </form>
@@ -53,55 +54,60 @@
         </div>
 
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-            <div class="card bg-base-100 shadow-md">
-                <div class="card-body p-4">
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm text-base-content/70">Total page views</p>
-                        <span class="badge badge-primary badge-soft">Views</span>
+            <div class="hover hover-3d">
+                <div class="card bg-base-100 shadow-md">
+                    <div class="card-body p-4">
+                        <div class="flex items-center justify-between font-bold">
+                            <p class="text-sm text-base-content/70">Total page views</p>
+                        </div>
+                        <h2 class="mt-3 text-2xl font-bold">{{ number_format($total_visits) }}</h2>
                     </div>
-                    <h2 class="mt-3 text-2xl font-bold">{{ number_format($total_visits) }}</h2>
                 </div>
             </div>
 
-            <div class="card bg-base-100 shadow-md">
-                <div class="card-body p-4">
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm text-base-content/70">Total users</p>
-                        <span class="badge badge-success badge-soft">Users</span>
+            <div class="hover hover-3d">
+                <div class="card bg-base-100 shadow-md">
+                    <div class="card-body p-4">
+                        <div class="flex items-center justify-between font-bold">
+                            <p class="text-sm text-base-content/70">Total users</p>
+                        </div>
+                        <h2 class="mt-3 text-2xl font-bold">{{ number_format($total_users) }}</h2>
                     </div>
-                    <h2 class="mt-3 text-2xl font-bold">{{ number_format($total_users) }}</h2>
                 </div>
             </div>
 
-            <div class="card bg-base-100 shadow-md">
-                <div class="card-body p-4">
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm text-base-content/70">New users</p>
-                        <span class="badge badge-info badge-soft">New</span>
+            <div class="hover hover-3d">
+                <div class="card bg-base-100 shadow-md">
+                    <div class="card-body p-4">
+                        <div class="flex items-center justify-between font-bold">
+                            <p class="text-sm text-base-content/70">New users</p>
+                        </div>
+                        <h2 class="mt-3 text-2xl font-bold">{{ number_format($new_users) }}</h2>
                     </div>
-                    <h2 class="mt-3 text-2xl font-bold">{{ number_format($new_users) }}</h2>
                 </div>
             </div>
 
-            <div class="card bg-base-100 shadow-md">
-                <div class="card-body p-4">
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm text-base-content/70">Avg. session</p>
-                        <span class="badge badge-warning badge-soft">Time</span>
+            <div class="hover hover-3d">
+                <div class="card bg-base-100 shadow-md">
+                    <div class="card-body p-4">
+                        <div class="flex items-center justify-between font-bold">
+                            <p class="text-sm text-base-content/70">Avg. session Time</p>
+                        </div>
+                        <h2 class="mt-3 text-2xl font-bold">
+                            {{ Str::startsWith($avg_session_duration, '00:') ? substr($avg_session_duration, 3) : $avg_session_duration }}
+                        </h2>
                     </div>
-                    <h2 class="mt-3 text-2xl font-bold">
-                        {{ Str::startsWith($avg_session_duration, '00:') ? substr($avg_session_duration, 3) : $avg_session_duration }}
-                    </h2>
                 </div>
             </div>
 
-            <div class="card bg-base-100 shadow-md">
-                <div class="card-body p-4">
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm text-base-content/70">Bounce rate</p>
-                        <span class="badge badge-error badge-soft">Rate</span>
+            <div class="hover hover-3d">
+                <div class="card bg-base-100 shadow-md">
+                    <div class="card-body p-4">
+                        <div class="flex items-center justify-between font-bold">
+                            <p class="text-sm text-base-content/70">Bounce rate</p>
+                        </div>
+                        <h2 class="mt-3 text-2xl font-bold">{{ $bounce_rate }}%</h2>
                     </div>
-                    <h2 class="mt-3 text-2xl font-bold">{{ $bounce_rate }}%</h2>
                 </div>
             </div>
         </div>
@@ -139,14 +145,16 @@
                                     }
                                 @endphp
 
-                                <li
-                                    class="flex items-center justify-between gap-3 rounded-box bg-base-200/40 p-3 shadow-md">
-                                    <a href="{{ $url }}" target="_blank"
-                                        class="link link-hover text-sm font-medium text-left">
-                                        {{ $page['pageTitle'] }}
-                                    </a>
-                                    <span class="badge badge-ghost badge-sm">{{ $page['screenPageViews'] }} views</span>
-                                </li>
+                                <div class="hover hover-3d flex w-full">
+                                    <li
+                                        class="flex items-center justify-between gap-3 rounded-box bg-base-200/40 p-3 shadow-md w-full">
+                                        <a href="{{ $url }}" target="_blank"
+                                            class="link link-hover text-sm font-medium text-left">
+                                            {{ $page['pageTitle'] }}
+                                        </a>
+                                        <span class="badge badge-ghost badge-sm">{{ $page['screenPageViews'] }} views</span>
+                                    </li>
+                                </div>
                             @endforeach
                         </ul>
                     </div>

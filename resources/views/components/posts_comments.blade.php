@@ -13,7 +13,7 @@
                     <span class="label-text-alt text-error">{{ $message }}</span>
                 </div>
             @enderror
-            <button type="submit" class="btn btn-neutral mt-4">Add</button>
+            <button type="submit" class="btn bg-base-300 shadow-md mt-4">Add</button>
         </fieldset>
     </form>
 </div>

@@ -18,7 +18,7 @@
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
                 @enderror
-                <button type="submit" class="btn btn-neutral mt-4">Update</button>
+                <button type="submit" class="btn bg-base-300 shadow-md mt-4">Update</button>
                 <a class="btn" href="{{ route('dashboard') }}">Back</a>
             </fieldset>
         </form>

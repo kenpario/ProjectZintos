@@ -5,7 +5,7 @@
     <div class="relative overflow-hidden rounded">
         <img class="absolute opacity-60 rounded-md w-screen"
             src="{{ asset('storage/assets/img/items/background.gif') }}">
-        <div class="relative z-10">
+        <div class="relative z-10 sm:m-2 sm:p-4">
             <div class="flex m-2 justify-center">
                 <div class="hover-3d">
                     <a href="{{ route('add_posts') }}" class="btn skeleton shadow-md">New Post</a>
@@ -28,17 +28,17 @@
                             </div>
                         </summary>
                         @forelse($all_posts->where('post_category_id', $category->id) as $post)
-                            <div class="collapse-content text-sm">
-                                <div class="max-lg:w-full" id="posts">
+                            <div class="collapse-content text-sm mx-2">
+                                <div class="max-lg:w-full hover-3d w-full min-w-0 mt-2 sm:p-4" id="posts">
 
-                                    <ul class="list bg-base-100 rounded-box shadow-md mt-2">
-                                        <li class="list-row">
+                                    <ul class="list bg-base-100 rounded-box shadow-md mx-2">
+                                        <li class="list-row grid-cols-[auto_minmax(0,1fr)_auto_auto] gap-2 p-2 sm:gap-4 sm:p-4">
                                             <div><a href="/users/{{ $post->user->id }}"><img
                                                         src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                         alt="{{ $post->user?->name }}'s avatar"
                                                         class="size-10 rounded-box" /></a>
                                             </div>
-                                            <div>
+                                            <div class="min-w-0 break-words">
                                                 <div><a class="link link-hover"
                                                         href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
                                                 </div>
@@ -89,7 +89,8 @@
                             </div>
                         @endforelse
                         <div class="flex justify-between collapse-content text-sm">
-                            <a class="btn btn-md mt-2" href="{{ route('categories_posts', $category) }}">
+                            <a class="btn btn-md bg-base-300 shadow-md mt-2"
+                                href="{{ route('categories_posts', $category) }}">
                                 View all posts ({{ $category->posts_count }})
                             </a>
                             {{ $categories->links() }}
