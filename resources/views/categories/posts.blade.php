@@ -27,11 +27,11 @@
                         </div>
                     </summary>
                     @forelse ($posts as $post)
-                        <div class="collapse-content text-sm mx-2">
-                            <div class="max-lg:w-full hover-3d w-full min-w-0 mt-2 sm:p-4" id="posts">
+                        <div class="collapse-content text-sm mx-2 mt-2 sm:p-4">
+                            <div class="max-lg:w-full hover-3d w-full min-w-0" id="posts">
 
                                 <ul class="list bg-base-100 rounded-box shadow-md mx-2">
-                                    <li class="list-row grid-cols-[auto_minmax(0,1fr)_auto_auto] gap-2 p-2 sm:gap-4 sm:p-4">
+                                    <li class="list-row grid-cols-[auto_minmax(0,1fr)_auto_auto] gap-2 p-0 sm:gap-4 sm:p-4">
 
                                         <div><a href="/users/{{ $post->user->id }}"><img
                                                     src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
