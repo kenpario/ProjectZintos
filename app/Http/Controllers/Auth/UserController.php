@@ -58,7 +58,7 @@ class UserController extends Controller
                     "%{$search}%"
                 );
             })
-            ->latest()
+            ->orderBy('id', 'asc')
             ->paginate(10)
             ->withQueryString();
 

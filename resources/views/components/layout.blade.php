@@ -47,9 +47,9 @@
                                 <summary>Categories</summary>
                                 <ul>
                                     <li><a href="{{ route('categories') }}">All</a></li>
-                                    @foreach ($category_names as $category_name)
+                                    @foreach ($categories as $category)
                                         <li><a
-                                                href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
+                                                href="{{ route('categories_posts', ['category' => $category->id]) }}">{{ $category->name }}</a>
                                         </li>
                                     @endforeach
                                     @if(Auth::user()->group?->is_admin)
@@ -86,6 +86,7 @@
                                     <ul>
                                         <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
                                         <li><a href="{{ route('user_administration')}}">User Administration</a></li>
+                                        <li><a href="{{ route('group_administration')}}">Group Administration</a></li>
                                     </ul>
                                 </details>
                             </li>
@@ -115,8 +116,9 @@
                 <div id="categories_menu" popover>
                     <ul class="menu gap-1 w-full">
                         <li><a href="{{ route('categories') }}">All</a></li>
-                        @foreach ($category_names as $category_name)
-                            <li><a href="{{ route('categories', ['category' => $category_name]) }}">{{ $category_name }}</a>
+                        @foreach ($categories as $category)
+                            <li><a
+                                    href="{{ route('categories_posts', ['category' => $category->id]) }}">{{ $category->name }}</a>
                             </li>
                         @endforeach
                         @if(Auth::user()->group?->is_admin)
@@ -180,6 +182,7 @@
                                     <ul>
                                         <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
                                         <li><a href="{{ route('user_administration')}}">User Administration</a></li>
+                                        <li><a href="{{ route('group_administration')}}">Group Administration</a></li>
                                     </ul>
                                 </details>
                             </li>

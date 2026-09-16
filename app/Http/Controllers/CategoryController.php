@@ -15,19 +15,10 @@ class CategoryController extends Controller
     {
         $search = $request->string('search')->trim()->toString();
 
-        $categoryName = $request->query('category');
-
         $categories = Post_Category::query()
-            ->when($categoryName, function ($query) use ($categoryName) {
-                $query->where('name', $categoryName);
-            })
-            ->withCount(['posts' => function ($query) {
-                $query->where('is_approved', true);
-            }])
-            ->latest()
+            ->orderBy('id', 'asc')
             ->paginate(5)
             ->withQueryString();
-
 
         $all_posts = Post::with(['user', 'category'])
             ->where('is_approved', true)

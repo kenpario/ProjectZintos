@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('components.layout', function (ViewInstance $view): void {
-            $view->with('category_names', Post_Category::query()->pluck('name'));
+            $view->with('categories', Post_Category::query()->get());
         });
     }
 }
