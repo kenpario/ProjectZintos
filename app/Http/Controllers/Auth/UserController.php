@@ -40,14 +40,27 @@ class UserController extends Controller
         return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes]);
     }
 
-    public function administration(User $user)
+    public function administration(Request $request)
     {
 
         if (! Auth::user()->group?->is_admin) {
             abort(403, 'Unauthorized Action!');
         }
 
-        $user_data = $user::latest()->paginate(10);
+        $search = $request->string('search')->trim()->toString();
+
+        $user_data = User::query()
+            ->with('group')
+            ->when($search !== '', function ($query) use ($search) {
+                $query->whereAny(
+                    ['name', 'email'],
+                    'ilike',
+                    "%{$search}%"
+                );
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('users.administration', ['user_data' => $user_data]);
     }
