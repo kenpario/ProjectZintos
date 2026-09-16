@@ -81,6 +81,7 @@ Route::middleware('auth')->group(function () {
     Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit_user_profile');
     Route::put('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
+    Route::get('/administration/users', [UserController::class, 'administration'])->name('user_administration');
 
 
     Route::get('/posts/add', [PostController::class, 'create'])->name('add_posts');

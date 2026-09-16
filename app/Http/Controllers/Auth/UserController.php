@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Group;
 use App\Models\Like;
 use App\Models\View;
 use Illuminate\Http\Request;
@@ -39,6 +40,17 @@ class UserController extends Controller
         return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes]);
     }
 
+    public function administration(User $user)
+    {
+
+        if (! Auth::user()->group?->is_admin) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $user_data = $user::latest()->paginate(10);
+
+        return view('users.administration', ['user_data' => $user_data]);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -71,7 +83,10 @@ class UserController extends Controller
         if (! (Auth::user()->id === $user->id || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
-        return view('users.edit', ['user' => $user]);
+
+        $groups = Group::get();
+
+        return view('users.edit', ['user' => $user, 'groups' => $groups]);
     }
 
     /**
@@ -90,6 +105,7 @@ class UserController extends Controller
                 'name' => 'required|string|max:30|min:5',
                 'avatar' => 'nullable|file|image|mimes:jpg,jpeg,png,gif|max:2048',
                 'bio' => 'nullable|string|max:100|min:5',
+                'group_id' => 'required|string',
             ],
             [
                 'name.required' => 'Please write a name!',
