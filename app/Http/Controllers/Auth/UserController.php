@@ -64,6 +64,23 @@ class UserController extends Controller
 
         return view('users.administration', ['user_data' => $user_data]);
     }
+
+    public function team()
+    {
+        $team_members = User::query()
+            ->with('group')
+            ->whereNotIn('group_id', [3, 4])
+            ->get();
+
+        $team_groups = $team_members
+            ->groupBy('group_id')
+            ->map(fn($group_members): array => [
+                'group' => $group_members->first()->group,
+                'members' => $group_members,
+            ]);
+
+        return view('members.team', ['team_groups' => $team_groups]);
+    }
     /**
      * Show the form for creating a new resource.
      */

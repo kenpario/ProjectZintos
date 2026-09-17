@@ -10,6 +10,7 @@ use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Mews\Purifier\Facades\Purifier;
 
 class PostController extends Controller
 {
@@ -44,9 +45,11 @@ class PostController extends Controller
             ->where('post_id', $post->id)
             ->get();
 
-        $total_likes =  Like::query()->whereIn('post_id', Post::query()->where('user_id', $post->user->id)->pluck('id'))->count();
+        $total_likes = Like::query()->whereIn('post_id', Post::query()->where('user_id', $post->user->id)->pluck('id'))->count();
 
-        return view('posts.index', ['post' => $post, 'post_comments' => $post_comments, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes]);
+        $total_posts = Post::query()->where('is_approved', 'true')->pluck('id')->count();
+
+        return view('posts.index', ['post' => $post, 'post_comments' => $post_comments, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes, 'total_posts' => $total_posts]);
     }
 
     public function moderation()
@@ -122,7 +125,13 @@ class PostController extends Controller
             unset($formFields['media']);
         }
 
+        if (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) {
+            $formFields['is_approved'] = 1;
+        }
+
         $formFields['user_id'] = Auth::id();
+
+        $formFields['message'] = Purifier::clean($formFields['message']);
 
         Post::create($formFields);
 
@@ -179,7 +188,13 @@ class PostController extends Controller
             ]
         );
 
-        $formFields['is_approved'] = 0;
+        if (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) {
+            $formFields['is_approved'] = 1;
+        } else {
+            $formFields['is_approved'] = 0;
+        }
+
+        $formFields['message'] = Purifier::clean($formFields['message']);
 
         $newMedia = null;
         $oldMedia = $post->media;
@@ -210,7 +225,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Post $post)
+    public function destroy(Post $post)
     {
         if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
             abort(403, 'Unauthorized Action!');

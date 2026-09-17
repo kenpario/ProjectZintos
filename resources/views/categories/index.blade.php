@@ -61,7 +61,7 @@
                                                     </div>
                                                     <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
                                                             href="/posts/{{ $post->id }}">
-                                                            {{ Str::limit($post->message, 50) }}</a>
+                                                            {{ Str::limit(strip_tags($post->message), 50) }}</a>
                                                     </div>
                                                 </div>
                                                 <div class="flex items-center gap-1">
