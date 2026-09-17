@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="bg-base-100 rounded-box shadow-md p-4">
-                <form method="GET" action="{{ route('categories') }}">
+                <form method="GET" action="{{ route('categories_posts', ['category' => $category]) }}">
                     <div class="m-2 flex justify-end">
                         <label class="input shadow-md">
                             <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
