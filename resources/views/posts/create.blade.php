@@ -3,13 +3,13 @@
         Add Post
     </x-slot:title>
     <div class="min-h-full w-full">
-        <form method="POST" action="/posts" class="mx-auto w-full max-w-md" enctype="multipart/form-data"
+        <form method="POST" action="/posts" class="mx-auto w-full max-w-4xl" enctype="multipart/form-data"
             onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Adding...';">
             @csrf
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
                 <legend class="fieldset-legend">New Post</legend>
                 <label class="label" for="media">Media</label>
-                <input id="media" type="file" class="file-input w-full" name="media"/>
+                <input id="media" type="file" class="file-input w-full" name="media" />
                 @error('media')
                     <div class="label">
                         <span class="label-text-alt text-error">{{ $message }}</span>
@@ -38,7 +38,18 @@
                     </div>
                 @enderror
                 <label class="label">Message</label>
-                <textarea class="textarea h-32 w-full max-w-full" placeholder="Message"
+                <script>
+                    tinymce.init({
+                        selector: '#post_message',
+                        promotion: false,
+                        branding: false,
+                        onboarding: false,
+                        plugins: 'autolink lists link table hr code wordcount',
+                        toolbar:
+                            'undo redo | blocks | bold italic underline | bullist numlist | link table hr | code',
+                    });
+                </script>
+                <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Message"
                     name="message">{{ old('message') }}</textarea>
                 @error('message')
                     <div class="label">

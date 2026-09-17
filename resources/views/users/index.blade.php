@@ -34,10 +34,14 @@
                                 {{ $user->bio ? $user->bio : 'This user has not filled the biography yet.'}}
                             </p>
                         </div>
-                        <div class="m-2">
-                            <p class="rounded-box shadow m-2 p-2">
+                        <div class="m-2 p-2 rounded-box shadow-md">
+                            <p>
                                 Likes received:
                                 {{ $total_likes }}
+                            </p>
+                            <p>
+                                Posts made:
+                                {{ $user_posts->count() }}
                             </p>
                         </div>
                     </div>
@@ -57,7 +61,7 @@
                                             </div>
                                             <div class="text-xs font-semibold opacity-60">
                                                 <a class="link link-hover"
-                                                    href="/posts/{{ $post->id }}">{{ Str::limit($post->message, 50) }}</a>
+                                                    href="/posts/{{ $post->id }}">{{ Str::limit(strip_tags($post->message), 50) }}</a>
                                             </div>
                                         </div>
                                         <div class="flex justify-end gap-4">

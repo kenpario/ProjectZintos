@@ -15,6 +15,7 @@
         "laravel/framework": "^13.8",
         "laravel/socialite": "^5.30",
         "laravel/tinker": "^3.0",
+        "mews/purifier": "^3.4",
         "spatie/laravel-analytics": "^5.7",
         "whitecube/laravel-cookie-consent": "^1.3"
     },

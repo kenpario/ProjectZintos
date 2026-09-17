@@ -3,7 +3,7 @@
         Edit {{ $post->title }}
     </x-slot:title>
     <div class="min-h-full w-full">
-        <form method="POST" action="/posts/{{ $post->id }}" class="mx-auto w-full max-w-md"
+        <form method="POST" action="/posts/{{ $post->id }}" class="mx-auto w-full max-w-4xl"
             enctype="multipart/form-data"
             onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Updating...';">
             @csrf
@@ -53,7 +53,18 @@
                     </div>
                 @enderror
                 <label class="label">Message</label>
-                <textarea class="textarea h-32 w-full max-w-full" placeholder="Message"
+                <script>
+                    tinymce.init({
+                        selector: '#post_message',
+                        promotion: false,
+                        branding: false,
+                        onboarding: false,
+                        plugins: 'autolink lists link table hr code wordcount',
+                        toolbar:
+                            'undo redo | blocks | bold italic underline | bullist numlist | link table hr | code',
+                    });
+                </script>
+                <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Message"
                     name="message">{{ old('message', $post->message) }}</textarea>
                 @error('message')
                     <div class="label">

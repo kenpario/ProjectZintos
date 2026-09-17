@@ -16,7 +16,7 @@
                     <div><a class="link link-hover"
                             href="/posts/{{ $hot_topic->id }}">{{ Str::limit($hot_topic->title, 20) }}</a></div>
                     <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
-                            href="/posts/{{ $hot_topic->id }}">{{ Str::limit($hot_topic->message, 50)}}</a>
+                            href="/posts/{{ $hot_topic->id }}">{{ Str::limit(strip_tags($hot_topic->message), 50)}}</a>
                     </div>
                 </div>
             </div>

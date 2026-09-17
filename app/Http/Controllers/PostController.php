@@ -10,6 +10,7 @@ use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Mews\Purifier\Facades\Purifier;
 
 class PostController extends Controller
 {
@@ -124,6 +125,8 @@ class PostController extends Controller
 
         $formFields['user_id'] = Auth::id();
 
+        $formFields['message'] = Purifier::clean($formFields['message']);
+
         Post::create($formFields);
 
         return redirect('/categories')->with('success', 'Your Post has been added!');
@@ -180,6 +183,8 @@ class PostController extends Controller
         );
 
         $formFields['is_approved'] = 0;
+
+        $formFields['message'] = Purifier::clean($formFields['message']);
 
         $newMedia = null;
         $oldMedia = $post->media;

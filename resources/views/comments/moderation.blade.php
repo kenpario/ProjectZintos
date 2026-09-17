@@ -8,9 +8,9 @@
                 <div class="font-semibold bg-base-300 rounded-box p-4">
                     <span>Comments waiting for approval</span>
                 </div>
-                <div class="w-full">
+                <div class="w-full hover-3d">
                     @forelse ($all_unapproved_comments as $comment)
-                        <div class="shadow-md rounded-box p-2 mt-2">
+                        <div class="shadow-md rounded-box p-2 mt-2 bg-base-100">
                             <div class="flex justify-between gap-2 m-2">
                                 <span class="text-xs uppercase font-semibold opacity-60"><a class="link link-hover"
                                         href="/posts/{{ $comment->post->id }}"> Submitted for

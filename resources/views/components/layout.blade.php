@@ -24,6 +24,8 @@
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @cookieconsentscripts
+    <script src="https://cdn.tiny.cloud/1/vjhp15lnzrse979u5hilnude93nrd4jsbr2a5hn9zdrs0cuq/tinymce/8/tinymce.min.js"
+        referrerpolicy="origin" crossorigin="anonymous"></script>
 </head>
 
 <body class="min-h-screen flex flex-col">

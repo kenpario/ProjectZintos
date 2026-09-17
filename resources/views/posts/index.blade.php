@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="divider lg:divider-horizontal"></div>
-                <div class="flex flex-col w-full gap-2">
+                <div class="flex min-w-0 flex-1 flex-col gap-2">
                     <div class="w-full">
                         <div class="flex justify-between items-center font-semibold bg-base-300 rounded-box p-4">
                             <span> {{ $post->title }} </span>
@@ -104,7 +104,7 @@
                                     {{ $post->created_at->diffForHumans() }}
                                 </span>
                             </div>
-                            <div class="flex flex-col m-2 w-full">
+                            <div class="flex w-full flex-col">
                                 <div class="flex justify-center w-full">
                                     @if($post->media)
                                         @if ($post->isVideo())
@@ -119,8 +119,8 @@
                                         @endif
                                     @endif
                                 </div>
-                                <div class="text-md font-semibold mt-2">
-                                    {{ $post->message }}
+                                <div class="post-content text-md p-2 font-semibold">
+                                    {!! $post->message !!}
                                 </div>
                             </div>
                         </div>

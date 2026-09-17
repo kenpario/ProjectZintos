@@ -4,6 +4,56 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+#post_message {
+    min-height: 20rem;
+}
+
+.post-content a {
+    @apply link-hover;
+}
+
+.post-content table {
+    width: 100%;
+    margin: 1rem 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--radius-md);
+    color: var(--color-base-content);
+}
+
+.post-content th,
+.post-content td {
+    border-color: var(--color-base-content) !important;
+    padding: 0.5rem 0.5rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+.post-content th {
+    font-weight: 700;
+}
+
+.post-content table > :first-child > tr:first-child > :first-child {
+    border-top-left-radius: var(--radius-md);
+}
+
+.post-content table > :first-child > tr:first-child > :last-child {
+    border-top-right-radius: var(--radius-md);
+}
+
+.post-content table > :last-child > tr:last-child > :first-child {
+    border-bottom-left-radius: var(--radius-md);
+}
+
+.post-content table > :last-child > tr:last-child > :last-child {
+    border-bottom-right-radius: var(--radius-md);
+}
+
+.post-content hr {
+    border: 0;
+    border-top: 2px solid var(--color-base-content);
+}
+
 @theme {
     --font-sans:
         "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
