@@ -72,6 +72,10 @@ class CommentController extends Controller
             ]
         );
 
+        if (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) {
+            $formFields['is_approved'] = 1;
+        }
+
         $formFields['user_id'] = Auth::user()->id;
 
         $formFields['post_id'] = $post->id;
@@ -123,7 +127,11 @@ class CommentController extends Controller
             ]
         );
 
-        $formFields['is_approved'] = 0;
+        if (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) {
+            $formFields['is_approved'] = 1;
+        } else {
+            $formFields['is_approved'] = 0;
+        }
 
         $comment->update($formFields);
 

@@ -36,10 +36,14 @@
                                 {{ $post->user?->bio ? $post->user?->bio : 'This user has not filled the biography yet.'}}
                             </p>
                         </div>
-                        <div class="m-2">
-                            <p class="rounded-box shadow m-2 p-2">
+                        <div class="rounded-box shadow m-2 p-2">
+                            <p>
                                 Likes received:
                                 {{ $total_likes }}
+                            </p>
+                            <p>
+                                Posts made:
+                                {{ $total_posts }}
                             </p>
                         </div>
                     </div>
@@ -119,7 +123,7 @@
                                         @endif
                                     @endif
                                 </div>
-                                <div class="post-content text-md p-2 font-semibold">
+                                <div class="post-content p-2">
                                     {!! $post->message !!}
                                 </div>
                             </div>
