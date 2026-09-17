@@ -129,12 +129,10 @@
                     </ul>
                 </div>
 
-                <button popovertarget="a2">AI</button>
-                <div id="a2" popover>
+                <button popovertarget="members_menu">Members</button>
+                <div id="members_menu" popover>
                     <ul class="menu w-full">
-                        <li><a>AI infrastructure</a></li>
-                        <li><a>Image generation</a></li>
-                        <li><a>MCP servers</a></li>
+                        <li><a href="{{ route('team') }}">Team</a></li>
                     </ul>
                 </div>
 
