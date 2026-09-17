@@ -18,7 +18,7 @@
                         </div>
                     @else
                         <div class="mb-2 flex justify-center">
-                            <div class="w-20 rounded-full shadow">
+                            <div class="w-20">
                                 <img src="https://img.daisyui.com/images/profile/demo/superperson@192.webp"
                                     alt="{{ $user->name }}'s avatar"
                                     class="w-[150px] h-[150px] object-cover rounded-full shadow-md m-2" />
@@ -41,6 +41,22 @@
                             <span class="label-text-alt text-error">{{ $message }}</span>
                         </div>
                     @enderror
+                    @if (Auth::user()->group?->is_admin)
+                        <label class="label">Group</label>
+                        <select class="select w-full" name="group_id">
+                            <option value="">Select a Group</option>
+                            @foreach ($groups as $group)
+                                <option value="{{ $group->id }}" @selected(old('group_id', $user->group_id) == $group->id)>
+                                    {{ $group->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('group_id')
+                            <div class="label">
+                                <span class="label-text-alt text-error">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    @endif
                     <label class="label">Email</label>
                     <input type="text" placeholder="Email" class="input mt-2" disabled value="{{ $user->email }}" />
                     <label class="label">Biography</label>
@@ -119,7 +135,8 @@
                             @else
                                 <form method="POST" action="{{ route('two-factor.enable') }}">
                                     @csrf
-                                    <button type="submit" class="btn bg-base-300 shadow-md w-full">Set up two-factor authentication</button>
+                                    <button type="submit" class="btn bg-base-300 shadow-md w-full">Set up two-factor
+                                        authentication</button>
                                 </form>
                             @endif
                         @endif

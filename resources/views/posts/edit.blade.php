@@ -34,7 +34,7 @@
                 <select class="select w-full" name="post_category_id">
                     <option value="">Select a Category</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('post_category_id', $category->id) == $category->id ? 'selected' : '' }}>
+                        <option value="{{ $category->id }}" @selected(old('post_category_id', $post->post_category_id) == $category->id)>
                             {{ $category->name }}
                         </option>
                     @endforeach

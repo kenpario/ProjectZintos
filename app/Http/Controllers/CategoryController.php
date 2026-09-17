@@ -13,24 +13,25 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $categoryName = $request->query('category');
+        $search = $request->string('search')->trim()->toString();
 
         $categories = Post_Category::query()
-            ->when($categoryName, function ($query) use ($categoryName) {
-                $query->where('name', $categoryName);
-            })
-            ->withCount(['posts' => function ($query) {
-                $query->where('is_approved', true);
-            }])
-            ->latest()
+            ->orderBy('id', 'asc')
             ->paginate(5)
             ->withQueryString();
 
         $all_posts = Post::with(['user', 'category'])
             ->where('is_approved', true)
+            ->when($search !== '', function ($query) use ($search) {
+                $query->whereAny(
+                    ['title', 'message'],
+                    'ilike',
+                    "%{$search}%"
+                );
+            })
             ->latest()
-            ->take(20)
-            ->get();
+            ->paginate(20)
+            ->withQueryString();
 
         $post_likes = Like::with(['user', 'post'])
             ->get();
@@ -42,12 +43,21 @@ class CategoryController extends Controller
         return view('categories.index', ['categories' => $categories, 'all_posts' => $all_posts, 'post_likes' => $post_likes, 'post_views' => $post_views]);
     }
 
-    public function posts(Post_Category $category)
+    public function posts(Request $request, Post_Category $category)
     {
+        $search = $request->string('search')->trim()->toString();
+
         $posts = $category->posts()
             ->with('user')
-            ->latest()
             ->where('is_approved', true)
+            ->when($search !== '', function ($query) use ($search) {
+                $query->whereAny(
+                    ['title', 'message'],
+                    'ilike',
+                    "%{$search}%"
+                );
+            })
+            ->latest()
             ->paginate(10)
             ->withQueryString();
 

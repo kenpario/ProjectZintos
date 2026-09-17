@@ -5,6 +5,7 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ViewController;
@@ -81,6 +82,11 @@ Route::middleware('auth')->group(function () {
     Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit_user_profile');
     Route::put('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
+    Route::get('/administration/users', [UserController::class, 'administration'])->name('user_administration');
+
+    Route::get('/administration/groups', [GroupController::class, 'administration'])->name('group_administration');
+    Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])->name('edit_groups');
+    Route::put('/groups/{group}', [GroupController::class, 'update']);
 
 
     Route::get('/posts/add', [PostController::class, 'create'])->name('add_posts');

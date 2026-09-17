@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
@@ -38,17 +40,56 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+
+    public function administration(Group $group)
     {
-        //
+
+        if (! Auth::user()->group?->is_admin) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $groups_data = Group::query()
+            ->orderBy('id', 'asc')
+            ->paginate(5)
+            ->withQueryString();
+
+        return view('groups.administration', ['groups_data' => $groups_data]);
+    }
+    public function edit(Group $group)
+    {
+        if (! Auth::user()->group?->is_admin) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        return view('groups.edit', ['group' => $group]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Group $group)
     {
-        //
+        if (! Auth::user()->group?->is_admin) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $formFields = $request->validate(
+            [
+                'name' => 'required|string|max:30|min:5',
+                'description' => 'required|string|max:30|min:5',
+            ],
+            [
+                'name.required' => 'Please write a name!',
+                'name.max' => 'Name must be 30 characters or less.',
+                'description.required' => 'Please write a description!',
+                'description.max' => 'Name must be 30 characters or less.'
+
+            ]
+        );
+
+        $group->update($formFields);
+
+        return redirect('/administration/groups')->with('success', 'Your Group has been updated!');
     }
 
     /**
