@@ -22,8 +22,9 @@ class DashboardController extends Controller
             ->get();
 
         $hot_topics = Post::with(['user', 'category'])
+            ->withCount('like')
             ->where('is_approved', true)
-            ->orderByDesc('likes')
+            ->orderByDesc('like_count')
             ->take(5)
             ->get();
 

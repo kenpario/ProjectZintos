@@ -65,6 +65,10 @@
             Don't have an account?
             <a href="{{ route('register') }}" class="link link-hover">Register</a>
         </p>
+        <p class="text-center text-sm">
+            Forgot your password?
+            <a href="{{ route('password.request') }}" class="link link-hover text-sm">Reset Password</a>
+        </p>
         </fieldset>
     </div>
 </x-layout>
