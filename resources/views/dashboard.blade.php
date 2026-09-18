@@ -39,15 +39,19 @@
                             <h1 class="mb-5 text-5xl font-bold"><span class="text-rotate text-7xl">
                                     <span class="justify-items-center">
                                         <span>Project</span>
-                                        <span class="skeleton skeleton-text">Zintos</span>
-                                        <span>Newest</span>
-                                        <span>Forum</span>
+                                        <span>Zintos</span>
                                     </span>
                                 </span></h1>
                             <p class="mb-5">
-                                Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-                                exercitationem
-                                quasi. In deleniti eaque aut repudiandae et a id nisi.
+                                Welcome to our community! This is a space for curious minds to connect, share ideas, ask
+                                questions,
+                                and learn from one another. Whether you're a seasoned expert or just getting started,
+                                you'll find a
+                                welcoming place to dive into discussions, get honest feedback, and build genuine
+                                connections with
+                                people who share your interests. Jump in, introduce yourself, and let's grow this
+                                community
+                                together.
                             </p>
                         </div>
                     </div>
