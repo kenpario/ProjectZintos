@@ -70,6 +70,7 @@ class UserController extends Controller
         $team_members = User::query()
             ->with('group')
             ->whereNotIn('group_id', [3, 4])
+            ->orderBy('group_id', 'asc')
             ->get();
 
         $team_groups = $team_members
@@ -80,6 +81,26 @@ class UserController extends Controller
             ]);
 
         return view('members.team', ['team_groups' => $team_groups]);
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->string('search')->trim()->toString();
+
+        $user_data = User::query()
+            ->with('group')
+            ->when($search !== '', function ($query) use ($search) {
+                $query->whereAny(
+                    ['name'],
+                    'ilike',
+                    "%{$search}%"
+                );
+            })
+            ->orderBy('id', 'asc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('members.search', ['user_data' => $user_data]);
     }
     /**
      * Show the form for creating a new resource.

@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/users/administration', [UserController::class, 'administration'])->name('user_administration');
     Route::get('/users/team', [UserController::class, 'team'])->name('team');
+    Route::get('/users/search', [UserController::class, 'search'])->name('user_search');
     Route::get('users/{user}', [UserController::class, 'index'])->name('user_profile');
     Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit_user_profile');
     Route::put('/users/{user}', [UserController::class, 'update']);

@@ -62,6 +62,15 @@
                         </li>
                         <li>
                             <details>
+                                <summary>Members</summary>
+                                <ul>
+                                    <li><a href="{{ route('team') }}">Team</a></li>
+                                    <li><a href="{{ route('user_search') }}">Search Members</a></li>
+                                </ul>
+                            </details>
+                        </li>
+                        <li>
+                            <details>
                                 <summary>{{ Auth::user()->name }}</summary>
                                 <ul>
                                     <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
@@ -133,6 +142,7 @@
                 <div id="members_menu" popover>
                     <ul class="menu w-full">
                         <li><a href="{{ route('team') }}">Team</a></li>
+                        <li><a href="{{ route('user_search') }}">Search Members</a></li>
                     </ul>
                 </div>
 

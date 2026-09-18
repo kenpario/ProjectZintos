@@ -36,16 +36,18 @@
                         <tr>
                             <th>{{ $user->id }}</th>
                             <th>@if ($user->avatar)
-                                <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}'s avatar"
-                                    class="avatar object-cover rounded w-8 shadow-md m-2" />
-                            @else
-                                    <img src="https://img.daisyui.com/images/profile/demo/superperson@192.webp"
+                                <a href="/users/{{ $user->id }}"><img src="{{ asset('storage/' . $user->avatar) }}"
                                         alt="{{ $user->name }}'s avatar"
-                                        class="avatar object-cover rounded w-8 shadow-md m-2" />
+                                        class="avatar object-cover rounded w-8 shadow-md m-2" /></a>
+                            @else
+                                    <a href="/users/{{ $user->id }}"><img
+                                            src="https://img.daisyui.com/images/profile/demo/superperson@192.webp"
+                                            alt="{{ $user->name }}'s avatar"
+                                            class="avatar object-cover rounded w-8 shadow-md m-2" /></a>
                                 @endif
                             </th>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td><a class="link-hover" href="/users/{{ $user->id }}">{{ $user->name }}</a></td>
+                            <td><a class="link-hover" href="/users/{{ $user->id }}">{{ $user->email }}</a></td>
                             <td>
                                 @if ($user->group?->is_admin)
                                     <div class="aura aura-rainbow">
