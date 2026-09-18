@@ -40,6 +40,7 @@ Route::middleware('guest')->group(function () {
                     'google_token' => $googleUser->token,
                     'google_refresh_token' => $googleUser->refreshToken,
                     'group_id' => 4,
+                    'email_verified_at' => now(),
                 ]);
             }
 
@@ -53,6 +54,7 @@ Route::middleware('guest')->group(function () {
                 ...$tokenFields,
                 'google_id' => $googleUser->id,
                 'email' => $googleUser->email,
+                'email_verified_at' => $user->email_verified_at ?? now(),
             ]);
 
             Auth::login($user);
@@ -66,7 +68,7 @@ Route::middleware('guest')->group(function () {
         }
     });
 });
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
