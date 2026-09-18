@@ -103,7 +103,7 @@ class CommentController extends Controller
             abort(403, 'Unauthorized Action!');
         }
 
-        return view('comments.edit', ['comment' => $comment]);
+        return view('comments.edit', ['comment' => $comment, 'backUrl' => url()->previous()]);
     }
 
     /**

@@ -91,7 +91,7 @@ class PostController extends Controller
                 ->where('can_comment', true)
                 ->get();
         }
-        return view('posts.create', ['categories' => $categories]);
+        return view('posts.create', ['categories' => $categories, 'backUrl' => url()->previous()]);
     }
 
     /**
@@ -154,7 +154,7 @@ class PostController extends Controller
 
         $categories = Post_Category::all();
 
-        return view('posts.edit', ['post' => $post, 'categories' => $categories]);
+        return view('posts.edit', ['post' => $post, 'categories' => $categories, 'backUrl' => url()->previous()]);
     }
 
     /**

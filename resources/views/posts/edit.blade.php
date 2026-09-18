@@ -72,7 +72,8 @@
                     </div>
                 @enderror
                 <button type="submit" class="btn bg-base-300 shadow-md mt-4">Update</button>
-                <a class="btn" href="{{ route('categories') }}">Back</a>
+                <input type="hidden" name="back_url" value="{{ old('back_url', $backUrl) }}">
+                <a class="btn" href="{{ old('back_url', $backUrl) }}">Back</a>
             </fieldset>
         </form>
     </div>

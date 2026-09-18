@@ -26,8 +26,10 @@
                     <div class="label">
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
-                @enderror<button type="submit" class="btn bg-base-300 shadow-md mt-4">Update</button>
-                <a class="btn" href="{{ route('group_administration') }}">Back</a>
+                @enderror
+                <button type="submit" class="btn bg-base-300 shadow-md mt-4">Update</button>
+                <input type="hidden" name="back_url" value="{{ old('back_url', $backUrl) }}">
+                <a class="btn" href="{{ old('back_url', $backUrl) }}">Back</a>
             </fieldset>
         </form>
     </div>

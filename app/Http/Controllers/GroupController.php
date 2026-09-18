@@ -61,7 +61,7 @@ class GroupController extends Controller
             abort(403, 'Unauthorized Action!');
         }
 
-        return view('groups.edit', ['group' => $group]);
+        return view('groups.edit', ['group' => $group, 'backUrl' => url()->previous()]);
     }
 
     /**
@@ -89,7 +89,7 @@ class GroupController extends Controller
 
         $group->update($formFields);
 
-        return redirect('/administration/groups')->with('success', 'Your Group has been updated!');
+        return redirect('/groups/administration')->with('success', 'Your Group has been updated!');
     }
 
     /**

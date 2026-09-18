@@ -137,7 +137,7 @@ class UserController extends Controller
 
         $groups = Group::get();
 
-        return view('users.edit', ['user' => $user, 'groups' => $groups]);
+        return view('users.edit', ['user' => $user, 'groups' => $groups, 'backUrl' => url()->previous()]);
     }
 
     /**

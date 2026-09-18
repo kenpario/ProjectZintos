@@ -75,7 +75,9 @@ class CategoryController extends Controller
     public function create()
     {
         if (Auth::user()->group?->is_admin) {
-            return view('categories.create');
+            return view('categories.create', [
+                'backUrl' => url()->previous(),
+            ]);
         } else {
             abort(403, 'Unauthorized Action!');
         }
@@ -128,7 +130,10 @@ class CategoryController extends Controller
         if (! Auth::user()->group?->is_admin) {
             abort(403, 'Unauthorized Action!');
         }
-        return view('categories.edit', ['category' => $category]);
+        return view('categories.edit', [
+            'category' => $category,
+            'backUrl' => url()->previous(),
+        ]);
     }
 
     /**
