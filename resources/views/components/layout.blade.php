@@ -31,194 +31,199 @@
 <body class="min-h-screen flex flex-col">
     <nav>
         <div class="flex justify-end">
-            <button class="btn sm:hidden fixed z-50 m-2 justify-start" popovertarget="mobile_megamenu"
-                aria-label="Open navigation menu">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    class="inline-block h-7 w-7 stroke-current">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
-                    </path>
-                </svg>
-            </button>
-            <div class="mt-11 w-full rounded sm:hidden fixed z-40 border border-base-300 bg-base-200 p-2 text-base-content shadow-md"
-                id="mobile_megamenu" popover>
-                @auth
-                    <ul class="menu w-full">
-                        <li><a href="{{ route('dashboard') }}" class="skeleton">Dashboard</a></li>
-                        <li>
-                            <details>
-                                <summary>Categories</summary>
-                                <ul>
-                                    <li><a href="{{ route('categories') }}">All</a></li>
-                                    @foreach ($categories as $category)
-                                        <li><a
-                                                href="{{ route('categories_posts', ['category' => $category->id]) }}">{{ $category->name }}</a>
-                                        </li>
-                                    @endforeach
-                                    @if(Auth::user()->group?->is_admin)
-                                        <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
-                                    @endif
-                                </ul>
-                            </details>
-                        </li>
-                        <li>
-                            <details>
-                                <summary>Members</summary>
-                                <ul>
-                                    <li><a href="{{ route('team') }}">Team</a></li>
-                                    <li><a href="{{ route('user_search') }}">Search Members</a></li>
-                                </ul>
-                            </details>
-                        </li>
-                        <li>
-                            <details>
-                                <summary>{{ Auth::user()->name }}</summary>
-                                <ul>
-                                    <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
-                                    <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit
-                                            Information</a></li>
-                                </ul>
-                            </details>
-                        </li>
-                        @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
-                            <li>
-                                <details>
-                                    <summary>Moderation</summary>
-                                    <ul>
-                                        <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
-                                        <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
-                                    </ul>
-                                </details>
-                            </li>
-                        @endif
-                        @if(Auth::user()->group?->is_admin)
-                            <li>
-                                <details>
-                                    <summary>Administration</summary>
-                                    <ul>
-                                        <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
-                                        <li><a href="{{ route('user_administration')}}">User Administration</a></li>
-                                        <li><a href="{{ route('group_administration')}}">Group Administration</a></li>
-                                    </ul>
-                                </details>
-                            </li>
-                        @endif
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}" class="flex w-full"
-                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                @else
-                    <a href="/" class="btn skeleton w-full">Home</a>
-                    <a href="{{ route('register') }}" class="btn skeleton w-full">Register</a>
-                    <a href="{{ route('login') }}" class="btn skeleton w-full">Login</a>
-                @endauth
-            </div>
-        </div>
-        <div class="megamenu max-sm:hidden max-sm:megamenu-vertical flex items-center gap-2 p-2 border border-base-300 fixed z-50 bg-base-200 text-base-content m-1 shadow"
-            id="megamenu" popover>
-            @auth
-                <span class="megamenu-active"></span>
-                <a class="btn skeleton" href="{{ route('dashboard') }}">Dashboard</a>
-
-                <button popovertarget="categories_menu">Categories</button>
-                <div id="categories_menu" popover>
-                    <ul class="menu gap-1 w-full">
-                        <li><a href="{{ route('categories') }}">All</a></li>
-                        @foreach ($categories as $category)
-                            <li><a
-                                    href="{{ route('categories_posts', ['category' => $category->id]) }}">{{ $category->name }}</a>
-                            </li>
-                        @endforeach
-                        @if(Auth::user()->group?->is_admin)
-                            <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
-                        @endif
-                    </ul>
-                </div>
-
-                <button popovertarget="members_menu">Members</button>
-                <div id="members_menu" popover>
-                    <ul class="menu w-full">
-                        <li><a href="{{ route('team') }}">Team</a></li>
-                        <li><a href="{{ route('user_search') }}">Search Members</a></li>
-                    </ul>
-                </div>
-
-                <button popovertarget="user_menu" class="ms-auto order-last">
-                    @if (Auth::user()->group?->is_admin)
-                        <div class="aura aura-rainbow">
-                            <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
-                        </div>
-                    @elseif(Auth::user()->group?->is_mod)
-                        <div class="aura aura-silver">
-                            <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
-                        </div>
-                    @elseif (Auth::user()->group?->is_premium)
-                        <div class="aura aura-gold">
-                            <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
-                        </div>
-                    @else
-                        <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
-                    @endif
-                    <div class="avatar">
-                        <div class="w-8 rounded shadow">
-                            <img alt="{{ Auth::user()->name }}'s avatar"
-                                src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}" />
-                        </div>
-                    </div>{{ Auth::user()->name}}
+            @if (!Auth::check() || Auth::user()->email_verified_at)
+                <button class="btn sm:hidden fixed z-50 m-2 justify-start" popovertarget="mobile_megamenu"
+                    aria-label="Open navigation menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        class="inline-block h-7 w-7 stroke-current">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                        </path>
+                    </svg>
                 </button>
-
-                <div id="user_menu" class="m-1 w-full" popover>
-                    <ul class="menu w-full">
-                        <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
-                        <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit Information</a></li>
-                        @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
+                <div class="mt-11 w-full rounded sm:hidden fixed z-40 border border-base-300 bg-base-200 p-2 text-base-content shadow-md"
+                    id="mobile_megamenu" popover>
+                    @auth
+                        <ul class="menu w-full">
+                            <li><a href="{{ route('dashboard') }}" class="skeleton">Dashboard</a></li>
                             <li>
                                 <details>
-                                    <summary>Moderation</summary>
+                                    <summary>Categories</summary>
                                     <ul>
-                                        <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
-                                        <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
+                                        <li><a href="{{ route('categories') }}">All</a></li>
+                                        @foreach ($categories as $category)
+                                            <li><a
+                                                    href="{{ route('categories_posts', ['category' => $category->id]) }}">{{ $category->name }}</a>
+                                            </li>
+                                        @endforeach
+                                        @if(Auth::user()->group?->is_admin)
+                                            <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                                        @endif
                                     </ul>
                                 </details>
                             </li>
-                        @endif
-                        @if(Auth::user()->group?->is_admin)
                             <li>
                                 <details>
-                                    <summary>Administration</summary>
+                                    <summary>Members</summary>
                                     <ul>
-                                        <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
-                                        <li><a href="{{ route('user_administration')}}">User Administration</a></li>
-                                        <li><a href="{{ route('group_administration')}}">Group Administration</a></li>
+                                        <li><a href="{{ route('team') }}">Team</a></li>
+                                        <li><a href="{{ route('user_search') }}">Search Members</a></li>
                                     </ul>
                                 </details>
                             </li>
-                        @endif
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}" class="inline"
-                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
+                            <li>
+                                <details>
+                                    <summary>{{ Auth::user()->name }}</summary>
+                                    <ul>
+                                        <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
+                                        <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit
+                                                Information</a></li>
+                                    </ul>
+                                </details>
+                            </li>
+                            @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
+                                <li>
+                                    <details>
+                                        <summary>Moderation</summary>
+                                        <ul>
+                                            <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
+                                            <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
+                                        </ul>
+                                    </details>
+                                </li>
+                            @endif
+                            @if(Auth::user()->group?->is_admin)
+                                <li>
+                                    <details>
+                                        <summary>Administration</summary>
+                                        <ul>
+                                            <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
+                                            <li><a href="{{ route('user_administration')}}">User Administration</a></li>
+                                            <li><a href="{{ route('group_administration')}}">Group Administration</a></li>
+                                        </ul>
+                                    </details>
+                                </li>
+                            @endif
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}" class="flex w-full"
+                                    onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    @else
+                        <a href="/" class="btn skeleton w-full">Home</a>
+                        <a href="{{ route('register') }}" class="btn skeleton w-full">Register</a>
+                        <a href="{{ route('login') }}" class="btn skeleton w-full">Login</a>
+                    @endauth
                 </div>
-            @endauth
-            @guest
-                <div class="flex justify-between w-full">
-                    <div id="home">
-                        <a href="/" class="btn skeleton">Home</a>
-                    </div>
-                    <div id="register_login">
-                        <a href="{{ route('register') }}" class="btn skeleton">Register</a>
-                        <a href="{{ route('login') }}" class="btn skeleton">Login</a>
-                    </div>
-                </div>
-            @endguest
+            @endif
         </div>
+        @auth
+            @if(Auth::user()->email_verified_at)
+                <div class="megamenu max-sm:hidden max-sm:megamenu-vertical flex items-center gap-2 p-2 border border-base-300 fixed z-50 bg-base-200 text-base-content m-1 shadow"
+                    id="megamenu" popover>
+                    <span class="megamenu-active"></span>
+                    <a class="btn skeleton" href="{{ route('dashboard') }}">Dashboard</a>
+
+                    <button popovertarget="categories_menu">Categories</button>
+                    <div id="categories_menu" popover>
+                        <ul class="menu gap-1 w-full">
+                            <li><a href="{{ route('categories') }}">All</a></li>
+                            @foreach ($categories as $category)
+                                <li><a
+                                        href="{{ route('categories_posts', ['category' => $category->id]) }}">{{ $category->name }}</a>
+                                </li>
+                            @endforeach
+                            @if(Auth::user()->group?->is_admin)
+                                <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                            @endif
+                        </ul>
+                    </div>
+
+                    <button popovertarget="members_menu">Members</button>
+                    <div id="members_menu" popover>
+                        <ul class="menu w-full">
+                            <li><a href="{{ route('team') }}">Team</a></li>
+                            <li><a href="{{ route('user_search') }}">Search Members</a></li>
+                        </ul>
+                    </div>
+
+                    <button popovertarget="user_menu" class="ms-auto order-last">
+                        @if (Auth::user()->group?->is_admin)
+                            <div class="aura aura-rainbow">
+                                <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
+                            </div>
+                        @elseif(Auth::user()->group?->is_mod)
+                            <div class="aura aura-silver">
+                                <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
+                            </div>
+                        @elseif (Auth::user()->group?->is_premium)
+                            <div class="aura aura-gold">
+                                <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
+                            </div>
+                        @else
+                            <span class="badge shadow">{{ Auth::user()->group?->name }}</span>
+                        @endif
+                        <div class="avatar">
+                            <div class="w-8 rounded shadow">
+                                <img alt="{{ Auth::user()->name }}'s avatar"
+                                    src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}" />
+                            </div>
+                        </div>{{ Auth::user()->name}}
+                    </button>
+
+                    <div id="user_menu" class="m-1 w-full" popover>
+                        <ul class="menu w-full">
+                            <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
+                            <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit Information</a></li>
+                            @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
+                                <li>
+                                    <details>
+                                        <summary>Moderation</summary>
+                                        <ul>
+                                            <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
+                                            <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
+                                        </ul>
+                                    </details>
+                                </li>
+                            @endif
+                            @if(Auth::user()->group?->is_admin)
+                                <li>
+                                    <details>
+                                        <summary>Administration</summary>
+                                        <ul>
+                                            <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
+                                            <li><a href="{{ route('user_administration')}}">User Administration</a></li>
+                                            <li><a href="{{ route('group_administration')}}">Group Administration</a></li>
+                                        </ul>
+                                    </details>
+                                </li>
+                            @endif
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}" class="inline"
+                                    onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            @endif
+        @endauth
+
+        @guest
+            <div class="flex justify-between w-full">
+                <div id="home">
+                    <a href="/" class="btn skeleton">Home</a>
+                </div>
+                <div id="register_login">
+                    <a href="{{ route('register') }}" class="btn skeleton">Register</a>
+                    <a href="{{ route('login') }}" class="btn skeleton">Login</a>
+                </div>
+            </div>
+        @endguest
     </nav>
     @if (session('success'))
         <div class="fixed z-40 toast toast-bottom toast-right">
