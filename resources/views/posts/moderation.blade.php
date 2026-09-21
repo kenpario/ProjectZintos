@@ -26,7 +26,7 @@
                                         <a href="/users/{{ $post->user->id }}"><img
                                                 src="{{ $post->user->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                 alt="{{ $post->user->name }}'s avatar"
-                                                class="size-10 rounded-box mt-2" /></a>
+                                                class="size-10 rounded-box w-[36px] h-[36px] mt-2" /></a>
                                     </div>
                                     <div class="flex flex-col m-2 w-full gap-1">
                                         <div class="text-xs font-semibold"><a class="link link-hover"

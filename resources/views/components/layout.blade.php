@@ -16,7 +16,7 @@
         const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
 
         const applySystemTheme = ({ matches }) => {
-            document.documentElement.dataset.theme = matches ? 'dark' : 'light';
+            document.documentElement.dataset.theme = matches ? 'luxury' : 'pastel';
         };
 
         applySystemTheme(systemTheme);

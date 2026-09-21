@@ -30,7 +30,7 @@
                 <div class="m-2 shadow-md rounded-box" id="{{ $category->name }} posts">
                     <details class="collapse collapse-arrow bg-base-200 border border-base-300 mb-2"
                         name="{{ $category->name }}" id="category-{{ $category->name }}" open>
-                        <summary class="collapse-title bg-base-300 rounded font-semibold">
+                        <summary class="collapse-title bg-base-300 rounded-box font-semibold">
                             <div class="flex items-center justify-between gap-2">
                                 <span>
                                     {{ Str::limit($category->name, 30) }}

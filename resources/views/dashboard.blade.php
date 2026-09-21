@@ -73,7 +73,7 @@
                 @foreach($post_categories as $post_category)
                     <details class="collapse collapse-arrow bg-base-200 border border-base-300 mb-2"
                         name="{{ $post_category->name }}" open>
-                        <summary class="collapse-title font-semibold bg-base-300 rounded">
+                        <summary class="collapse-title font-semibold bg-base-300 rounded-box">
                             <div class="flex items-center justify-between gap-2">
                                 <span>
                                     {{ Str::limit($post_category->name, 30) }} --
