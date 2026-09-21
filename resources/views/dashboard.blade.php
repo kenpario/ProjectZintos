@@ -3,10 +3,22 @@
         Dashboard
     </x-slot:title>
     <div class="flex flex-row gap-4 max-lg:flex-col">
-        <div class="w-1/3 max-lg:w-full" id="posts">
+        <div class="w-1/3 max-lg:w-full rounded-box p-1" id="posts">
             <ul class="list bg-base-100 rounded-box shadow-md">
+                <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded">Statistics</li>
+                <li class="list-row">
+                    <div class="flex flex-col gap-1">
+                        <div class="opacity-60 text-xs font-semibold">{{ $all_posts->count() }} Posts</div>
+                        <div class="opacity-60 text-xs font-semibold">{{ $users->count() }} Members</div>
+                        <div class="opacity-60 text-xs font-semibold">Latest Member: <a class="link-hover"
+                                href="/users/{{ $users->sortByDesc('created_at')->first()?->id }}">{{ $users->sortByDesc('created_at')->first()?->name }}</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="list bg-base-100 rounded-box shadow-md mt-2">
 
-                <li class="p-4 pb-2 text-s opacity-90 tracking-wide bg-base-300 rounded">Latest Posts</li>
+                <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded">Latest Posts</li>
                 @forelse ($latest_posts as $latest_post)
                     <x-dashboard_latest_posts :latest_post="$latest_post" :post_likes="$post_likes"
                         :post_views="$post_views" />
@@ -19,7 +31,7 @@
 
             <ul class="list bg-base-100 rounded-box shadow-md mt-2">
 
-                <li class="p-4 pb-2 text-s opacity-90 tracking-wide bg-base-300 rounded">Hot Topics</li>
+                <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded">Hot Topics</li>
                 @forelse ($hot_topics as $hot_topic)
                     <x-dashboard_hot_topics :hot_topic="$hot_topic" :post_likes="$post_likes" :post_views="$post_views" />
                 @empty
@@ -29,7 +41,7 @@
                 @endforelse
             </ul>
         </div>
-        <div id="summary" class="flex-1 min-w-0">
+        <div id="summary" class="flex-1 min-w-0 p-1">
             <div class="aura aura-dual w-full">
                 <div class="hero min-h-screen rounded-box shadow-xl overflow-hidden"
                     style="background-image: url('{{ asset('storage/assets/img/items/background.gif') }}');">
