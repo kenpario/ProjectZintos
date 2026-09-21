@@ -51,11 +51,12 @@
                     <div class="collapse-title font-semibold bg-base-300 rounded"> {{ $user->name }}'s Activity
                     </div>
                     <div class="sm:p-4">
-                        @forelse($user_posts as $post)
-                            <ul class="list rounded-box gap-2 w-full">
-                                <div class="m-2 hover-3d flex">
-                                    <li class="list-row rounded-box shadow-md w-full bg-base-100">
-                                        <div>
+                        <ul class="list gap-2 w-full">
+                            @forelse($user_posts as $post)
+                                <li class="w-full gap-2 hover-3d">
+                                    <div
+                                        class="flex justify-between bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
+                                        <div class="flex flex-col gap-2">
                                             <div><a class="link link-hover"
                                                     href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
                                             </div>
@@ -64,7 +65,7 @@
                                                     href="/posts/{{ $post->id }}">{{ Str::limit(strip_tags($post->message), 50) }}</a>
                                             </div>
                                         </div>
-                                        <div class="flex justify-end gap-4">
+                                        <div class="flex gap-2">
                                             <div class="flex items-center gap-1">
                                                 <span>{{ $post_likes->where('post_id', $post->id)->count() }}</span>
                                                 <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg"
@@ -87,14 +88,19 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                    </li>
-                                </div>
-                        @empty
-                                    <div class="text-md uppercase font-semibold opacity-60 flex justify-center m-2">This user
-                                        has no
-                                        activity yet.</div>
-                                </ul>
+                                    </div>
+                                </li>
+                            @empty
+                                <li>
+                                    <div
+                                        class="flex justify-center bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
+                                        <div class="text-s font-semibold opacity-60">
+                                            Nothing here.
+                                        </div>
+                                    </div>
+                                </li>
                             @endforelse
+                        </ul>
                     </div>
 
                 </div>

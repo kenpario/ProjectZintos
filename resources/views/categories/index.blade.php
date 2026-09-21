@@ -27,11 +27,11 @@
                         </label>
                     </div>
                 </form>
-                <div class="m-2 shadow-md rounded-box">
+                <div class="m-2">
                     @foreach($categories as $category)
                         <details class="collapse collapse-arrow bg-base-200 border border-base-300 mb-2"
                             name="{{ $category->name }}" id="category-{{ $category->name }}" open>
-                            <summary class="collapse-title bg-base-300 rounded-box font-semibold">
+                            <summary class="collapse-title bg-base-300 rounded-box font-semibold shadow-md">
                                 <div class="flex items-center justify-between gap-2">
                                     <span>
                                         {{ Str::limit($category->name, 30) }}
@@ -43,68 +43,65 @@
                                     @endif
                                 </div>
                             </summary>
-                            @forelse($all_posts->where('post_category_id', $category->id) as $post)
-                                <div class="collapse-content text-sm mx-2 mt-2 sm:p-4">
-                                    <div class="max-lg:w-full hover-3d w-full min-w-0 " id="posts">
-
-                                        <ul class="list bg-base-100 rounded-box shadow-md mx-2">
-                                            <li
-                                                class="list-row grid-cols-[auto_minmax(0,1fr)_auto_auto] gap-2 p-0 sm:gap-4 sm:p-4">
-                                                <div><a href="/users/{{ $post->user->id }}"><img
-                                                            src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
-                                                            alt="{{ $post->user?->name }}'s avatar"
-                                                            class="size-10 rounded-box" /></a>
-                                                </div>
-                                                <div class="min-w-0 break-words">
-                                                    <div><a class="link link-hover"
-                                                            href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
+                            <div class="collapse-content text-sm mx-2 mt-2 sm:p-4">
+                                <ul class="list gap-2 mx-2">
+                                    @forelse($all_posts->where('post_category_id', $category->id) as $post)
+                                        <li class="w-full gap-2 hover-3d">
+                                            <div
+                                                class="flex justify-between bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
+                                                <div class="flex gap-2">
+                                                    <div><a href="/users/{{ $post->user->id }}"><img
+                                                                src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
+                                                                alt="{{ $post->user?->name }}'s avatar"
+                                                                class="size-10 rounded-box" /></a>
                                                     </div>
-                                                    <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
-                                                            href="/posts/{{ $post->id }}">
-                                                            {{ Str::limit(strip_tags($post->message), 50) }}</a>
+                                                    <div class="min-w-0 break-words">
+                                                        <div><a class="link link-hover"
+                                                                href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
+                                                        </div>
+                                                        <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
+                                                                href="/posts/{{ $post->id }}">
+                                                                {{ Str::limit(strip_tags($post->message), 50) }}</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="flex items-center gap-1">
-                                                    <span>{{ $post_likes->where('post_id', $post->id)->count() }}</span>
-                                                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 24 24" aria-label="Likes">
-                                                        <path
-                                                            d="M7 10v10H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3Zm0 10h9.5a2 2 0 0 0 1.94-1.53l1.5-6A2 2 0 0 0 18 10h-4.11l.58-3.48A2.98 2.98 0 0 0 11.53 3L7 10v10Z"
-                                                            fill="none" stroke="currentColor" stroke-linejoin="round"
-                                                            stroke-width="2" />
-                                                    </svg>
+                                                <div class="flex gap-2">
+                                                    <div class="flex items-center gap-1">
+                                                        <span>{{ $post_likes->where('post_id', $post->id)->count() }}</span>
+                                                        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24" aria-label="Likes">
+                                                            <path
+                                                                d="M7 10v10H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3Zm0 10h9.5a2 2 0 0 0 1.94-1.53l1.5-6A2 2 0 0 0 18 10h-4.11l.58-3.48A2.98 2.98 0 0 0 11.53 3L7 10v10Z"
+                                                                fill="none" stroke="currentColor" stroke-linejoin="round"
+                                                                stroke-width="2" />
+                                                        </svg>
+                                                    </div>
+                                                    <div class="flex items-center gap-1">
+                                                        <span>{{ $post_views->where('post_id', $post->id)->count() }}</span>
+                                                        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24" aria-label="Views">
+                                                            <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                                                                fill="none" stroke="currentColor" stroke-linejoin="round"
+                                                                stroke-width="2" />
+                                                            <circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor"
+                                                                stroke-width="2" />
+                                                        </svg>
+                                                    </div>
                                                 </div>
-                                                <div class="flex items-center gap-1">
-                                                    <span>{{ $post_views->where('post_id', $post->id)->count() }}</span>
-                                                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 24 24" aria-label="Views">
-                                                        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
-                                                            fill="none" stroke="currentColor" stroke-linejoin="round"
-                                                            stroke-width="2" />
-                                                        <circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor"
-                                                            stroke-width="2" />
-                                                    </svg>
+                                            </div>
+                                        </li>
+                                    @empty
+                                        <li class="w-full gap-2">
+                                            <div
+                                                class="flex justify-center bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
+                                                <div class="text-s font-semibold opacity-60">
+                                                    Nothing here.
                                                 </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="collapse-content text-sm">
-                                    <div class="max-lg:w-full" id="posts">
-
-                                        <ul class="list bg-base-100 rounded-box shadow-md mt-2">
-                                            <li class="list-row">
-                                                <div>
-                                                    <div class="text-xs uppercase font-semibold opacity-60">There are no posts
-                                                        in
-                                                        this category.</div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            @endforelse
+                                            </div>
+                                        </li>
+                                    @endforelse
+                                </ul>
+                            </div>
                             <div class="flex justify-between collapse-content text-sm">
                                 <a class="btn btn-md bg-base-300 shadow-md mt-2"
                                     href="{{ route('categories_posts', ['category' => $category->id]) }}">
