@@ -13,13 +13,13 @@
                 <div class="flex justify-center items-center">
                     @if ($post->media)
                         @if ($post->isVideo())
-                            <video controls class="w-[250px] h-[250px] object-cover rounded shadow-md">
+                            <video controls class="w-[300px] h-[250px] object-cover rounded shadow-md">
                                 <source src="{{ asset('storage/' . $post->media) }}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         @else
                             <img src="{{ $post->media ? asset('storage/' . $post->media) : '' }}" alt="Post Media"
-                                class="w-[250px] h-[250px] object-cover rounded shadow-md" />
+                                class="w-[300px] h-[250px] object-cover rounded shadow-md" />
                         @endif
                     @endif
                 </div>

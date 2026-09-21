@@ -112,14 +112,14 @@
                                 <div class="flex justify-center w-full">
                                     @if($post->media)
                                         @if ($post->isVideo())
-                                            <video controls class="w-[500px] h-[500px] object-cover rounded-xl shadow-md">
+                                            <video controls class="w-[700px] h-[500px] object-cover rounded-xl shadow-md">
                                                 <source src="{{ asset('storage/' . $post->media) }}" type="video/mp4">
                                                 Your browser does not support the video tag.
                                             </video>
                                         @else
                                             <img src="{{ $post->media ? asset('storage/' . $post->media) : '' }}"
                                                 alt="Post Media"
-                                                class="w-[500px] h-[500px] object-cover rounded-xl shadow-md" />
+                                                class="w-[700px] h-[500px] object-cover rounded-xl shadow-md" />
                                         @endif
                                     @endif
                                 </div>

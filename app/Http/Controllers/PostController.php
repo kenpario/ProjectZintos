@@ -104,7 +104,7 @@ class PostController extends Controller
                 'title' => 'required|string|max:50|min:5',
                 'message' => 'required|string|max:8000|min:5',
                 'post_category_id' => 'required|integer|exists:post_categories,id',
-                'media' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:2048',
+                'media' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:5120',
             ],
             [
                 'title.required' => 'Please write a title!',
@@ -113,8 +113,8 @@ class PostController extends Controller
                 'message.max' => 'Message must be 8000 characters or less.',
                 'post_category_id.required' => 'Please select a category!',
                 'media.mimes' => 'The media must be a JPG, PNG, GIF or MP4 file.',
-                'media.max' => 'The media must be 2 MB or smaller.',
-                'media.uploaded' => 'The media must be 2 MB or smaller.',
+                'media.max' => 'The media must be 5 MB or smaller.',
+                'media.uploaded' => 'The media must be 5 MB or smaller.',
 
             ]
         );
@@ -173,7 +173,7 @@ class PostController extends Controller
                 'title' => 'required|string|max:50|min:5',
                 'message' => 'required|string|max:8000|min:5',
                 'post_category_id' => 'required|integer|exists:post_categories,id',
-                'media' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:2048',
+                'media' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:5120',
             ],
             [
                 'title.required' => 'Please write a title!',
@@ -182,8 +182,8 @@ class PostController extends Controller
                 'message.max' => 'Message must be 8000 characters or less.',
                 'post_category_id.required' => 'Please select a category!',
                 'media.mimes' => 'The media must be a JPG, PNG, GIF or MP4 file.',
-                'media.max' => 'The media must be 2 MB or smaller.',
-                'media.uploaded' => 'The media must be 2 MB or smaller.',
+                'media.max' => 'The media must be 5 MB or smaller.',
+                'media.uploaded' => 'The media must be 5 MB or smaller.',
 
             ]
         );
