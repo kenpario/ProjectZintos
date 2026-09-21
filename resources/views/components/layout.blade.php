@@ -214,13 +214,16 @@
         @endauth
 
         @guest
-            <div class="flex justify-between w-full">
-                <div id="home">
-                    <a href="/" class="btn skeleton">Home</a>
-                </div>
-                <div id="register_login">
-                    <a href="{{ route('register') }}" class="btn skeleton">Register</a>
-                    <a href="{{ route('login') }}" class="btn skeleton">Login</a>
+            <div class="megamenu max-sm:hidden max-sm:megamenu-vertical flex items-center gap-2 p-2 border border-base-300 fixed z-50 bg-base-200 text-base-content m-1 shadow"
+                id="megamenu" popover>
+                <div class="flex justify-between w-full">
+                    <div id="home">
+                        <a href="/" class="btn skeleton">Home</a>
+                    </div>
+                    <div id="register_login">
+                        <a href="{{ route('register') }}" class="btn skeleton">Register</a>
+                        <a href="{{ route('login') }}" class="btn skeleton">Login</a>
+                    </div>
                 </div>
             </div>
         @endguest

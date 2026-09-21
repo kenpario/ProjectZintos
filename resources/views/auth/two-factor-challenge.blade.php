@@ -11,17 +11,24 @@
 
                 <p class="mb-4 text-sm">Enter the code from your authenticator app or use a recovery code.</p>
 
-                <label class="floating-label mb-2">
-                    <input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" placeholder="123456"
-                        class="w-full input input-bordered @error('code') input-error @enderror">
-                    <span>Authentication code</span>
-                </label>
-
-                @error('code')
-                    <div class="label -mt-4 mb-2">
-                        <span class="label-text-alt text-error">{{ $message }}</span>
-                    </div>
-                @enderror
+                <div class="flex flex-col gap-1 justify-center items-center">
+                    <span>Authenticator Code</span>
+                    <label class="mb-2 otp">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <input type="text" name="code" inputmode="numeric" autocomplete="one-time-code"
+                            placeholder="123456" maxlength="6" class="@error('code') input-error @enderror">
+                    </label>
+                    @error('code')
+                        <div class="label -mt-4 mb-2">
+                            <span class="label-text-alt text-error">{{ $message }}</span>
+                        </div>
+                    @enderror
+                </div>
                 <div class="divider p-2">OR</div>
                 <label class="floating-label mb-6">
                     <input type="text" name="recovery_code" autocomplete="off" placeholder="Recovery code"

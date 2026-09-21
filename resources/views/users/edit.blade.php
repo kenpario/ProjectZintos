@@ -124,11 +124,24 @@
                                     </div>
                                     <form method="POST" action="{{ route('two-factor.confirm') }}">
                                         @csrf
-                                        <label class="floating-label">
-                                            <input type="text" name="code" inputmode="numeric" autocomplete="one-time-code"
-                                                placeholder="123456" class="input mt-2 mb-2input-bordered w-full" required>
-                                            <span>Authenticator code</span>
-                                        </label>
+                                        <div class="flex flex-col gap-1 justify-center items-center">
+                                            <span>Authenticator Code</span>
+                                            <label class="mb-2 otp">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <input type="text" name="code" inputmode="numeric" autocomplete="one-time-code"
+                                                    placeholder="123456" maxlength="6" class="@error('code') input-error @enderror">
+                                            </label>
+                                            @error('code')
+                                                <div class="label -mt-4 mb-2">
+                                                    <span class="label-text-alt text-error">{{ $message }}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
                                         <button type="submit" class="btn bg-base-300 shadow-md mt-3 w-full">Confirm two-factor
                                             authentication</button>
                                     </form>
