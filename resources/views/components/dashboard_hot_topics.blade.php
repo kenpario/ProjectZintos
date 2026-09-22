@@ -3,12 +3,12 @@
 <li class="list-row">
     <div class="flex flex-col gap-2 list-col-grow">
         <div>
-            <div class="font-bold"><a class="link link-hover"
+            <div class="font-bold">Posted in <a class="link link-hover"
                     href="/categories/{{ $hot_topic->category->id }}/posts">{{ Str::limit($hot_topic->category->name, 40) }}</a>
             </div>
         </div>
         <div class="flex justify-between">
-            <div class="flex gap-4">
+            <div class="flex gap-4 items-center">
                 <div><a href="/users/{{ $hot_topic->user->id }}"><img
                             src="{{ $hot_topic->user?->avatar ? asset('storage/' . $hot_topic->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                             alt="{{ $hot_topic->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
@@ -17,6 +17,9 @@
                             href="/posts/{{ $hot_topic->id }}">{{ Str::limit($hot_topic->title, 20) }}</a></div>
                     <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
                             href="/posts/{{ $hot_topic->id }}">{{ Str::limit(strip_tags($hot_topic->message), 50)}}</a>
+                    </div>
+                    <div>by <a class="link link-hover"
+                            href="/users/{{ $hot_topic->user->id }}">{{ $hot_topic->user?->name }}</a>
                     </div>
                 </div>
             </div>

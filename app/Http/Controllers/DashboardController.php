@@ -32,7 +32,7 @@ class DashboardController extends Controller
         $all_posts = Post::with(['user', 'category'])
             ->where('is_approved', true)
             ->latest()
-            ->take(20)
+            ->take(5)
             ->get();
 
         $post_categories = Post_Category::all();

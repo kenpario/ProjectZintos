@@ -49,7 +49,7 @@
                                         <li class="w-full gap-2 hover-3d">
                                             <div
                                                 class="flex justify-between bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
-                                                <div class="flex gap-2">
+                                                <div class="flex gap-4 items-center">
                                                     <div><a href="/users/{{ $post->user->id }}"><img
                                                                 src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                                 alt="{{ $post->user?->name }}'s avatar"
@@ -62,6 +62,9 @@
                                                         <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
                                                                 href="/posts/{{ $post->id }}">
                                                                 {{ Str::limit(strip_tags($post->message), 50) }}</a>
+                                                        </div>
+                                                        <div>by <a class="link link-hover"
+                                                                href="/users/{{ $post->user->id }}">{{ $post->user?->name }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -107,10 +110,10 @@
                                     href="{{ route('categories_posts', ['category' => $category->id]) }}">
                                     View all posts ({{ $category->posts->count() }})
                                 </a>
-                                {{ $categories->links() }}
                             </div>
                         </details>
                     @endforeach
+                    {{ $categories->links() }}
                 </div>
             </div>
         </div>

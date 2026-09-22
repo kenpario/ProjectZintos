@@ -56,7 +56,7 @@
                                 <li class="w-full gap-2 hover-3d">
                                     <div
                                         class="flex justify-between bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
-                                        <div class="flex flex-col gap-2">
+                                        <div class="flex flex-col">
                                             <div><a class="link link-hover"
                                                     href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
                                             </div>
@@ -102,10 +102,9 @@
                             @endforelse
                         </ul>
                     </div>
-
-                </div>
-                <div class="mt-4 flex justify-center">
-                    {{ $user_posts->links() }}
+                    <div class="mt-4">
+                        {{ $user_posts->links() }}
+                    </div>
                 </div>
             </div>
         </div>

@@ -30,7 +30,7 @@ class CategoryController extends Controller
                 );
             })
             ->latest()
-            ->paginate(20)
+            ->paginate(10)
             ->withQueryString();
 
         $post_likes = Like::with(['user', 'post'])
