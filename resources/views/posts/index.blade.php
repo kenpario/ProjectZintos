@@ -100,8 +100,8 @@
                         </div>
                         <div class="shadow-md rounded-box p-2 mt-2">
                             <div class="flex justify-between gap-2 m-2">
-                                <span class="text-xs uppercase font-semibold opacity-60"><a class="link link-hover"
-                                        href="/categories/{{ $post->category->id }}/posts"> Posted in
+                                <span class="text-xs uppercase font-semibold opacity-60"> Posted in <a
+                                        class="link link-hover" href="/categories/{{ $post->category->id }}/posts">
                                         {{ $post->category?->name }}</a>
                                 </span>
                                 <span class="text-xs uppercase font-semibold opacity-60"> Posted
@@ -109,7 +109,7 @@
                                 </span>
                             </div>
                             <div class="flex w-full flex-col">
-                                <div class="flex justify-center w-full">
+                                <div class="flex flex-col items-center w-full">
                                     @if($post->media)
                                         @if ($post->isVideo())
                                             <video controls class="w-[700px] h-[500px] object-cover rounded-xl shadow-md">
@@ -121,6 +121,7 @@
                                                 alt="Post Media"
                                                 class="w-[700px] h-[500px] object-cover rounded-xl shadow-md" />
                                         @endif
+                                        <div class="divider"></div>
                                     @endif
                                 </div>
                                 <div class="post-content p-2">

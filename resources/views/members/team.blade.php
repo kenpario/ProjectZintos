@@ -22,9 +22,9 @@
                         <span class="badge badge-xl shadow">{{ $team_group['group']?->name }}</span>
                     </div>
                 @endif
-                <div class="flex gap-4 bg-base-200 rounded-box shadow-md p-4">
+                <div class="sm:flex max-sm:flex max-sm:flex-col gap-4 bg-base-200 rounded-box shadow-md p-4">
                     @foreach ($team_group['members'] as $team_member)
-                        <div class="card bg-base-100 w-64 max-w-full shadow-md items-center p-2">
+                        <div class="card bg-base-100 w-64 max-w-full shadow-md items-center mt-1 mb-1 p-2">
                             <figure>
                                 <a href="/users/{{ $team_member->id }}"><img
                                         src="{{ $team_member->avatar ? asset('storage/' . $team_member->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
