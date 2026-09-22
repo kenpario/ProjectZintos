@@ -48,7 +48,7 @@
                                     @forelse($all_posts->where('post_category_id', $category->id) as $post)
                                         <li class="w-full gap-2 hover-3d">
                                             <div
-                                                class="flex justify-between bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
+                                                class="flex justify-between bg-base-100 rounded-box shadow-md gap-4 p-2 gap-2">
                                                 <div class="flex gap-4 items-center">
                                                     <div><a href="/users/{{ $post->user->id }}"><img
                                                                 src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
@@ -96,7 +96,7 @@
                                     @empty
                                         <li class="w-full gap-2">
                                             <div
-                                                class="flex justify-center bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
+                                                class="flex justify-center bg-base-100 rounded-box shadow-md gap-4 p-4 gap-2">
                                                 <div class="text-s font-semibold opacity-60">
                                                     Nothing here.
                                                 </div>

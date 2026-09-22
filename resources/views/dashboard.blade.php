@@ -102,7 +102,7 @@
                                 @empty
                                     <li class="w-full gap-2">
                                         <div
-                                            class="flex justify-center bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
+                                            class="flex justify-center bg-base-100 rounded-box shadow-md gap-4 p-4 gap-2">
                                             <div class="text-s font-semibold opacity-60">
                                                 Nothing here.
                                             </div>
