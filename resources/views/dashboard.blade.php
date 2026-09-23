@@ -98,7 +98,7 @@
                         </summary>
                         <div class="collapse-content text-sm mt-2 sm:p-4">
                             <ul class="list gap-2 mx-2 mb-2">
-                                @foreach($all_posts->where('post_category_id', $post_category->id) as $post)
+                                @foreach($all_pinned_posts->where('post_category_id', $post_category->id) as $post)
                                     <x-dashboard_pinned :post="$post" :post_likes="$post_likes" :post_views="$post_views" />
                                 @endforeach
                             </ul>
