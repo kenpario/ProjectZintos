@@ -247,9 +247,50 @@
             </div>
         </div>
     @endif
-    <main class="mt-18 mb-2 ml-2 mr-2 flex-1">
+
+    <main class="mt-20 mb-2 ml-2 mr-2 flex-1">
         {{ $slot }}
     </main>
+
+    <button onclick="topFunction()" id="topBtn" title="Go to top"
+        class="radial-progress bg-base-300 text-base-content shadow-xl fixed bottom-20 right-5 z-50 opacity-0 pointer-events-none transition-all duration-300 m-1 flex items-center justify-center cursor-pointer hover:shadow-[0_0_7px_3px] hover:shadow-base-content/50"
+        style="--value:0; --size: 3rem; --thickness: 2px;" aria-valuenow="0" role="progressbar">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
+
+    <script>
+        const myButton = document.getElementById('topBtn');
+        let ticking = false;
+
+        function updateButton() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const percent = scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
+
+            myButton.style.setProperty('--value', percent);
+            myButton.setAttribute('aria-valuenow', percent);
+
+            const scrolled = scrollTop > 20;
+            myButton.classList.toggle('opacity-0', !scrolled);
+            myButton.classList.toggle('pointer-events-none', !scrolled);
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateButton);
+                ticking = true;
+            }
+        });
+
+        function topFunction() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
     @cookieconsentview
 
     <footer class="footer footer-center relative z-10 bg-base-300 text-base-content p-4 rounded">
