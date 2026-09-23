@@ -41,6 +41,10 @@ class DashboardController extends Controller
             ->where('is_pinned', true)
             ->get();
 
+        $statistics_posts = Post::with(['user', 'category'])
+            ->where('is_approved', true)
+            ->get();
+
         $post_categories = Post_Category::all();
 
         $post_likes = Like::with(['user', 'post'])->get();
@@ -49,7 +53,7 @@ class DashboardController extends Controller
 
         $users = User::all();
 
-        return view('dashboard', ['latest_posts' => $latest_posts, 'hot_topics' => $hot_topics, 'post_categories' => $post_categories, 'all_posts' => $all_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'users' => $users, 'all_pinned_posts' => $all_pinned_posts]);
+        return view('dashboard', ['latest_posts' => $latest_posts, 'hot_topics' => $hot_topics, 'post_categories' => $post_categories, 'all_posts' => $all_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'users' => $users, 'all_pinned_posts' => $all_pinned_posts, 'statistics_posts' => $statistics_posts]);
     }
 
     /**

@@ -9,7 +9,7 @@
                     Statistics</li>
                 <li class="list-row">
                     <div class="flex flex-col gap-1">
-                        <div class="opacity-60 text-xs font-semibold">{{ $all_posts->count() }} Posts</div>
+                        <div class="opacity-60 text-xs font-semibold">{{ $statistics_posts->count() }} Posts</div>
                         <div class="opacity-60 text-xs font-semibold">{{ $users->count() }} Members</div>
                         <div class="opacity-60 text-xs font-semibold">Latest Member: <a class="link-hover"
                                 href="/users/{{ $users->sortByDesc('created_at')->first()?->id }}">{{ $users->sortByDesc('created_at')->first()?->name }}</a>
@@ -54,7 +54,7 @@
             </ul>
         </div>
         <div id="summary" class="flex-1 min-w-0 p-1">
-            <div class="aura aura-dual w-full">
+            <div class="aura aura-glow w-full">
                 <div class="hero min-h-screen rounded-box shadow-xl overflow-hidden"
                     style="background-image: url('{{ asset('storage/assets/img/items/background.gif') }}');">
                     <div class="hero-overlay"></div>
