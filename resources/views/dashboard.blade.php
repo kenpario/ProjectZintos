@@ -19,7 +19,8 @@
             </ul>
             <ul class="list bg-base-100 rounded-box shadow-md mt-2">
 
-                <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded-md shadow-md">Latest
+                <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded-md shadow-md">
+                    Latest
                     Posts</li>
                 @forelse ($latest_posts as $latest_post)
                     <x-dashboard_latest_posts :latest_post="$latest_post" :post_likes="$post_likes"
@@ -96,13 +97,17 @@
                             </div>
                         </summary>
                         <div class="collapse-content text-sm mt-2 sm:p-4">
+                            <ul class="list gap-2 mx-2 mb-2">
+                                @foreach($all_posts->where('post_category_id', $post_category->id) as $post)
+                                    <x-dashboard_pinned :post="$post" :post_likes="$post_likes" :post_views="$post_views" />
+                                @endforeach
+                            </ul>
                             <ul class="list gap-2 mx-2">
                                 @forelse($all_posts->where('post_category_id', $post_category->id) as $post)
                                     <x-dashboard_categories :post="$post" :post_likes="$post_likes" :post_views="$post_views" />
                                 @empty
                                     <li class="w-full gap-2">
-                                        <div
-                                            class="flex justify-center bg-base-100 rounded-box shadow-md gap-4 p-4 gap-2">
+                                        <div class="flex justify-center bg-base-100 rounded-box shadow-md gap-4 p-4">
                                             <div class="text-s font-semibold opacity-60">
                                                 Nothing here.
                                             </div>

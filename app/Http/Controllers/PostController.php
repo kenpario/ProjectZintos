@@ -79,6 +79,34 @@ class PostController extends Controller
             ->with('success', 'The post has been approved!');
     }
 
+    public function pin(Post $post)
+    {
+        if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $post->update([
+            'is_pinned' => true,
+        ]);
+
+        return redirect()->route('posts', ['post' => $post])
+            ->with('success', 'The post has been pinned!');
+    }
+
+    public function unpin(Post $post)
+    {
+        if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $post->update([
+            'is_pinned' => false,
+        ]);
+
+        return redirect()->route('posts', ['post' => $post])
+            ->with('success', 'The post has been unpinned!');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
