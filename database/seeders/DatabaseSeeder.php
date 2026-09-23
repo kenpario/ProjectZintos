@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
         $timestamp = now();
 
         $groupNames = [
-            ['name' => 'Administrator', 'description' => 'Official Zintos community', 'is_admin' => true, 'is_mod' => true, 'is_premium' => true],
-            ['name' => 'Moderator', 'description' => 'Software development team', 'is_admin' => false, 'is_mod' => true, 'is_premium' => false],
-            ['name' => 'Premium', 'description' => 'Travel stories and advice', 'is_admin' => false, 'is_mod' => false, 'is_premium' => true],
-            ['name' => 'Member', 'description' => 'Photography and creative work', 'is_admin' => false, 'is_mod' => false, 'is_premium' => false],
+            ['name' => 'Administrator', 'description' => 'Administrator Group', 'is_admin' => true, 'is_mod' => true, 'is_premium' => true],
+            ['name' => 'Moderator', 'description' => 'Moderator Group', 'is_admin' => false, 'is_mod' => true, 'is_premium' => false],
+            ['name' => 'Premium', 'description' => 'Premium Group', 'is_admin' => false, 'is_mod' => false, 'is_premium' => true],
+            ['name' => 'Member', 'description' => 'Member Group', 'is_admin' => false, 'is_mod' => false, 'is_premium' => false],
         ];
 
         foreach ($groupNames as $index => $group) {

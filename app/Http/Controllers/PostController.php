@@ -79,6 +79,34 @@ class PostController extends Controller
             ->with('success', 'The post has been approved!');
     }
 
+    public function pin(Post $post)
+    {
+        if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $post->update([
+            'is_pinned' => true,
+        ]);
+
+        return redirect()->route('posts', ['post' => $post])
+            ->with('success', 'The post has been pinned!');
+    }
+
+    public function unpin(Post $post)
+    {
+        if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
+            abort(403, 'Unauthorized Action!');
+        }
+
+        $post->update([
+            'is_pinned' => false,
+        ]);
+
+        return redirect()->route('posts', ['post' => $post])
+            ->with('success', 'The post has been unpinned!');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -91,6 +119,7 @@ class PostController extends Controller
                 ->where('can_comment', true)
                 ->get();
         }
+
         return view('posts.create', ['categories' => $categories, 'backUrl' => url()->previous()]);
     }
 
@@ -135,7 +164,10 @@ class PostController extends Controller
 
         Post::create($formFields);
 
-        return redirect('/categories')->with('success', 'Your Post has been added!');
+        if (Auth::user()->group?->is_admin || Auth::user()->group->is_mod) {
+            return redirect('/categories')->with('success', 'Your Post has been added!');
+        }
+        return redirect('/categories')->with('success', 'Your post is waiting for approval!');
     }
 
     /**
@@ -218,8 +250,12 @@ class PostController extends Controller
             Storage::disk('public')->delete($oldMedia);
         }
 
-        return redirect()->route('posts', ['post' => $post])
-            ->with('success', 'The post has been updated!');
+
+        if (Auth::user()->group?->is_admin || Auth::user()->group->is_mod) {
+            return redirect()->route('posts', ['post' => $post])
+                ->with('success', 'The post has been updated!');
+        }
+        return redirect('/categories')->with('success', 'Your post is waiting for approval!');
     }
 
     /**

@@ -22,6 +22,7 @@ class CategoryController extends Controller
 
         $all_posts = Post::with(['user', 'category'])
             ->where('is_approved', true)
+            ->where('is_pinned', false)
             ->when($search !== '', function ($query) use ($search) {
                 $query->whereAny(
                     ['title', 'message'],
@@ -33,6 +34,19 @@ class CategoryController extends Controller
             ->paginate(10)
             ->withQueryString();
 
+        $all_pinned_posts = Post::with(['user', 'category'])
+            ->where('is_approved', true)
+            ->where('is_pinned', true)
+            ->when($search !== '', function ($query) use ($search) {
+                $query->whereAny(
+                    ['title', 'message'],
+                    'ilike',
+                    "%{$search}%"
+                );
+            })
+            ->orderBy('id', 'asc')
+            ->get();
+
         $post_likes = Like::with(['user', 'post'])
             ->get();
 
@@ -40,7 +54,7 @@ class CategoryController extends Controller
             ->get();
 
 
-        return view('categories.index', ['categories' => $categories, 'all_posts' => $all_posts, 'post_likes' => $post_likes, 'post_views' => $post_views]);
+        return view('categories.index', ['categories' => $categories, 'all_posts' => $all_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'all_pinned_posts' => $all_pinned_posts]);
     }
 
     public function posts(Request $request, Post_Category $category)
@@ -50,6 +64,7 @@ class CategoryController extends Controller
         $posts = $category->posts()
             ->with('user')
             ->where('is_approved', true)
+            ->where('is_pinned', false)
             ->when($search !== '', function ($query) use ($search) {
                 $query->whereAny(
                     ['title', 'message'],
@@ -61,13 +76,26 @@ class CategoryController extends Controller
             ->paginate(10)
             ->withQueryString();
 
+        $pinned_posts = Post::with('user')
+            ->where('is_approved', true)
+            ->where('is_pinned', true)
+            ->when($search !== '', function ($query) use ($search) {
+                $query->whereAny(
+                    ['title', 'message'],
+                    'ilike',
+                    "%{$search}%"
+                );
+            })
+            ->orderBy('id', 'asc')
+            ->get();
+
         $post_likes = Like::with(['user', 'post'])
             ->get();
 
         $post_views = View::with(['user', 'post'])
             ->get();
 
-        return view('categories.posts', ['category' => $category, 'posts' => $posts, 'post_likes' => $post_likes, 'post_views' => $post_views]);
+        return view('categories.posts', ['category' => $category, 'posts' => $posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'pinned_posts' => $pinned_posts]);
     }
     /**
      * Show the form for creating a new resource.

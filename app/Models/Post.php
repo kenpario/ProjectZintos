@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
 {
-    protected $fillable = ['user_id', 'title', 'message', 'post_category_id', 'likes', 'views', 'is_approved', 'media'];
+    protected $fillable = ['user_id', 'title', 'message', 'post_category_id', 'likes', 'views', 'is_approved', 'media', 'is_pinned'];
     protected $hidden = ['user_id', 'likes', 'views'];
-    protected $casts = ['is_approved' => 'boolean'];
+    protected $casts = ['is_approved' => 'boolean', 'is_pinned' => 'boolean'];
 
 
     public function user(): BelongsTo

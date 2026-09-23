@@ -97,6 +97,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/posts', [PostController::class, 'store']);
     Route::get('/posts/moderation', [PostController::class, 'moderation'])->name('mod_posts');
     Route::put('/posts/{post}/approve', [PostController::class, 'approve'])->name('approve_posts');
+    Route::put('/posts/{post}/pin', [PostController::class, 'pin'])->name('pin_posts');
+    Route::put('/posts/{post}/unpin', [PostController::class, 'unpin'])->name('unpin_posts');
     Route::get('/posts/{post}', [PostController::class, 'index'])->name('posts');
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('edit_posts');
     Route::put('/posts/{post}', [PostController::class, 'update']);

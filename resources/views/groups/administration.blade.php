@@ -37,7 +37,7 @@
                                 @else
                                 <span class="badge shadow">{{ $group->name }}</span> @endif
                             </td>
-                            <th>{{ $group->description }}</th>
+                            <td>{{ $group->description }}</td>
                             <td>
                                 <p>{{ $group->is_admin ? 'True' : 'False' }}</p>
                             </td>

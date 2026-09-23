@@ -50,7 +50,7 @@
                 <div class="w-full">
                     <div class="collapse-title font-semibold bg-base-300 rounded"> {{ $user->name }}'s Activity
                     </div>
-                    <div class="sm:p-4">
+                    <div class="p-4">
                         <ul class="list gap-2 w-full">
                             @forelse($user_posts as $post)
                                 <li class="w-full gap-2 hover-3d">

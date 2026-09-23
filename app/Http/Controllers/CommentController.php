@@ -82,8 +82,12 @@ class CommentController extends Controller
 
         Comment::create($formFields);
 
+        if (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) {
+            return redirect()->route('posts', ['post' => $post])
+                ->with('success', 'Your comment has been posted!');
+        }
         return redirect()->route('posts', ['post' => $post])
-            ->with('success', 'Your comment has been posted!');
+            ->with('success', 'Your comment is waiting for approval!');
     }
 
     /**
@@ -137,8 +141,12 @@ class CommentController extends Controller
 
         $postId = $comment->post_id;
 
+        if (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) {
+            return redirect()->route('posts', ['post' => $postId])
+                ->with('success', 'Your comment has been posted!');
+        }
         return redirect()->route('posts', ['post' => $postId])
-            ->with('success', 'Your comment has been updated!');
+            ->with('success', 'Your comment is waiting for approval!');
     }
 
     /**

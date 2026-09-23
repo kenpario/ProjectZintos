@@ -52,9 +52,18 @@
                 <div class="flex min-w-0 flex-1 flex-col gap-2">
                     <div class="w-full">
                         <div class="flex justify-between items-center font-semibold bg-base-300 rounded-box p-4">
-                            <span> {{ $post->title }} </span>
+                            <div class="flex gap-2 items-center">
+                                @if(Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)
+                                    <x-posts_pin :post="$post" />
+                                @endif
+                                <div class="flex flex-col">
+                                    @if($post->is_pinned)
+                                        <span class="text-xs opacity-60"> Pinned Post </span>
+                                    @endif
+                                    <span> {{ $post->title }} </span>
+                                </div>
+                            </div>
                             <div class="flex gap-2">
-                                <x-posts_likes :post_likes="$post_likes" :post="$post" />
                                 @if((Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) && !$post->is_approved)
                                     <form method="POST" action="{{ route('approve_posts', $post) }}">
                                         @csrf
@@ -72,6 +81,7 @@
                                         </div>
                                     </form>
                                 @endif
+                                <x-posts_likes :post_likes="$post_likes" :post="$post" />
                                 @if(Auth::user()->id === $post->user?->id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
                                     <a href="{{ route('edit_posts', ['post' => $post]) }}">
                                         <button class="btn btn-square" aria-label="Edit Post" title="Edit Post">
