@@ -7,7 +7,8 @@
                 <div class="flex justify-end w-full">
                     @if((Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) && !$post_comment->is_approved)
                         <div class="flex justify-end gap-2 bg-base-300 p-2">
-                            <form method="POST" action="{{ route('approve_comments', $post_comment) }}">
+                            <form method="POST" action="{{ route('approve_comments', $post_comment) }}"
+                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled');">
                                 @csrf
                                 @method('PUT')
                                 <div class="aura aura-dual">
@@ -33,7 +34,8 @@
                                     </svg>
                                 </button>
                             </a>
-                            <form method="POST" action="/comments/{{ $post_comment->id }}">
+                            <form method="POST" action="/comments/{{ $post_comment->id }}"
+                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?')"

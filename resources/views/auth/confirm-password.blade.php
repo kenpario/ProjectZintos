@@ -4,7 +4,8 @@
     </x-slot:title>
 
     <div class="min-h-full w-full">
-        <form method="POST" action="{{ route('password.confirm.store') }}" class="mx-auto w-full max-w-md">
+        <form method="POST" action="{{ route('password.confirm.store') }}" class="mx-auto w-full max-w-md"
+            onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Confirming...';">
             @csrf
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
                 <legend class="fieldset-legend">Confirm Password</legend>

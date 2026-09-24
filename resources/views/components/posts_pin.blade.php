@@ -1,7 +1,8 @@
 @props(['post'])
 
 @if(!$post->is_pinned)
-    <form method="POST" action="{{ route('pin_posts', $post) }}">
+    <form method="POST" action="{{ route('pin_posts', $post) }}"
+        onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled');">
         @csrf
         @method('PUT')
         <div class="aura text-orange-600 bg-yellow-200">
@@ -17,7 +18,8 @@
         </div>
     </form>
 @else
-    <form method="POST" action="{{ route('unpin_posts', $post) }}">
+    <form method="POST" action="{{ route('unpin_posts', $post) }}"
+        onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled');">
         @csrf
         @method('PUT')
         <div class="aura aura-silver">

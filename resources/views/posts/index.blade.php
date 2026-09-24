@@ -65,7 +65,8 @@
                             </div>
                             <div class="flex gap-2">
                                 @if((Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) && !$post->is_approved)
-                                    <form method="POST" action="{{ route('approve_posts', $post) }}">
+                                    <form method="POST" action="{{ route('approve_posts', $post) }}"
+                                        onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled');">
                                         @csrf
                                         @method('PUT')
                                         <div class="aura aura-dual">
@@ -92,7 +93,8 @@
                                             </svg>
                                         </button>
                                     </a>
-                                    <form method="POST" action="/posts/{{ $post->id }}">
+                                    <form method="POST" action="/posts/{{ $post->id }}"
+                                        onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

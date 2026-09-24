@@ -103,12 +103,14 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('two-factor.regenerate-recovery-codes') }}">
+                            <form method="POST" action="{{ route('two-factor.regenerate-recovery-codes') }}"
+                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Generating...';">
                                 @csrf
                                 <button type="submit" class="btn bg-base-300 w-full">Generate new recovery codes</button>
                             </form>
 
-                            <form method="POST" action="{{ route('two-factor.disable') }}">
+                            <form method="POST" action="{{ route('two-factor.disable') }}"
+                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Disabling...';">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-error w-full mt-2">Disable two-factor
@@ -122,7 +124,8 @@
                                     <div class="mx-auto w-fit rounded bg-white p-2" aria-label="Two-factor authentication QR code">
                                         {!! $user->twoFactorQrCodeSvg() !!}
                                     </div>
-                                    <form method="POST" action="{{ route('two-factor.confirm') }}">
+                                    <form method="POST" action="{{ route('two-factor.confirm') }}"
+                                        onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Confirming...';">
                                         @csrf
                                         <div class="flex flex-col gap-1 justify-center items-center">
                                             <span>Authenticator Code</span>
@@ -147,7 +150,8 @@
                                     </form>
                                 </div>
                             @else
-                                <form method="POST" action="{{ route('two-factor.enable') }}">
+                                <form method="POST" action="{{ route('two-factor.enable') }}"
+                                    onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled');">
                                     @csrf
                                     <button type="submit" class="btn bg-base-300 shadow-md w-full">Set up two-factor
                                         authentication</button>

@@ -43,7 +43,7 @@ class DashboardController extends Controller
 
         $statistics_posts = Post::with(['user', 'category'])
             ->where('is_approved', true)
-            ->get();
+            ->count();
 
         $post_categories = Post_Category::all();
 

@@ -14,7 +14,8 @@
                     <div class="alert alert-success mb-4">A new verification link has been sent.</div>
                 @endif
 
-                <form method="POST" action="{{ route('verification.send') }}">
+                <form method="POST" action="{{ route('verification.send') }}"
+                    onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Sending...';">
                     @csrf
                     <button type="submit" class="btn bg-base-300 shadow-md w-full">Resend verification email</button>
                 </form>

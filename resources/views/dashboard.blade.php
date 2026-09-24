@@ -9,7 +9,7 @@
                     Statistics</li>
                 <li class="list-row">
                     <div class="flex flex-col gap-1">
-                        <div class="opacity-60 text-xs font-semibold">{{ $statistics_posts->count() }} Posts</div>
+                        <div class="opacity-60 text-xs font-semibold">{{ $statistics_posts }} Posts</div>
                         <div class="opacity-60 text-xs font-semibold">{{ $users->count() }} Members</div>
                         <div class="opacity-60 text-xs font-semibold">Latest Member: <a class="link-hover"
                                 href="/users/{{ $users->sortByDesc('created_at')->first()?->id }}">{{ $users->sortByDesc('created_at')->first()?->name }}</a>

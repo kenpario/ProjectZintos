@@ -4,7 +4,8 @@
     </x-slot:title>
 
     <div class="min-h-full w-full">
-        <form method="POST" action="{{ route('two-factor.login') }}" class="mx-auto w-full max-w-md">
+        <form method="POST" action="{{ route('two-factor.login') }}" class="mx-auto w-full max-w-md"
+            onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Verifying...';">
             @csrf
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
                 <legend class="fieldset-legend">Two-Factor Authentication</legend>
