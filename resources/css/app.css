@@ -92,6 +92,16 @@
     font-size: 0.875em;
 }
 
+.post-content ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+}
+
+.post-content ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+}
+
 @theme {
     --font-sans:
         "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
