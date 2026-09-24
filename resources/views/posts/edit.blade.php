@@ -53,6 +53,7 @@
                     </div>
                 @enderror
                 <label class="label">Message</label>
+
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         if (window.tinymce) {
@@ -73,11 +74,18 @@
                             toolbar: 'undo redo | blocks | bold italic underline | bullist numlist | link table hr | codesample | code',
                             convert_unsafe_embeds: true,
                             sandbox_iframes: true,
+                            setup: function (editor) {
+                                editor.on('init', function () {
+                                    document.getElementById('post_message').removeAttribute('hidden');
+                                });
+                            }
                         });
                     }
                 </script>
-                <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Message"
-                    name="message">{{ old('message', $post->message) }}</textarea>
+
+                <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Message" name="message"
+                    hidden>{{ old('message') }}</textarea>
+
                 @error('message')
                     <div class="label">
                         <span class="label-text-alt text-error">{{ $message }}</span>
