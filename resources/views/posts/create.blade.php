@@ -61,7 +61,7 @@
                             sandbox_iframes: true,
                             setup: function (editor) {
                                 editor.on('init', function () {
-                                    document.getElementById('post_message').removeAttribute('hidden');
+                                    document.getElementById('post_message').removeAttribute('hidden', 'disabled');
                                 });
                             }
                         });
@@ -69,7 +69,7 @@
                 </script>
 
                 <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Message" name="message"
-                    hidden>{{ old('message') }}</textarea>
+                    disabled hidden>{{ old('message') }}</textarea>
 
                 @error('message')
                     <div class="label">
