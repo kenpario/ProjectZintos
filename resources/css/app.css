@@ -53,10 +53,6 @@
     border-bottom-right-radius: var(--radius-md);
 }
 
-.post-content hr {
-    border: 0;
-    border-top: 2px solid var(--color-base-content);
-}
 .post-content pre {
     position: relative;
     background-color: var(--color-base-300);
