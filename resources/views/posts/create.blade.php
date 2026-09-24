@@ -39,15 +39,27 @@
                 @enderror
                 <label class="label">Message</label>
                 <script>
-                    tinymce.init({
-                        selector: '#post_message',
-                        promotion: false,
-                        branding: false,
-                        onboarding: false,
-                        plugins: 'autolink lists link table hr code wordcount',
-                        toolbar:
-                            'undo redo | blocks | bold italic underline | bullist numlist | link table hr | code',
+                    document.addEventListener('DOMContentLoaded', function () {
+                        if (window.tinymce) {
+                            initEditor();
+                        } else {
+                            document.addEventListener('tinymce:ready', initEditor, { once: true });
+                        }
                     });
+
+                    function initEditor() {
+                        tinymce.init({
+                            selector: '#post_message',
+                            license_key: 'gpl',
+                            promotion: false,
+                            branding: false,
+                            onboarding: false,
+                            plugins: 'autolink lists link table hr code codesample wordcount',
+                            toolbar: 'undo redo | blocks | bold italic underline | bullist numlist | link table hr | codesample | code',
+                            convert_unsafe_embeds: true,
+                            sandbox_iframes: true,
+                        });
+                    }
                 </script>
                 <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Message"
                     name="message">{{ old('message') }}</textarea>

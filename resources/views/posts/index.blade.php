@@ -138,6 +138,18 @@
                                 </div>
                                 <div class="post-content p-2">
                                     {!! $post->message !!}
+                                    @push('js')
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', () => {
+                                                document.querySelectorAll('.post-content pre[class*="language-"]').forEach((block) => {
+                                                    const match = block.className.match(/language-(\w+)/);
+                                                    if (match) {
+                                                        block.setAttribute('data-language', match[1]);
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                    @endpush
                                 </div>
                             </div>
                         </div>

@@ -26,6 +26,8 @@
 .post-content th,
 .post-content td {
     border-color: var(--color-base-content) !important;
+    border-style: solid;
+    border-width: 1px;
     padding: 0.5rem 0.5rem;
     text-align: left;
     vertical-align: top;
@@ -54,6 +56,44 @@
 .post-content hr {
     border: 0;
     border-top: 2px solid var(--color-base-content);
+}
+.post-content pre {
+    position: relative;
+    background-color: var(--color-base-300);
+    color: var(--color-base-content);
+    padding: 1rem;
+    padding-top: 1.75rem;
+    margin: 1rem 0;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    font-family: ui-monospace, "Cascadia Code", monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.post-content pre[data-language]::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 0.4rem;
+    left: 1rem;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-base-content);
+    opacity: 0.5;
+}
+
+.post-content code {
+    font-family: inherit;
+}
+
+.post-content :not(pre) > code {
+    background-color: var(--color-base-300);
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
 }
 
 @theme {
