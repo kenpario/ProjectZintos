@@ -54,7 +54,7 @@
                             promotion: false,
                             branding: false,
                             onboarding: false,
-                            plugins: 'autolink lists link table hr code codesample wordcount',
+                            plugins: 'autolink lists link table code codesample wordcount',
                             toolbar: 'undo redo | blocks | bold italic underline | bullist numlist | link table hr | codesample | code',
                             convert_unsafe_embeds: true,
                             sandbox_iframes: true,
