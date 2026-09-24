@@ -4,7 +4,7 @@
     </x-slot:title>
     <div class="flex flex-row gap-4 max-lg:flex-col">
         <div class="w-1/3 max-lg:w-full rounded-box p-1" id="posts">
-            <ul class="list bg-base-100 rounded-box shadow-md">
+            <ul class="list bg-base-200 rounded-box shadow-md">
                 <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded-md shadow-md">
                     Statistics</li>
                 <li class="list-row">
@@ -17,7 +17,7 @@
                     </div>
                 </li>
             </ul>
-            <ul class="list bg-base-100 rounded-box shadow-md mt-2">
+            <ul class="list bg-base-200 rounded-box shadow-md mt-2">
 
                 <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded-md shadow-md">
                     Latest
@@ -26,7 +26,7 @@
                     <x-dashboard_latest_posts :latest_post="$latest_post" :post_likes="$post_likes"
                         :post_views="$post_views" />
                 @empty
-                    <li class="list-row">
+                    <li class="p-4">
                         <div class="flex justify-center bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
                             <div class="text-s font-semibold opacity-60">
                                 Nothing here.
@@ -36,14 +36,14 @@
                 @endforelse
             </ul>
 
-            <ul class="list bg-base-100 rounded-box shadow-md mt-2">
+            <ul class="list bg-base-200 rounded-box shadow-md mt-2">
 
                 <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded-md shadow-md">Hot
                     Topics</li>
                 @forelse ($hot_topics as $hot_topic)
                     <x-dashboard_hot_topics :hot_topic="$hot_topic" :post_likes="$post_likes" :post_views="$post_views" />
                 @empty
-                    <li class="list-row">
+                    <li class="p-4">
                         <div class="flex justify-center bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
                             <div class="text-s font-semibold opacity-60">
                                 Nothing here.

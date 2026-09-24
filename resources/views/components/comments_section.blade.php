@@ -50,17 +50,17 @@
                         </div>
                     @endif
                 </div>
-                <div class="flex items-center">
-                    <div class="m-2">
+                <div class="flex gap-2 items-center bg-base-100 rounded-md p-4">
+                    <div>
                         <a href="/users/{{ $post_comment->user->id }}"><img
                                 src="{{ $post_comment->user->avatar ? asset('storage/' . $post_comment->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
-                                alt="{{ $post_comment->user->name }}'s avatar" class="size-10 rounded-box mt-2" /></a>
+                                alt="{{ $post_comment->user->name }}'s avatar" class="size-10 rounded-box" /></a>
                     </div>
-                    <div class="flex w-full">
+                    <div class="flex items-center w-full">
                         <div class="flex flex-col text-xs font-semibold gap-2 w-full">
-                            <div class="flex justify-between uppercase gap-2 opacity-60">
-                                <a class="link link-hover" href="/users/{{ $post_comment->user->id }}"><span>By
-                                        {{ $post_comment->user->name }}</span></a>
+                            <div class="flex justify-between text-xs gap-2 opacity-60">
+                                <span>by <a class="link link-hover" href="/users/{{ $post_comment->user->id }}">
+                                        {{ $post_comment->user->name }}</a></span>
                                 <span>Commented
                                     {{ $post_comment->created_at->diffForHumans() }}
                             </div>
@@ -68,8 +68,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="divider p-2"></div>
             </div>
+            <div class="divider p-2"></div>
         @endif
     @endforeach
 </div>

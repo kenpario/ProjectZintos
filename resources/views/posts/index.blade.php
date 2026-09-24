@@ -4,9 +4,9 @@
     </x-slot:title>
     <div class="max-w-full py-12">
         <div class="mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="sm:flex max-sm:flex-col p-4 sm:p-8 shadow-md rounded-md">
+            <div class="sm:flex max-sm:flex-col p-4 sm:p-8 shadow-md rounded-md bg-base-200">
                 <div class="flex justify-center max-sm:w-full w-80">
-                    <div class="flex flex-col items-center shadow-md rounded-md p-2 text-center w-full">
+                    <div class="flex flex-col items-center shadow-md rounded-md p-2 text-center bg-base-300 w-full">
                         <h1 class="m-2 text-xl font-semibold"><a class="link link-hover"
                                 href="/users/{{ $post->user->id }}">{{ $post->user?->name }}</a></h1>
                         <div class="divider"></div>
@@ -32,11 +32,11 @@
                             </div>
                         @endif
                         <div class="m-2">
-                            <p class="rounded-box shadow m-2 p-2">
+                            <p class="p-2">
                                 {{ $post->user?->bio ? $post->user?->bio : 'This user has not filled the biography yet.'}}
                             </p>
                         </div>
-                        <div class="rounded-box shadow m-2 p-2">
+                        <div class="m-2 p-2">
                             <p>
                                 Likes received:
                                 {{ $total_likes }}
@@ -110,7 +110,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="shadow-md rounded-box p-2 mt-2">
+                        <div class="shadow-md rounded-box p-2 mt-2 bg-base-100">
                             <div class="flex justify-between gap-2 m-2">
                                 <span class="text-xs uppercase font-semibold opacity-60"> Posted in <a
                                         class="link link-hover" href="/categories/{{ $post->category->id }}/posts">
@@ -163,7 +163,7 @@
                     <div class="bg-base-200 rounded-box">
                         <x-comments_section :post_comments="$post_comments" />
                     </div>
-                    <div class="rounded-box shadow-md mt-2">
+                    <div class="rounded-box shadow-md mt-2 bg-base-100">
                         <div class="m-2">
                             <span class="text-sm font-bold m-2">Liked by:</span>
                             @foreach ($post_likes as $post_like)
@@ -172,7 +172,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="rounded-box shadow-md mt-2">
+                    <div class="rounded-box shadow-md mt-2 bg-base-100">
                         <div class="m-2">
                             <span class="text-sm font-bold m-2">Viewed by:</span>
                             @foreach ($post_views as $post_view)

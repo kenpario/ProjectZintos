@@ -4,8 +4,8 @@
     </x-slot:title>
     <div class="max-w-full py-12">
         <div class="mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="sm:flex max-sm:flex-col p-4 sm:p-8 shadow-md rounded-md">
-                <div class="flex justify-center max-sm:w-full w-80">
+            <div class="sm:flex max-sm:flex-col p-4 sm:p-8 shadow-md rounded-md bg-base-200 ">
+                <div class="flex justify-center max-sm:w-full bg-base-300 w-80">
                     <div class="flex flex-col items-center shadow-md rounded-md p-2 text-center w-full">
                         <h1 class="m-2 text-xl font-semibold">{{ $user->name }}</h1>
                         <div class="divider"></div>
@@ -30,11 +30,11 @@
                             </div>
                         @endif
                         <div class="m-2">
-                            <p class="rounded-box shadow m-2 p-2">
+                            <p class="p-2">
                                 {{ $user->bio ? $user->bio : 'This user has not filled the biography yet.'}}
                             </p>
                         </div>
-                        <div class="m-2 p-2 rounded-box shadow-md">
+                        <div class="m-2 p-2">
                             <p>
                                 Likes received:
                                 {{ $total_likes }}
@@ -50,7 +50,7 @@
                 <div class="w-full">
                     <div class="collapse-title font-semibold bg-base-300 rounded"> {{ $user->name }}'s Activity
                     </div>
-                    <div class="p-4">
+                    <div class="p-4 mt-1 rounded-md">
                         <ul class="list gap-2 w-full">
                             @forelse($user_posts as $post)
                                 <li class="w-full gap-2 hover-3d">
