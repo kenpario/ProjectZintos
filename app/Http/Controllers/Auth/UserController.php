@@ -186,6 +186,10 @@ class UserController extends Controller
                 unset($formFields['group_id']);
             }
 
+            if (array_key_exists('group_id', $formFields) && empty($formFields['group_id'])) {
+                unset($formFields['group_id']);
+            }
+
             $user->update($formFields);
         } catch (\Throwable $exception) {
             if ($newAvatar) {
