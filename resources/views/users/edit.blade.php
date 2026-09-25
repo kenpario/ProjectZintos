@@ -41,7 +41,7 @@
                             <span class="label-text-alt text-error">{{ $message }}</span>
                         </div>
                     @enderror
-                    @if (Auth::user()->group?->is_admin)
+                    @if (Auth::user()->group?->is_admin && ! $user->group?->is_admin)
                         <label class="label">Group</label>
                         <select class="select w-full" name="group_id" @disabled($user->group?->is_admin)>
                             <option value="">Select a Group</option>

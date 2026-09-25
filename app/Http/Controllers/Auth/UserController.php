@@ -10,6 +10,7 @@ use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -135,7 +136,7 @@ class UserController extends Controller
             abort(403, 'Unauthorized Action!');
         }
 
-        $groups = Group::get();
+        $groups = Group::where('is_admin', false)->where('is_premium', false)->get();
 
         return view('users.edit', ['user' => $user, 'groups' => $groups, 'backUrl' => url()->previous()]);
     }
@@ -151,12 +152,16 @@ class UserController extends Controller
 
         $avatar = $request->file('avatar');
 
+        $allowedGroupIds = Group::where('is_admin', false)
+            ->where('is_premium', false)
+            ->pluck('id');
+
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',
                 'avatar' => 'nullable|file|image|mimes:jpg,jpeg,png,gif|max:2048',
                 'bio' => 'nullable|string|max:100|min:5',
-                'group_id' => 'nullable|integer|exists:groups,id',
+                'group_id' => ['nullable', 'integer', Rule::in($allowedGroupIds)],
             ],
             [
                 'name.required' => 'Please write a name!',
