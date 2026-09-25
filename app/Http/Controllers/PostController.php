@@ -63,11 +63,12 @@ class PostController extends Controller
             ->with(['user', 'category'])
             ->where('is_approved', false)
             ->when($search !== '', function ($query) use ($search) {
-                $query->whereAny(
-                    ['title', 'message'],
-                    'ilike',
-                    "%{$search}%"
-                );
+                $query->where(function ($q) use ($search) {
+                    $q->whereAny(['title', 'message'], 'ilike', "%{$search}%")
+                        ->orWhereHas('user', function ($userQuery) use ($search) {
+                            $userQuery->where('name', 'ilike', "%{$search}%");
+                        });
+                });
             })
             ->paginate(20)
             ->withQueryString();

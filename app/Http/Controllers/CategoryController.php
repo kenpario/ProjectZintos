@@ -24,11 +24,12 @@ class CategoryController extends Controller
             ->where('is_approved', true)
             ->where('is_pinned', false)
             ->when($search !== '', function ($query) use ($search) {
-                $query->whereAny(
-                    ['title', 'message'],
-                    'ilike',
-                    "%{$search}%"
-                );
+                $query->where(function ($q) use ($search) {
+                    $q->whereAny(['title', 'message'], 'ilike', "%{$search}%")
+                        ->orWhereHas('user', function ($userQuery) use ($search) {
+                            $userQuery->where('name', 'ilike', "%{$search}%");
+                        });
+                });
             })
             ->latest()
             ->paginate(10)
@@ -38,11 +39,12 @@ class CategoryController extends Controller
             ->where('is_approved', true)
             ->where('is_pinned', true)
             ->when($search !== '', function ($query) use ($search) {
-                $query->whereAny(
-                    ['title', 'message'],
-                    'ilike',
-                    "%{$search}%"
-                );
+                $query->where(function ($q) use ($search) {
+                    $q->whereAny(['title', 'message'], 'ilike', "%{$search}%")
+                        ->orWhereHas('user', function ($userQuery) use ($search) {
+                            $userQuery->where('name', 'ilike', "%{$search}%");
+                        });
+                });
             })
             ->orderBy('id', 'asc')
             ->get();
@@ -66,11 +68,12 @@ class CategoryController extends Controller
             ->where('is_approved', true)
             ->where('is_pinned', false)
             ->when($search !== '', function ($query) use ($search) {
-                $query->whereAny(
-                    ['title', 'message'],
-                    'ilike',
-                    "%{$search}%"
-                );
+                $query->where(function ($q) use ($search) {
+                    $q->whereAny(['title', 'message'], 'ilike', "%{$search}%")
+                        ->orWhereHas('user', function ($userQuery) use ($search) {
+                            $userQuery->where('name', 'ilike', "%{$search}%");
+                        });
+                });
             })
             ->latest()
             ->paginate(10)
@@ -80,11 +83,12 @@ class CategoryController extends Controller
             ->where('is_approved', true)
             ->where('is_pinned', true)
             ->when($search !== '', function ($query) use ($search) {
-                $query->whereAny(
-                    ['title', 'message'],
-                    'ilike',
-                    "%{$search}%"
-                );
+                $query->where(function ($q) use ($search) {
+                    $q->whereAny(['title', 'message'], 'ilike', "%{$search}%")
+                        ->orWhereHas('user', function ($userQuery) use ($search) {
+                            $userQuery->where('name', 'ilike', "%{$search}%");
+                        });
+                });
             })
             ->orderBy('id', 'asc')
             ->get();
