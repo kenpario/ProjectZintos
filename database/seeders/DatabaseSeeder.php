@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $timestamp = now();
 
         $groupNames = [
-            ['name' => 'Administrator', 'description' => 'Administrator Group', 'is_admin' => true, 'is_mod' => true, 'is_premium' => true],
+            ['name' => 'Administrator', 'description' => 'Administrator Group', 'is_admin' => true, 'is_mod' => false, 'is_premium' => false],
             ['name' => 'Moderator', 'description' => 'Moderator Group', 'is_admin' => false, 'is_mod' => true, 'is_premium' => false],
             ['name' => 'Premium', 'description' => 'Premium Group', 'is_admin' => false, 'is_mod' => false, 'is_premium' => true],
             ['name' => 'Member', 'description' => 'Member Group', 'is_admin' => false, 'is_mod' => false, 'is_premium' => false],
