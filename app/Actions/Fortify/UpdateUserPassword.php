@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Contracts\UpdatesUserPasswords;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class UpdateUserPassword implements UpdatesUserPasswords
 {
@@ -22,6 +23,7 @@ class UpdateUserPassword implements UpdatesUserPasswords
     public function update(User $user, array $input): void
     {
         Validator::make($input, [
+            'cf-turnstile-response' => ['required', new Turnstile],
             'current_password' => ['required', 'string', 'current_password:web'],
             'password' => $this->passwordRules(),
         ], [

@@ -48,12 +48,15 @@
                         class="w-full input input-bordered" required>
                     <span>Confirm Password</span>
                 </label>
-
+                <div class="flex justify-center">
+                    <x-turnstile />
+                </div>
                 <div class="form-control mt-8">
                     <button type="submit" class="btn btn-md skeleton w-full">
                         Register
                     </button>
                 </div>
+
         </form>
         <div class="divider">OR</div>
         <a class="w-full btn bg-white text-black border-[#e5e5e5]" href="{{ route('login_google') }}">

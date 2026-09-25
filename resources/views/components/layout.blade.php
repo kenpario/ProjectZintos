@@ -24,6 +24,7 @@
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @cookieconsentscripts
+    <x-turnstile.scripts />
 </head>
 
 <body class="min-h-screen flex flex-col">
