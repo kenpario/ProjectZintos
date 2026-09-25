@@ -14,14 +14,14 @@
                     @if ($user->avatar)
                         <div class="mb-2 flex justify-center">
                             <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}'s avatar"
-                                class="w-[150px] h-[150px] object-cover rounded-full shadow-md m-2" />
+                                class="w-[75px] h-[75px] object-cover rounded-full shadow-md m-2" />
                         </div>
                     @else
                         <div class="mb-2 flex justify-center">
                             <div class="w-20">
                                 <img src="https://img.daisyui.com/images/profile/demo/superperson@192.webp"
                                     alt="{{ $user->name }}'s avatar"
-                                    class="w-[150px] h-[150px] object-cover rounded-full shadow-md m-2" />
+                                    class="w-[75px] h-[75px] object-cover rounded-full shadow-md m-2" />
                             </div>
                         </div>
                     @endif
@@ -43,7 +43,7 @@
                     @enderror
                     @if (Auth::user()->group?->is_admin)
                         <label class="label">Group</label>
-                        <select class="select w-full" name="group_id">
+                        <select class="select w-full" name="group_id" @disabled($user->group?->is_admin)>
                             <option value="">Select a Group</option>
                             @foreach ($groups as $group)
                                 <option value="{{ $group->id }}" @selected(old('group_id', $user->group_id) == $group->id)>

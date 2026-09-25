@@ -69,7 +69,7 @@ class UserController extends Controller
     {
         $team_members = User::query()
             ->with('group')
-            ->whereNotIn('group_id', [3, 4])
+            ->whereIn('group_id', [1, 2])
             ->orderBy('group_id', 'asc')
             ->get();
 
@@ -156,7 +156,7 @@ class UserController extends Controller
                 'name' => 'required|string|max:30|min:5',
                 'avatar' => 'nullable|file|image|mimes:jpg,jpeg,png,gif|max:2048',
                 'bio' => 'nullable|string|max:100|min:5',
-                'group_id' => 'required|string',
+                'group_id' => 'nullable|integer|exists:groups,id',
             ],
             [
                 'name.required' => 'Please write a name!',
@@ -177,6 +177,10 @@ class UserController extends Controller
         }
 
         try {
+            if (! Auth::user()->group?->is_admin || $user->group?->is_admin) {
+                unset($formFields['group_id']);
+            }
+
             $user->update($formFields);
         } catch (\Throwable $exception) {
             if ($newAvatar) {
