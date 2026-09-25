@@ -2,7 +2,7 @@
     <x-slot:title>
         Search Member
     </x-slot:title>
-    <div class="rounded-box mx-auto w-fit flex flex-col justify-center items-center shadow-md p-4">
+    <div class="rounded-box mx-auto w-fit flex flex-col justify-center items-center shadow-md bg-base-200 p-4">
         <form method="GET" action="{{ route('user_search') }}">
             <div class="m-2 flex justify-center">
                 <label class="input shadow-md">
@@ -13,7 +13,7 @@
                             <path d="m21 21-4.3-4.3"></path>
                         </g>
                     </svg>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search"
+                    <input type="search" name="search" value="{{ request('search') }}" placeholder="Search"
                         class="input" />
                 </label>
             </div>
@@ -21,7 +21,8 @@
         @if (request()->filled('search'))
             <div class="w-fit max-w-full flex flex-col items-center overflow-x-auto rounded-box shadow-md m-2 bg-base-100">
                 <table class="table table-zebra w-auto">
-                    <caption class="text-sm font-bold">Members</caption>
+                    <span class="text-sm font-bold p-4">Members</span>
+                    <div class="divider p-2"></div>
                     <thead>
                         <tr>
                             <th>Avatar</th>

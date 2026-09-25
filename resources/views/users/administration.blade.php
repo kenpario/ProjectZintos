@@ -13,7 +13,7 @@
                             <path d="m21 21-4.3-4.3"></path>
                         </g>
                     </svg>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search"
+                    <input type="search" name="search" value="{{ request('search') }}" placeholder="Search"
                         class="input" />
                 </label>
             </div>
