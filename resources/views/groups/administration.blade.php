@@ -2,10 +2,11 @@
     <x-slot:title>
         Groups Administration
     </x-slot:title>
-    <div class="rounded-box shadow-md p-4">
+    <div class="rounded-box bg-base-200 shadow-md m-2 p-4">
         <div class="overflow-x-auto rounded-box shadow-md m-2 bg-base-100">
             <table class="table table-zebra">
-                <caption class="text-sm font-bold">Groups Table</caption>
+                <span class="flex justify-center text-sm font-bold p-4">Groups Table</span>
+                <div class="divider p-2"></div>
                 <thead>
                     <tr>
                         <th>Nr.</th>
@@ -39,13 +40,13 @@
                             </td>
                             <td>{{ $group->description }}</td>
                             <td>
-                                <p>{{ $group->is_admin ? 'True' : 'False' }}</p>
+                                <p>{{ $group->is_admin ? 'Yes' : 'No' }}</p>
                             </td>
                             <td>
-                                <p>{{ $group->is_mod ? 'True' : 'False' }}</p>
+                                <p>{{ $group->is_mod ? 'Yes' : 'No' }}</p>
                             </td>
                             <td>
-                                <p>{{ $group->is_premium ? 'True' : 'False' }}</p>
+                                <p>{{ $group->is_premium ? 'Yes' : 'No' }}</p>
                             </td>
 
                             <td>

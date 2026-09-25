@@ -22,8 +22,10 @@ class CommentController extends Controller
         //
     }
 
-    public function moderation(Comment $comment)
+    public function moderation(Request $request, Comment $comment)
     {
+        $search = $request->string('search')->trim()->toString();
+
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
@@ -31,7 +33,15 @@ class CommentController extends Controller
         $all_unapproved_comments = Comment::query()
             ->with(['user', 'post'])
             ->where('is_approved', false)
-            ->paginate(20);
+            ->when($search !== '', function ($query) use ($search) {
+                $query->whereAny(
+                    ['message'],
+                    'ilike',
+                    "%{$search}%"
+                );
+            })
+            ->paginate(20)
+            ->withQueryString();
 
         return view('comments.moderation', ['all_unapproved_comments' => $all_unapproved_comments]);
     }

@@ -52,15 +52,25 @@ class PostController extends Controller
         return view('posts.index', ['post' => $post, 'post_comments' => $post_comments, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes, 'total_posts' => $total_posts]);
     }
 
-    public function moderation()
+    public function moderation(Request $request)
     {
+        $search = $request->string('search')->trim()->toString();
+
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
             abort(403, 'Unauthorized Action!');
         }
         $all_unapproved_posts = Post::query()
             ->with(['user', 'category'])
             ->where('is_approved', false)
-            ->paginate(20);
+            ->when($search !== '', function ($query) use ($search) {
+                $query->whereAny(
+                    ['title', 'message'],
+                    'ilike',
+                    "%{$search}%"
+                );
+            })
+            ->paginate(20)
+            ->withQueryString();
 
         return view('posts.moderation', ['all_unapproved_posts' => $all_unapproved_posts]);
     }

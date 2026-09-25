@@ -8,32 +8,48 @@
                 <div class="font-semibold bg-base-300 rounded-box p-4">
                     <span>Posts waiting for approval</span>
                 </div>
-                <div class="w-full">
+                <div class="w-full p-4 bg-base-200 rounded-md">
+                    <form method="GET" action="{{ route('mod_posts') }}">
+                        <div class="m-2 flex justify-end">
+                            <label class="input shadow-md">
+                                <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
+                                        stroke="currentColor">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="m21 21-4.3-4.3"></path>
+                                    </g>
+                                </svg>
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search"
+                                    class="input" />
+                            </label>
+                        </div>
+                    </form>
                     @forelse ($all_unapproved_posts as $post)
-                        <div class="hover-3d flex w-full">
+                        <div class="hover-3d flex gap-2 w-full">
                             <div class="shadow-md rounded-box p-2 mt-2 bg-base-100 w-full">
-                                <div class="flex justify-between gap-2 m-2">
-                                    <span class="text-xs uppercase font-semibold opacity-60"><a class="link link-hover"
-                                            href="/categories/{{ $post->category->id }}/posts"> Submitted for
+                                <div class="flex justify-between gap-2 p-2">
+                                    <span class="text-xs uppercase font-semibold opacity-60">Submitted for <a
+                                            class="link link-hover" href="/categories/{{ $post->category->id }}/posts">
                                             {{ $post->category?->name }}</a>
                                     </span>
                                     <span class="text-xs uppercase font-semibold opacity-60"> Submitted
                                         {{ $post->created_at->diffForHumans() }}
                                     </span>
                                 </div>
-                                <div class="flex items-center">
-                                    <div class="m-2">
+                                <div class="flex gap-2 items-center">
+                                    <div>
                                         <a href="/users/{{ $post->user->id }}"><img
                                                 src="{{ $post->user->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                 alt="{{ $post->user->name }}'s avatar"
-                                                class="size-10 rounded-box w-[36px] h-[36px] mt-2" /></a>
+                                                class="size-10 rounded-box w-[36px] h-[36px]" /></a>
                                     </div>
-                                    <div class="flex flex-col m-2 w-full gap-1">
-                                        <div class="text-xs font-semibold"><a class="link link-hover"
-                                                href="/users/{{ $post->user->id }}">Submitted by
+                                    <div class="flex flex-col w-full">
+                                        <div class="text-xs font-semibold">Submitted by <a class="link link-hover"
+                                                href="/users/{{ $post->user->id }}">
                                                 {{ $post->user->name }}</a></div>
                                         <div class="text-xs opacity-60 font-semibold"><a class="link link-hover"
-                                                href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 30) }}</a></div>
+                                                href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 30) }}</a>
+                                        </div>
                                         <div class="text-xs opacity-60 font-semibold">
                                             <a class="link link-hover"
                                                 href="/posts/{{ $post->id }}">{{ Str::limit(strip_tags($post->message), 50) }}</a>
