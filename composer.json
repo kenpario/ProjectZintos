@@ -17,6 +17,7 @@
         "laravel/tinker": "^3.0",
         "mews/purifier": "^3.4",
         "resend/resend-laravel": "^1.5",
+        "ryangjchandler/laravel-cloudflare-turnstile": "^3.0",
         "spatie/laravel-analytics": "^5.7",
         "whitecube/laravel-cookie-consent": "^1.3"
     },

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -23,6 +24,7 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input): User
     {
         Validator::make($input, [
+            'cf-turnstile-response' => ['required', new Turnstile],
             'name' => ['required', 'string', 'min:5', 'max:255'],
             'email' => [
                 'required',

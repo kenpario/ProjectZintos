@@ -40,7 +40,9 @@
                         class="w-full input input-bordered" required>
                     <span>Confirm new password</span>
                 </label>
-
+                <div class="flex justify-center">
+                    <x-turnstile />
+                </div>
                 <button type="submit" class="btn bg-base-300 shadow-md w-full">Reset password</button>
             </fieldset>
         </form>

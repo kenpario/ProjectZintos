@@ -49,8 +49,8 @@
                     </div>
                 </div>
                 <div class="divider lg:divider-horizontal"></div>
-                <div class="flex min-w-0 flex-1 flex-col gap-2">
-                    <div class="w-full">
+                <div class="w-full">
+                    <div class="flex min-w-0 flex-1 flex-col gap-2">
                         <div class="flex justify-between items-center font-semibold bg-base-300 rounded-box p-4">
                             <div class="flex gap-2 items-center">
                                 @if(Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)
@@ -163,23 +163,27 @@
                     <div class="bg-base-200 rounded-box">
                         <x-comments_section :post_comments="$post_comments" />
                     </div>
-                    <div class="rounded-box shadow-md mt-2 bg-base-100">
-                        <div class="m-2">
-                            <span class="text-sm font-bold m-2">Liked by:</span>
-                            @foreach ($post_likes as $post_like)
-                                <a class="link link-hover"
-                                    href="/users/{{ $post_like->user?->id }}">{{ $post_like->user?->name }} </a>
-                            @endforeach
-                        </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2 bg-base-200 p-4 sm:p-8 shadow-md rounded-md">
+                <div class="rounded-box p-1 shadow-md bg-base-100">
+                    <div class="m-2">
+                        <span class="text-sm font-bold m-2">Liked by:</span>
+                        @foreach ($post_likes as $post_like)
+                            <a class="link link-hover"
+                                href="/users/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}
+                            </a>
+                        @endforeach
                     </div>
-                    <div class="rounded-box shadow-md mt-2 bg-base-100">
-                        <div class="m-2">
-                            <span class="text-sm font-bold m-2">Viewed by:</span>
-                            @foreach ($post_views as $post_view)
-                                <a class="link link-hover"
-                                    href="/users/{{ $post_view->user?->id }}">{{ $post_view->user?->name }} </a>
-                            @endforeach
-                        </div>
+                </div>
+                <div class="rounded-box p-1 shadow-md bg-base-100">
+                    <div class="m-2">
+                        <span class="text-sm font-bold m-2">Viewed by:</span>
+                        @foreach ($post_views as $post_view)
+                            <a class="link link-hover"
+                                href="/users/{{ $post_view->user?->id }}">{{ $post_view->user?->name }}
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>

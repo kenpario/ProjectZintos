@@ -32,13 +32,15 @@
                     </div>
                 @enderror
 
-                <div class="form-control mt-4">
+                <div class="form-control mb-2">
                     <label class="label cursor-pointer justify-start">
                         <input type="checkbox" name="remember" class="checkbox">
                         <span class="label-text ml-2">Remember me</span>
                     </label>
                 </div>
-
+                <div class="flex justify-center">
+                    <x-turnstile />
+                </div>
                 <div class="form-control mt-8">
                     <button type="submit" class="btn skeleton btn-md w-full">
                         Login

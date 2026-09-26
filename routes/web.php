@@ -75,44 +75,44 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
     Route::get('/categories/{category}/posts', [CategoryController::class, 'posts'])->name('categories_posts');
     Route::get('/categories/add', [CategoryController::class, 'create'])->name('add_categories');
-    Route::post('/categories', [CategoryController::class, 'store']);
+    Route::post('/categories', [CategoryController::class, 'store'])->middleware(['throttle:5,1']);
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('edit_categories');
-    Route::put('/categories/{category}', [CategoryController::class, 'update']);
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->middleware(['throttle:10,1']);
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->middleware(['throttle:10,1']);
 
     Route::get('/users/administration', [UserController::class, 'administration'])->name('user_administration');
     Route::get('/users/team', [UserController::class, 'team'])->name('team');
     Route::get('/users/search', [UserController::class, 'search'])->name('user_search');
     Route::get('users/{user}', [UserController::class, 'index'])->name('user_profile');
     Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit_user_profile');
-    Route::put('/users/{user}', [UserController::class, 'update']);
-    Route::delete('/users/{user}', [UserController::class, 'destroy']);
+    Route::put('/users/{user}', [UserController::class, 'update'])->middleware(['throttle:10,1']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->middleware(['throttle:10,1']);
 
     Route::get('/groups/administration', [GroupController::class, 'administration'])->name('group_administration');
     Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])->name('edit_groups');
-    Route::put('/groups/{group}', [GroupController::class, 'update']);
+    Route::put('/groups/{group}', [GroupController::class, 'update'])->middleware(['throttle:10,1']);
 
 
     Route::get('/posts/add', [PostController::class, 'create'])->name('add_posts');
-    Route::post('/posts', [PostController::class, 'store']);
+    Route::post('/posts', [PostController::class, 'store'])->middleware(['throttle:5,1']);
     Route::get('/posts/moderation', [PostController::class, 'moderation'])->name('mod_posts');
-    Route::put('/posts/{post}/approve', [PostController::class, 'approve'])->name('approve_posts');
-    Route::put('/posts/{post}/pin', [PostController::class, 'pin'])->name('pin_posts');
-    Route::put('/posts/{post}/unpin', [PostController::class, 'unpin'])->name('unpin_posts');
+    Route::put('/posts/{post}/approve', [PostController::class, 'approve'])->name('approve_posts')->middleware(['throttle:10,1']);
+    Route::put('/posts/{post}/pin', [PostController::class, 'pin'])->name('pin_posts')->middleware(['throttle:10,1']);
+    Route::put('/posts/{post}/unpin', [PostController::class, 'unpin'])->name('unpin_posts')->middleware(['throttle:10,1']);
     Route::get('/posts/{post}', [PostController::class, 'index'])->name('posts');
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('edit_posts');
-    Route::put('/posts/{post}', [PostController::class, 'update']);
-    Route::delete('/posts/{post}', [PostController::class, 'destroy']);
+    Route::put('/posts/{post}', [PostController::class, 'update'])->middleware(['throttle:10,1']);
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware(['throttle:10,1']);
 
-    Route::post('/posts/{post}/comment', [CommentController::class, 'store'])->name('comment_posts');
+    Route::post('/posts/{post}/comment', [CommentController::class, 'store'])->name('comment_posts')->middleware(['throttle:10,1']);
     Route::get('/comments/moderation', [CommentController::class, 'moderation'])->name('mod_comments');
-    Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('approve_comments');
-    Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
+    Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('approve_comments')->middleware(['throttle:10,1']);
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->middleware(['throttle:10,1']);
     Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('edit_comments');
-    Route::put('/comments/{comment}', [CommentController::class, 'update']);
+    Route::put('/comments/{comment}', [CommentController::class, 'update'])->middleware(['throttle:10,1']);
 
-    Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('like_posts');
-    Route::delete('/likes/{like}', [LikeController::class, 'destroy']);
+    Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('like_posts')->middleware(['throttle:10,1']);
+    Route::delete('/likes/{like}', [LikeController::class, 'destroy'])->middleware(['throttle:10,1']);
 
     Route::post('/posts/{post}/view', [ViewController::class, 'store'])->name('view_posts');
 

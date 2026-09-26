@@ -24,6 +24,7 @@
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @cookieconsentscripts
+    <x-turnstile.scripts />
 </head>
 
 <body class="min-h-screen flex flex-col">
@@ -251,7 +252,7 @@
     </main>
 
     <button onclick="topFunction()" id="topBtn" title="Go to top"
-        class="radial-progress bg-base-300 text-base-content shadow-xl fixed bottom-20 right-5 z-50 opacity-0 pointer-events-none transition-all duration-300 m-1 flex items-center justify-center cursor-pointer hover:shadow-[0_0_7px_3px] hover:shadow-base-content/50"
+        class="radial-progress bg-base-300 text-base-content shadow-xl fixed bottom-20 right-5 z-50 opacity-0 pointer-events-none transition-all duration-300 m-1 flex items-center justify-center cursor-pointer"
         style="--value:0; --size: 3rem; --thickness: 2px;" aria-valuenow="0" role="progressbar">
         <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
             stroke-width="2">
