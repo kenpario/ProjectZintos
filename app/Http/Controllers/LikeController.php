@@ -40,7 +40,7 @@ class LikeController extends Controller
         Like::create($formFields);
 
         return redirect()->route('posts', ['post' => $post])
-            ->with('success', 'Your liked this post!');
+            ->with('success', 'You liked this post!');
     }
 
     /**

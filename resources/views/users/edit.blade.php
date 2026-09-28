@@ -6,7 +6,7 @@
         <div class="mx-auto w-full max-w-md">
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
                 <legend class="fieldset-legend">Edit {{ $user->name }}'s Profile</legend>
-                <form method="POST" action="/users/{{ $user->id }}" enctype="multipart/form-data"
+                <form class="flex flex-col gap-1" method="POST" action="/users/{{ $user->id }}" enctype="multipart/form-data"
                     onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Updating...';">
                     @csrf
                     @method('PUT')
@@ -58,7 +58,7 @@
                         @enderror
                     @endif
                     <label class="label">Email</label>
-                    <input type="text" placeholder="Email" class="input mt-2" disabled value="{{ $user->email }}" />
+                    <input type="text" placeholder="Email" class="input" disabled value="{{ $user->email }}" />
                     <label class="label">Biography</label>
                     <textarea class="textarea h-32 w-full max-w-full" placeholder="Biography"
                         name="bio">{{ old('bio', $user->bio) }}</textarea>

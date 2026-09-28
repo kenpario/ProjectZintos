@@ -1,4 +1,4 @@
-<div class="min-h-full w-full mb-2">
+<div class="min-h-full w-full mb-4">
     <form method="POST" action="{{ route('comment_posts', $post) }}" class="mx-auto w-full max-w-md"
         enctype="multipart/form-data"
         onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Adding...';">
