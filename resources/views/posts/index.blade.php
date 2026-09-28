@@ -65,13 +65,10 @@
                             </div>
                             <div class="flex gap-2">
                                 @if((Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) && !$post->is_approved)
-                                    <form method="POST" action="{{ route('approve_posts', $post) }}"
-                                        onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled');">
-                                        @csrf
-                                        @method('PUT')
+                                    <div onclick="event.stopPropagation()">
                                         <div class="aura aura-dual">
-                                            <button type="submit"
-                                                onclick="return confirm('Are you sure you want to approve this post?')"
+                                            <button type="button"
+                                                onclick="document.getElementById('approve_post_modal_{{ $post->id }}').showModal()"
                                                 class="btn btn-square" aria-label="Approve post" title="Approve post">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="2.5" stroke="currentColor" class="size-[1.2em]">
@@ -80,7 +77,37 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                    </form>
+                                        <dialog id="approve_post_modal_{{ $post->id }}" class="modal">
+                                            <div class="modal-box">
+                                                <form method="dialog">
+                                                    <button
+                                                        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                </form>
+                                                <h3 class="text-lg font-bold">Approve post?</h3>
+                                                <p class="py-4">This will approve
+                                                    "{{ Str::limit($post->title, 10) }}". This can't be undone.
+                                                </p>
+                                                <div class="modal-action">
+                                                    <form method="dialog">
+                                                        <button class="btn">Cancel</button>
+                                                    </form>
+                                                    <button type="submit" form="approve_post_{{ $post->id }}"
+                                                        id="approve_post_confirm_{{ $post->id }}"
+                                                        class="btn btn-error">Confirm</button>
+                                                </div>
+                                            </div>
+                                            <form method="dialog" class="modal-backdrop">
+                                                <button>close</button>
+                                            </form>
+                                        </dialog>
+
+                                        <form id="approve_post_{{ $post->id }}" method="POST"
+                                            action="{{ route('approve_posts', $post) }}"
+                                            onsubmit="const button = document.getElementById('approve_post_confirm_{{ $post->id }}'); button.disabled = true; button.classList.add('btn-disabled');">
+                                            @csrf
+                                            @method('PUT')
+                                        </form>
+                                    </div>
                                 @endif
                                 <x-posts_likes :post_likes="$post_likes" :post="$post" />
                                 @if(Auth::user()->id === $post->user?->id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
@@ -93,12 +120,9 @@
                                             </svg>
                                         </button>
                                     </a>
-                                    <form method="POST" action="/posts/{{ $post->id }}"
-                                        onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            onclick="return confirm('Are you sure you want to delete this post?')"
+                                    <div>
+                                        <button type="button"
+                                            onclick="document.getElementById('delete_post_modal_{{ $post->id }}').showModal()"
                                             class="btn btn-square" aria-label="Delete post" title="Delete post">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="2.5" stroke="currentColor" class="size-[1.2em]">
@@ -106,7 +130,37 @@
                                                     d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673A2.25 2.25 0 0 1 15.916 21.75H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-10.978.562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0V4.5a2.25 2.25 0 0 0-2.25-2.25h-3A2.25 2.25 0 0 0 9.272 4.5v.615m9.968 0a48.667 48.667 0 0 0-9.968 0" />
                                             </svg>
                                         </button>
-                                    </form>
+
+                                        <dialog id="delete_post_modal_{{ $post->id }}" class="modal">
+                                            <div class="modal-box">
+                                                <form method="dialog">
+                                                    <button
+                                                        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                </form>
+                                                <h3 class="text-lg font-bold">Delete post?</h3>
+                                                <p class="py-4">This will permanently delete
+                                                    "{{ Str::limit($post->title, 40) }}". This can't be undone.</p>
+                                                <div class="modal-action">
+                                                    <form method="dialog">
+                                                        <button class="btn">Cancel</button>
+                                                    </form>
+                                                    <button type="submit" form="delete_post_form_{{ $post->id }}"
+                                                        id="delete_post_confirm_{{ $post->id }}"
+                                                        class="btn btn-error">Delete</button>
+                                                </div>
+                                            </div>
+                                            <form method="dialog" class="modal-backdrop">
+                                                <button>close</button>
+                                            </form>
+                                        </dialog>
+
+                                        <form id="delete_post_form_{{ $post->id }}" method="POST"
+                                            action="/posts/{{ $post->id }}"
+                                            onsubmit="const button = document.getElementById('delete_post_confirm_{{ $post->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Deleting...';">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </div>
                                 @endif
                             </div>
                         </div>

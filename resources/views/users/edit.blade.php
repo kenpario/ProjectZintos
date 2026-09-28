@@ -73,14 +73,39 @@
                         <a class="btn" href="{{ old('back_url', $backUrl) }}">Back</a>
                     </div>
                 </form>
-                <form method="POST" action="/users/{{ $user->id }}" class="mt-2"
-                    onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Deleting...';">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete your account?')"
-                        class="btn btn-error w-full">Delete
+                <div onclick="event.stopPropagation()">
+                    <button type="button" class="btn btn-error w-full" aria-label="Delete user" title="Delete user"
+                        onclick="document.getElementById('delete_user_modal_{{ $user->id }}').showModal()">Delete
                     </button>
-                </form>
+
+                    <dialog id="delete_user_modal_{{ $user->id }}" class="modal">
+                        <div class="modal-box">
+                            <form method="dialog">
+                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                            </form>
+                            <h3 class="text-lg font-bold">Delete user?</h3>
+                            <p class="py-4 font-bold">This will permanently delete
+                                your account along with all of your posts and
+                                comments. This can't be undone.</p>
+                            <div class="modal-action">
+                                <form method="dialog">
+                                    <button class="btn">Cancel</button>
+                                </form>
+                                <button type="submit" form="delete_user_{{ $user->id }}"
+                                    id="delete_user_confirm_{{ $user->id }}" class="btn btn-error">Delete</button>
+                            </div>
+                        </div>
+                        <form method="dialog" class="modal-backdrop">
+                            <button>close</button>
+                        </form>
+                    </dialog>
+
+                    <form id="delete_user_{{ $user->id }}" method="POST" action="/users/{{ $user->id }}"
+                        onsubmit="const button = document.getElementById('delete_user_confirm_{{ $user->id }}'); button.disabled = true; button.classList.add('btn-disabled');">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                </div>
 
                 @if (Auth::id() === $user->id && Auth::user()->password !== NULL)
                     <div class="divider">Security</div>
@@ -109,13 +134,40 @@
                                 <button type="submit" class="btn bg-base-300 w-full">Generate new recovery codes</button>
                             </form>
 
-                            <form method="POST" action="{{ route('two-factor.disable') }}"
-                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Disabling...';">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-error w-full mt-2">Disable two-factor
-                                    authentication</button>
-                            </form>
+                            <div onclick="event.stopPropagation()">
+                                <button type="button" class="btn btn-error w-full mt-2"
+                                    onclick="document.getElementById('disable_2fa_modal').showModal()">
+                                    Disable two-factor authentication
+                                </button>
+
+                                <dialog id="disable_2fa_modal" class="modal">
+                                    <div class="modal-box">
+                                        <form method="dialog">
+                                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                        </form>
+                                        <h3 class="text-lg font-bold">Disable two-factor authentication?</h3>
+                                        <p class="py-4 font-bold">Your account will be protected by your password alone. Anyone who gets
+                                            hold of it will be able to log in. You can turn two-factor authentication back on at
+                                            any time.</p>
+                                        <div class="modal-action">
+                                            <form method="dialog">
+                                                <button class="btn">Cancel</button>
+                                            </form>
+                                            <button type="submit" form="disable_2fa_form" id="disable_2fa_confirm"
+                                                class="btn btn-error">Disable</button>
+                                        </div>
+                                    </div>
+                                    <form method="dialog" class="modal-backdrop">
+                                        <button>close</button>
+                                    </form>
+                                </dialog>
+
+                                <form id="disable_2fa_form" method="POST" action="{{ route('two-factor.disable') }}"
+                                    onsubmit="const button = document.getElementById('disable_2fa_confirm'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Disabling...';">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </div>
                         @else
                             <p class="text-sm">Protect your account with an authenticator app.</p>
 

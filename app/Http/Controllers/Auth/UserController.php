@@ -216,6 +216,10 @@ class UserController extends Controller
             abort(403, 'Unauthorized Action!');
         }
 
+        if ($user->group?->is_admin) {
+            abort(403, 'Administrators cannot be deleted.');
+        }
+
         if ($user->avatar) {
             Storage::disk('public')->delete($user->avatar);
         }
