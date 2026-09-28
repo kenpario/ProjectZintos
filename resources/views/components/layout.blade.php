@@ -313,7 +313,23 @@
         });
 
         function topFunction() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const startPosition = window.scrollY;
+            const duration = 800;
+            const startTime = performance.now();
+
+            function scrollAnimation(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+
+                window.scrollTo(0, startPosition * (1 - eased));
+
+                if (progress < 1) {
+                    requestAnimationFrame(scrollAnimation);
+                }
+            }
+
+            requestAnimationFrame(scrollAnimation);
         }
     </script>
     @cookieconsentview
