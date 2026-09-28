@@ -31,15 +31,8 @@
     <nav>
         <div class="flex justify-end">
             @if (!Auth::check() || Auth::user()->email_verified_at)
-                <div class="flex justify-between items-center bg-base-300 shadow-md w-full sm:hidden fixed z-50 p-2">
-                    <div class="p-2">
-                        @auth
-                            <a href="{{ route('dashboard') }}"><img
-                                    src="{{ asset('storage/assets/img/favicon/favicon-32x32.png')}}" /></a>
-                        @else
-                            <a href="/"><img src="{{ asset('storage/assets/img/favicon/favicon-32x32.png')}}" /></a>
-                        @endauth
-                    </div>
+                <div
+                    class="flex justify-between items-center bg-base-200 shadow-md w-full sm:hidden fixed z-50 p-2 rounded-md">
                     <div>
                         <button class="btn shadow-md" popovertarget="mobile_megamenu" aria-label="Open navigation menu">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -49,7 +42,7 @@
                                 </path>
                             </svg>
                         </button>
-                        <div class="mt-11 w-full rounded sm:hidden fixed z-40 border border-base-300 bg-base-200 p-2 text-base-content shadow-md"
+                        <div class="mt-[64px] w-full rounded sm:hidden fixed z-40 border border-base-300 bg-base-200 p-2 text-base-content shadow-md"
                             id="mobile_megamenu" popover>
                             @auth
                                 <ul class="menu w-full">
@@ -79,17 +72,6 @@
                                             </ul>
                                         </details>
                                     </li>
-                                    <li>
-                                        <details>
-                                            <summary>{{ Auth::user()->name }}</summary>
-                                            <ul>
-                                                <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a>
-                                                </li>
-                                                <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit
-                                                        Information</a></li>
-                                            </ul>
-                                        </details>
-                                    </li>
                                     @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
                                         <li>
                                             <details>
@@ -113,13 +95,6 @@
                                             </details>
                                         </li>
                                     @endif
-                                    <li>
-                                        <form method="POST" action="{{ route('logout') }}" class="flex w-full"
-                                            onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
-                                        </form>
-                                    </li>
                                 </ul>
                             @else
                                 <a href="{{ route('register') }}" class="btn skeleton w-full">Register</a>
@@ -127,6 +102,46 @@
                             @endauth
                         </div>
                     </div>
+                    <div class="p-2">
+                        @auth
+                            <a href="{{ route('dashboard') }}"><img
+                                    src="{{ asset('storage/assets/img/favicon/favicon-32x32.png')}}" /></a>
+                        @else
+                            <a href="/"><img src="{{ asset('storage/assets/img/favicon/favicon-32x32.png')}}" /></a>
+                        @endauth
+                    </div>
+                    @auth
+                        <div>
+                            <div class="rounded w-10 h-10">
+                                <button class="btn w-10 h-10 min-w-0 p-0" popovertarget="user_mobilemenu"
+                                    aria-label="Open user menu">
+                                    <img class="w-full h-full object-cover rounded" alt="{{ Auth::user()->name }}'s avatar"
+                                        src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}" />
+                                </button>
+                            </div>
+                            <div class="mt-[64px] w-full rounded sm:hidden fixed z-40 border border-base-300 bg-base-200 p-2 text-base-content shadow-md"
+                                id="user_mobilemenu" popover>
+                                <ul class="menu w-full">
+                                    <li>
+                                        <details>
+                                            <summary>{{ Auth::user()->name }}</summary>
+                                            <ul>
+                                                <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a>
+                                                </li>
+                                                <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit
+                                                        Information</a></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <form method="POST" action="{{ route('logout') }}" class="w-full mt-1"
+                                        onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
+                                    </form>
+                                </ul>
+                            </div>
+                        </div>
+                    @endauth
                 </div>
             @endif
         </div>
@@ -211,19 +226,16 @@
                                     </details>
                                 </li>
                             @endif
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}" class="inline"
-                                    onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
-                                </form>
-                            </li>
+                            <form method="POST" action="{{ route('logout') }}" class="w-full mt-1"
+                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
+                            </form>
                         </ul>
                     </div>
                 </div>
             @endif
         @endauth
-
         @guest
             <div class="megamenu max-sm:hidden max-sm:megamenu-vertical flex items-center gap-2 p-2 border border-base-300 fixed z-50 bg-base-200 text-base-content m-1 shadow"
                 id="megamenu" popover>

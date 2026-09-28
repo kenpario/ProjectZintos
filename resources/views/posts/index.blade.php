@@ -63,7 +63,7 @@
                                     <span> {{ $post->title }} </span>
                                 </div>
                             </div>
-                            <div class="flex gap-2">
+                            <div class="flex flex-wrap justify-end gap-2">
                                 @if((Auth::user()->group?->is_mod || Auth::user()->group?->is_admin) && !$post->is_approved)
                                     <div onclick="event.stopPropagation()">
                                         <div class="aura aura-dual">
