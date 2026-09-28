@@ -31,7 +31,7 @@
     <nav>
         <div class="flex justify-end">
             @if (!Auth::check() || Auth::user()->email_verified_at)
-                <div class="flex justify-between bg-base-300 shadow-md w-full sm:hidden fixed z-50 p-2">
+                <div class="flex justify-between items-center bg-base-300 shadow-md w-full sm:hidden fixed z-50 p-2">
                     <div class="p-2">
                         @auth
                             <a href="{{ route('dashboard') }}"><img
@@ -41,7 +41,7 @@
                         @endauth
                     </div>
                     <div>
-                        <button class="btn" popovertarget="mobile_megamenu" aria-label="Open navigation menu">
+                        <button class="btn shadow-md" popovertarget="mobile_megamenu" aria-label="Open navigation menu">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 class="inline-block h-7 w-7 stroke-current">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

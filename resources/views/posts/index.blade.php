@@ -103,7 +103,7 @@
 
                                         <form id="approve_post_{{ $post->id }}" method="POST"
                                             action="{{ route('approve_posts', $post) }}"
-                                            onsubmit="const button = document.getElementById('approve_post_confirm_{{ $post->id }}'); button.disabled = true; button.classList.add('btn-disabled');">
+                                            onsubmit="const button = document.getElementById('approve_post_confirm_{{ $post->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Approving...';">
                                             @csrf
                                             @method('PUT')
                                         </form>

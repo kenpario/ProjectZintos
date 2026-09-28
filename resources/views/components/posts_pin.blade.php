@@ -36,7 +36,7 @@
         </dialog>
 
         <form id="pin_post_{{ $post->id }}" method="POST" action="{{ route('pin_posts', $post) }}"
-            onsubmit="const button = document.getElementById('pin_post_confirm_{{ $post->id }}'); button.disabled = true; button.classList.add('btn-disabled');">
+            onsubmit="const button = document.getElementById('pin_post_confirm_{{ $post->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Pinning...';">
             @csrf
             @method('PUT')
         </form>
@@ -77,7 +77,7 @@
         </dialog>
 
         <form id="unpin_post_{{ $post->id }}" method="POST" action="{{ route('unpin_posts', $post) }}"
-            onsubmit="const button = document.getElementById('unpin_post_confirm_{{ $post->id }}'); button.disabled = true; button.classList.add('btn-disabled');">
+            onsubmit="const button = document.getElementById('unpin_post_confirm_{{ $post->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Unpinning...';">
             @csrf
             @method('PUT')
         </form>

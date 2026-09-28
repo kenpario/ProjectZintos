@@ -42,7 +42,7 @@
 
                                 <form id="approve_comment_{{ $post_comment->id }}" method="POST"
                                     action="{{ route('approve_comments', $post_comment) }}"
-                                    onsubmit="const button = document.getElementById('approve_comment_confirm_{{ $post_comment->id }}'); button.disabled = true; button.classList.add('btn-disabled');">
+                                    onsubmit="const button = document.getElementById('approve_comment_confirm_{{ $post_comment->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Approving...';">
                                     @csrf
                                     @method('PUT')
                                 </form>
@@ -77,7 +77,8 @@
                                             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                         </form>
                                         <h3 class="text-lg font-bold">Delete comment?</h3>
-                                        <p class="py-4 font-bold">This will permanently delete "{{ Str::limit($post_comment->message, 10) }}".
+                                        <p class="py-4 font-bold">This will permanently delete
+                                            "{{ Str::limit($post_comment->message, 10) }}".
                                             This
                                             can't be undone.</p>
                                         <div class="modal-action">
@@ -96,7 +97,7 @@
 
                                 <form id="delete_comment_{{ $post_comment->id }}" method="POST"
                                     action="/comments/{{ $post_comment->id }}"
-                                    onsubmit="const button = document.getElementById('delete_comment_confirm_{{ $post_comment->id }}'); button.disabled = true; button.classList.add('btn-disabled');">
+                                    onsubmit="const button = document.getElementById('delete_comment_confirm_{{ $post_comment->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Deleting...';">
                                     @csrf
                                     @method('DELETE')
                                 </form>
