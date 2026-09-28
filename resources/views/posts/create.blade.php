@@ -37,7 +37,7 @@
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
                 @enderror
-                <label class="label">Message</label>
+                <label class="label">Content</label>
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
@@ -70,7 +70,7 @@
                     }
                 </script>
 
-                <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Message" name="message"
+                <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Content" name="message"
                     hidden disabled>{{ old('message') }}</textarea>
 
                 @error('message')
