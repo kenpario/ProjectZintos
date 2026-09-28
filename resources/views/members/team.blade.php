@@ -51,7 +51,7 @@
                                     </div>
                                 @endif
                                 <div class="m-2">
-                                    <p class="rounded-box shadow-md m-2 p-2">
+                                    <p class="rounded-box m-2 p-2">
                                         {{ $team_member->bio ? $team_member->bio : 'This user has not filled the biography yet.'}}
                                     </p>
                                 </div>

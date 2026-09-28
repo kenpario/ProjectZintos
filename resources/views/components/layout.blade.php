@@ -31,90 +31,102 @@
     <nav>
         <div class="flex justify-end">
             @if (!Auth::check() || Auth::user()->email_verified_at)
-                <button class="btn sm:hidden fixed z-50 m-2 justify-start" popovertarget="mobile_megamenu"
-                    aria-label="Open navigation menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        class="inline-block h-7 w-7 stroke-current">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
-                        </path>
-                    </svg>
-                </button>
-                <div class="mt-11 w-full rounded sm:hidden fixed z-40 border border-base-300 bg-base-200 p-2 text-base-content shadow-md"
-                    id="mobile_megamenu" popover>
-                    @auth
-                        <ul class="menu w-full">
-                            <li><a href="{{ route('dashboard') }}" class="skeleton">Dashboard</a></li>
-                            <li>
-                                <details>
-                                    <summary>Categories</summary>
-                                    <ul>
-                                        <li><a href="{{ route('categories') }}">All</a></li>
-                                        @foreach ($categories as $category)
-                                            <li><a
-                                                    href="{{ route('categories_posts', ['category' => $category->id]) }}">{{ $category->name }}</a>
-                                            </li>
-                                        @endforeach
-                                        @if(Auth::user()->group?->is_admin)
-                                            <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
-                                        @endif
-                                    </ul>
-                                </details>
-                            </li>
-                            <li>
-                                <details>
-                                    <summary>Members</summary>
-                                    <ul>
-                                        <li><a href="{{ route('team') }}">Team</a></li>
-                                        <li><a href="{{ route('user_search') }}">Search Members</a></li>
-                                    </ul>
-                                </details>
-                            </li>
-                            <li>
-                                <details>
-                                    <summary>{{ Auth::user()->name }}</summary>
-                                    <ul>
-                                        <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a></li>
-                                        <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit
-                                                Information</a></li>
-                                    </ul>
-                                </details>
-                            </li>
-                            @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
-                                <li>
-                                    <details>
-                                        <summary>Moderation</summary>
-                                        <ul>
-                                            <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
-                                            <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
-                                        </ul>
-                                    </details>
-                                </li>
-                            @endif
-                            @if(Auth::user()->group?->is_admin)
-                                <li>
-                                    <details>
-                                        <summary>Administration</summary>
-                                        <ul>
-                                            <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
-                                            <li><a href="{{ route('user_administration')}}">User Administration</a></li>
-                                            <li><a href="{{ route('group_administration')}}">Group Administration</a></li>
-                                        </ul>
-                                    </details>
-                                </li>
-                            @endif
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}" class="flex w-full"
-                                    onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
-                    @else
-                        <a href="/" class="btn skeleton w-full">Home</a>
-                        <a href="{{ route('register') }}" class="btn skeleton w-full">Register</a>
-                        <a href="{{ route('login') }}" class="btn skeleton w-full">Login</a>
-                    @endauth
+                <div class="flex justify-between bg-base-300 shadow-md w-full sm:hidden fixed z-50 p-2">
+                    <div class="p-2">
+                        @auth
+                            <a href="{{ route('dashboard') }}"><img
+                                    src="{{ asset('storage/assets/img/favicon/favicon-32x32.png')}}" /></a>
+                        @else
+                            <a href="/"><img src="{{ asset('storage/assets/img/favicon/favicon-32x32.png')}}" /></a>
+                        @endauth
+                    </div>
+                    <div>
+                        <button class="btn" popovertarget="mobile_megamenu" aria-label="Open navigation menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                class="inline-block h-7 w-7 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16">
+                                </path>
+                            </svg>
+                        </button>
+                        <div class="mt-11 w-full rounded sm:hidden fixed z-40 border border-base-300 bg-base-200 p-2 text-base-content shadow-md"
+                            id="mobile_megamenu" popover>
+                            @auth
+                                <ul class="menu w-full">
+                                    <li>
+                                        <details>
+                                            <summary>Categories</summary>
+                                            <ul>
+                                                <li><a href="{{ route('categories') }}">All</a></li>
+                                                @foreach ($categories as $category)
+                                                    <li><a
+                                                            href="{{ route('categories_posts', ['category' => $category->id]) }}">{{ $category->name }}</a>
+                                                    </li>
+                                                @endforeach
+                                                @if(Auth::user()->group?->is_admin)
+                                                    <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <li>
+                                        <details>
+                                            <summary>Members</summary>
+                                            <ul>
+                                                <li><a href="{{ route('team') }}">Team</a></li>
+                                                <li><a href="{{ route('user_search') }}">Search Members</a></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <li>
+                                        <details>
+                                            <summary>{{ Auth::user()->name }}</summary>
+                                            <ul>
+                                                <li><a href="{{ route('user_profile', ['user' => Auth::user()]) }}">Profile</a>
+                                                </li>
+                                                <li><a href="{{ route('edit_user_profile', ['user' => Auth::user()]) }}">Edit
+                                                        Information</a></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
+                                        <li>
+                                            <details>
+                                                <summary>Moderation</summary>
+                                                <ul>
+                                                    <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
+                                                    <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    @endif
+                                    @if(Auth::user()->group?->is_admin)
+                                        <li>
+                                            <details>
+                                                <summary>Administration</summary>
+                                                <ul>
+                                                    <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
+                                                    <li><a href="{{ route('user_administration')}}">User Administration</a></li>
+                                                    <li><a href="{{ route('group_administration')}}">Group Administration</a></li>
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    @endif
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}" class="flex w-full"
+                                            onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            @else
+                                <a href="{{ route('register') }}" class="btn skeleton w-full">Register</a>
+                                <a href="{{ route('login') }}" class="btn skeleton w-full">Login</a>
+                            @endauth
+                        </div>
+                    </div>
                 </div>
             @endif
         </div>
