@@ -3,7 +3,7 @@
         Categories
     </x-slot:title>
     <div class="relative overflow-hidden rounded">
-        <img class="absolute opacity-60 rounded-md w-screen"
+        <img class="absolute opacity-60 rounded-md w-screen h-full object-cover bg-image"
             src="{{ asset('storage/assets/img/items/background.gif') }}">
         <div class="relative z-10 sm:m-2 sm:p-4">
             <div class="flex m-2 justify-center">
