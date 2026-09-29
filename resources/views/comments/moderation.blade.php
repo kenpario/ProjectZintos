@@ -6,7 +6,7 @@
         <div class="mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 shadow-md rounded-md">
                 <div class="font-semibold bg-base-300 rounded-box p-4">
-                    <span>Comments waiting for approval</span>
+                    <span>Replies waiting for approval</span>
                 </div>
                 <div class="w-full p-4 bg-base-200 rounded-md">
                     <form method="GET" action="{{ route('mod_comments') }}">

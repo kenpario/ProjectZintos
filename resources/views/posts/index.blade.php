@@ -58,7 +58,7 @@
                                 @endif
                                 <div class="flex flex-col">
                                     @if($post->is_pinned)
-                                        <span class="text-xs opacity-60"> Pinned Post </span>
+                                        <span class="text-xs opacity-60"> Pinned Thread </span>
                                     @endif
                                     <span> {{ $post->title }} </span>
                                 </div>
@@ -83,7 +83,7 @@
                                                     <button
                                                         class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                                 </form>
-                                                <h3 class="text-lg font-bold">Approve post?</h3>
+                                                <h3 class="text-lg font-bold">Approve thread?</h3>
                                                 <p class="py-4">This will approve
                                                     "{{ Str::limit($post->title, 10) }}". This can't be undone.
                                                 </p>
@@ -112,7 +112,7 @@
                                 <x-posts_likes :post_likes="$post_likes" :post="$post" />
                                 @if(Auth::user()->id === $post->user?->id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
                                     <a href="{{ route('edit_posts', ['post' => $post]) }}">
-                                        <button class="btn btn-square" aria-label="Edit Post" title="Edit Post">
+                                        <button class="btn btn-square" aria-label="Edit thread" title="Edit thread">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="2.5" stroke="currentColor" class="size-[1.2em]">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -123,7 +123,7 @@
                                     <div>
                                         <button type="button"
                                             onclick="document.getElementById('delete_post_modal_{{ $post->id }}').showModal()"
-                                            class="btn btn-square" aria-label="Delete post" title="Delete post">
+                                            class="btn btn-square" aria-label="Delete thread" title="Delete thread">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="2.5" stroke="currentColor" class="size-[1.2em]">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -137,7 +137,7 @@
                                                     <button
                                                         class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                                 </form>
-                                                <h3 class="text-lg font-bold">Delete post?</h3>
+                                                <h3 class="text-lg font-bold">Delete thread?</h3>
                                                 <p class="py-4">This will permanently delete
                                                     "{{ Str::limit($post->title, 40) }}". This can't be undone.</p>
                                                 <div class="modal-action">
@@ -212,7 +212,7 @@
                         <div>
                             <x-posts_comments :post="$post" />
                         </div>
-                        <div class="p-6 shadow-md rounded-md bg-base-300 font-semibold mb-2">Comment Section</div>
+                        <div class="p-6 shadow-md rounded-md bg-base-300 font-semibold mb-2">Replies</div>
                     @endif
                     <div class="bg-base-200 rounded-box">
                         <x-comments_section :post_comments="$post_comments" />

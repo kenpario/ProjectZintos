@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Edit Comment
+        Edit reply
     </x-slot:title>
     <div class="min-h-full w-full">
         <form method="POST" action="/comments/{{ $comment->id }}" class="mx-auto w-full max-w-md"
@@ -9,8 +9,8 @@
             @csrf
             @method('PUT')
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
-                <legend class="fieldset-legend">Edit Comment</legend>
-                <label class="label">Message</label>
+                <legend class="fieldset-legend">Edit reply</legend>
+                <label class="label">Reply</label>
                 <textarea class="textarea h-32 w-full max-w-full" placeholder="Message"
                     name="message">{{ old('message', $comment->message) }}</textarea>
                 @error('message')

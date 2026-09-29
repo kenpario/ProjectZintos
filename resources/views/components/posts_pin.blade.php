@@ -4,7 +4,7 @@
     <div onclick="event.stopPropagation()">
         <div class="aura text-orange-600 bg-yellow-200">
             <button type="button" onclick="document.getElementById('pin_post_modal_{{ $post->id }}').showModal()"
-                class="btn btn-square" aria-label="Pin post" title="Pin post">
+                class="btn btn-square" aria-label="Pin thread" title="Pin thread">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                     stroke="currentColor" class="size-[1.2em]">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 4h8" />

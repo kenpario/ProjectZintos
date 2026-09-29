@@ -4,8 +4,8 @@
         onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Adding...';">
         @csrf
         <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-full border p-6 shadow-md">
-            <legend class="fieldset-legend">Write a comment</legend>
-            <label class="label">Message</label>
+            <legend class="fieldset-legend">Write a reply</legend>
+            <label class="label">Reply</label>
             <textarea class="textarea h-32 w-full max-w-full" placeholder="Message"
                 name="message">{{ old('message') }}</textarea>
             @error('message')

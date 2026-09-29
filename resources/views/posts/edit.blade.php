@@ -9,7 +9,7 @@
             @csrf
             @method('PUT')
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
-                <legend class="fieldset-legend">New Post</legend>
+                <legend class="fieldset-legend">Edit thread</legend>
                 <div class="flex justify-center items-center">
                     @if ($post->media)
                         @if ($post->isVideo())
@@ -52,7 +52,7 @@
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
                 @enderror
-                <label class="label">Message</label>
+                <label class="label">Content</label>
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
@@ -85,7 +85,7 @@
                     }
                 </script>
 
-                <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Message" hidden
+                <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Content" hidden
                     disabled name="message">{{ old('message', $post->message) }}</textarea>
 
                 @error('message')

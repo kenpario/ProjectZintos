@@ -28,12 +28,12 @@
                     </div>
                 @enderror
                 <fieldset class="fieldset bg-base-100 border-base-300 rounded-box border p-4">
-                    <legend class="fieldset-legend">Comment Section</legend>
+                    <legend class="fieldset-legend">Post & reply section</legend>
                     <label class="label">
                         <input type="hidden" name="can_comment" value="0" />
                         <input type="checkbox" @checked(old('can_comment', $category->can_comment) == 1) class="checkbox"
                             name="can_comment" value="1" />
-                        Can members comment?
+                        Can members post in this category and reply?
                     </label>
                 </fieldset>
                 <button type="submit" class="btn bg-base-300 shadow-md mt-4">Update</button>

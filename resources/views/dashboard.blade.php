@@ -6,7 +6,7 @@
         <div class="w-1/3 max-lg:w-full rounded-box p-1" id="posts">
             <ul class="list bg-base-200 rounded-box shadow-md">
                 <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded-md shadow-md">
-                    Statistics</li>
+                    Forum Statistics</li>
                 <li class="list-row">
                     <div class="flex flex-col gap-1">
                         <div class="opacity-60 text-xs font-semibold">{{ $statistics_posts }} Posts</div>
@@ -21,7 +21,7 @@
 
                 <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded-md shadow-md">
                     Latest
-                    Posts</li>
+                    Threads</li>
                 @forelse ($latest_posts as $latest_post)
                     <x-dashboard_latest_posts :latest_post="$latest_post" :post_likes="$post_likes"
                         :post_views="$post_views" />

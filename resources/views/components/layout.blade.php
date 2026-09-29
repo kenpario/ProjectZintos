@@ -77,8 +77,8 @@
                                             <details>
                                                 <summary>Moderation</summary>
                                                 <ul>
-                                                    <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
-                                                    <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
+                                                    <li><a href="{{ route('mod_posts')}}">Threads Moderation</a></li>
+                                                    <li><a href="{{ route('mod_comments')}}">Replies Moderation</a></li>
                                                 </ul>
                                             </details>
                                         </li>
@@ -208,8 +208,8 @@
                                     <details>
                                         <summary>Moderation</summary>
                                         <ul>
-                                            <li><a href="{{ route('mod_posts')}}">Posts Moderation</a></li>
-                                            <li><a href="{{ route('mod_comments')}}">Comments Moderation</a></li>
+                                            <li><a href="{{ route('mod_posts')}}">Threads Moderation</a></li>
+                                            <li><a href="{{ route('mod_comments')}}">Replies Moderation</a></li>
                                         </ul>
                                     </details>
                                 </li>

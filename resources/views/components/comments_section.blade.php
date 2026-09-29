@@ -11,7 +11,7 @@
                                 <div class="aura aura-dual">
                                     <button type="button"
                                         onclick="document.getElementById('approve_comment_modal_{{ $post_comment->id }}').showModal()"
-                                        class="btn btn-square" aria-label="Approve comment" title="Approve comment">
+                                        class="btn btn-square" aria-label="Approve reply" title="Approve reply">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                                             stroke="currentColor" class="size-[1.2em]">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -52,7 +52,7 @@
                     @if(Auth::user()->id === $post_comment->user?->id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
                         <div class="flex justify-end gap-2 bg-base-300 p-2 w-full shadow-md">
                             <a href="{{ route('edit_comments', ['comment' => $post_comment]) }}">
-                                <button class="btn btn-square" aria-label="Edit Post" title="Edit Post">
+                                <button class="btn btn-square" aria-label="Edit reply" title="Edit reply">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                                         stroke="currentColor" class="size-[1.2em]">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -63,7 +63,7 @@
                             <div onclick="event.stopPropagation()">
                                 <button type="button"
                                     onclick="document.getElementById('delete_comment_modal_{{ $post_comment->id }}').showModal()"
-                                    class="btn btn-square" aria-label="Delete comment" title="Delete comment">
+                                    class="btn btn-square" aria-label="Delete reply" title="Delete reply">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                                         stroke="currentColor" class="size-[1.2em]">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -76,7 +76,7 @@
                                         <form method="dialog">
                                             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                         </form>
-                                        <h3 class="text-lg font-bold">Delete comment?</h3>
+                                        <h3 class="text-lg font-bold">Delete reply?</h3>
                                         <p class="py-4 font-bold">This will permanently delete
                                             "{{ Str::limit($post_comment->message, 10) }}".
                                             This
@@ -116,7 +116,7 @@
                             <div class="flex justify-between text-xs gap-2 opacity-60">
                                 <span>by <a class="link link-hover" href="/users/{{ $post_comment->user->id }}">
                                         {{ $post_comment->user->name }}</a></span>
-                                <span>Commented
+                                <span>Replied
                                     {{ $post_comment->created_at->diffForHumans() }}
                             </div>
                             <span>{{ $post_comment->message }}</span>

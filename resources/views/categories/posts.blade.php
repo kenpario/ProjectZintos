@@ -8,7 +8,7 @@
         <div class="relative z-10 sm:m-2 sm:p-4">
             <div class="flex m-2 justify-center">
                 <div class="hover-3d">
-                    <a href="{{ route('add_posts') }}" class="btn skeleton shadow-md">New Post</a>
+                    <a href="{{ route('add_posts') }}" class="btn skeleton shadow-md">New Thread</a>
                 </div>
             </div>
             <div class="bg-base-100 rounded-box shadow-md p-4">
@@ -22,8 +22,8 @@
                                     <path d="m21 21-4.3-4.3"></path>
                                 </g>
                             </svg>
-                            <input type="search" name="search" value="{{ request('search') }}" placeholder="Search title, content or member"
-                                class="input" />
+                            <input type="search" name="search" value="{{ request('search') }}"
+                                placeholder="Search title, content or member" class="input" />
                         </label>
                     </div>
                 </form>

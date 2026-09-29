@@ -7,7 +7,7 @@
             onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Adding...';">
             @csrf
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
-                <legend class="fieldset-legend">New Post</legend>
+                <legend class="fieldset-legend">New thread</legend>
                 <label class="label" for="media">Media</label>
                 <input id="media" type="file" class="file-input w-full" name="media" />
                 @error('media')
