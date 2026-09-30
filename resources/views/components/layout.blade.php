@@ -50,14 +50,27 @@
                                         <details>
                                             <summary>Categories</summary>
                                             <ul>
-                                                <li><a href="{{ route('categories') }}">All</a></li>
+                                                <li><a href="{{ route('categories') }}">All Categories</a></li>
                                                 @foreach ($categories as $category)
-                                                    <li><a
-                                                            href="{{ route('categories_posts', ['category' => $category->id]) }}">{{ $category->name }}</a>
+                                                    <li>
+                                                        <details>
+                                                            <summary>{{ $category->name }}</summary>
+                                                            <ul>
+                                                                <li><a
+                                                                        href="{{ route('categories_posts', ['category' => $category->id]) }}">All
+                                                                        subcategories</a></li>
+                                                                @foreach($subcategories->where('post_category_id', $category->id) as $subcategory)
+                                                                    <li><a
+                                                                            href="{{ route('subcategories_posts', ['subcategory' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </details>
                                                     </li>
                                                 @endforeach
                                                 @if(Auth::user()->group?->is_admin)
-                                                    <li class="mt-1"><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a>
+                                                    <li class="mt-1"><a class="skeleton" href="{{ route('add_categories') }}">Add
+                                                            Category</a>
                                                     </li>
                                                     <li class="mt-1"><a class="skeleton" href="{{ route('add_subcategories') }}">Add
                                                             Subcategory</a></li>
@@ -136,12 +149,15 @@
                                             </ul>
                                         </details>
                                     </li>
-                                    <form method="POST" action="{{ route('logout') }}" class="w-full mt-1"
-                                        onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
-                                        @csrf
-                                        <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
-                                    </form>
+
                                 </ul>
+                                <form method="POST" action="{{ route('logout') }}" class="w-full p-2"
+                                    onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-error w-full">
+                                        Logout
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     @endauth
@@ -158,10 +174,21 @@
                     <button popovertarget="categories_menu">Categories</button>
                     <div id="categories_menu" popover>
                         <ul class="menu gap-1 w-full">
-                            <li><a href="{{ route('categories') }}">All</a></li>
+                            <li><a href="{{ route('categories') }}">All Categories</a></li>
                             @foreach ($categories as $category)
-                                <li><a
-                                        href="{{ route('categories_posts', ['category' => $category->id]) }}">{{ $category->name }}</a>
+                                <li>
+                                    <details>
+                                        <summary>{{ $category->name }}</summary>
+                                        <ul>
+                                            <li><a href="{{ route('categories_posts', ['category' => $category->id]) }}">All
+                                                    subcategories</a></li>
+                                            @foreach($subcategories->where('post_category_id', $category->id) as $subcategory)
+                                                <li><a
+                                                        href="{{ route('subcategories_posts', ['subcategory' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </details>
                                 </li>
                             @endforeach
                             @if(Auth::user()->group?->is_admin)
@@ -230,12 +257,15 @@
                                     </details>
                                 </li>
                             @endif
-                            <form method="POST" action="{{ route('logout') }}" class="w-full mt-1"
-                                onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-error w-full">Logout</button>
-                            </form>
+
                         </ul>
+                        <form method="POST" action="{{ route('logout') }}" class="w-full mt-1 p-2"
+                            onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Logging Out...';">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-error w-full">
+                                Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
             @endif
@@ -258,7 +288,7 @@
     @if (session('success'))
         <div class="fixed z-40 toast toast-bottom toast-right">
             <div class="alert alert-success animate-fade-out">
-                <svg xmlns="<http://www.w3.org/2000/svg>" class="h-6 w-6 shrink-0 stroke-current" fill="none"
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

@@ -7,7 +7,8 @@
                     href="/categories/{{ $hot_topic->category->id }}/posts">{{ Str::limit($hot_topic->category->name, 40) }}</a>
             </div>
             <div>-</div>
-            <div class="font-bold"> {{ Str::limit($hot_topic->subcategory->name, 40) }}
+            <div class="font-bold"><a class="link link-hover"
+                    href="/subcategories/{{ $hot_topic->subcategory->id }}/posts">{{ Str::limit($hot_topic->subcategory->name, 40) }}</a>
             </div>
         </div>
         <div class="flex justify-between">

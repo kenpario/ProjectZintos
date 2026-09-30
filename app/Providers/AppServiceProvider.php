@@ -6,6 +6,7 @@ use App\Http\Responses\Auth\LoginResponse;
 use App\Http\Responses\Auth\LogoutResponse;
 use App\Http\Responses\Auth\RegisterResponse;
 use App\Models\Post_Category;
+use App\Models\Subcategory;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Laravel\Fortify\Contracts\LogoutResponse as LogoutResponseContract;
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
@@ -31,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('components.layout', function (ViewInstance $view): void {
-            $view->with('categories', Post_Category::query()->get());
+            $view->with(['categories' => Post_Category::query()->get(), 'subcategories' => Subcategory::query()->get()],);
         });
     }
 }

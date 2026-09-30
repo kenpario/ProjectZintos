@@ -172,8 +172,9 @@
                                             {{ $post->category?->name }}</a>
                                     </span>
                                     <span class="text-xs uppercase font-semibold opacity-60">-</span>
-                                    <span class="text-xs uppercase font-semibold opacity-60">
-                                        {{ $post->subcategory?->name }}
+                                    <span class="text-xs uppercase font-semibold opacity-60"><a class="link link-hover"
+                                            href="/subcategories/{{ $post->subcategory->id }}/posts">
+                                            {{ $post->subcategory?->name }}</a>
                                     </span>
                                 </div>
                                 <span class="text-xs uppercase font-semibold opacity-60"> Posted

@@ -48,7 +48,7 @@
                 </div>
                 <div class="divider lg:divider-horizontal"></div>
                 <div class="w-full">
-                    <div class="collapse-title font-semibold bg-base-300 rounded"> {{ $user->name }}'s Activity
+                    <div class="collapse-title font-semibold bg-base-300 rounded"> {{ $user->name }}'s activity
                     </div>
                     <div class="p-2 sm:p-4 mt-1 rounded-md">
                         <ul class="list gap-2 w-full">

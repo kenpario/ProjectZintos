@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        {{ $category->name }} Posts
+        {{ $category->name }} Subcategories and Threads
     </x-slot:title>
     <div class="relative overflow-hidden rounded">
         <img class="absolute opacity-60 rounded-md w-screen h-full object-cover bg-image"
@@ -32,11 +32,14 @@
                         name="{{ $category->name }}" id="category-{{ $category->name }}" open>
                         <summary class="collapse-title bg-base-300 rounded-box font-semibold shadow-md">
                             <div class="flex items-center justify-between gap-2">
-                                <span>
-                                    {{ Str::limit($category->name, 30) }}
-                                    --
-                                    {{ Str::limit($category->description, 30) }}
-                                </span>
+                                <div class="flex flex-col">
+                                    <span>
+                                        {{ Str::limit($category->name, 30) }}
+                                    </span>
+                                    <span class="text-xs opacity-60 font-semibold">
+                                        {{ Str::limit($category->description, 30) }}
+                                    </span>
+                                </div>
                                 @if(Auth::user()->group?->is_admin)
                                     <x-categories_editdelete :category="$category" />
                                 @endif
@@ -48,11 +51,14 @@
                                 name="{{ $subcategory->name }}" id="category-{{ $subcategory->name }}" open>
                                 <summary class="collapse-title bg-base-300 rounded-box font-semibold shadow-md">
                                     <div class="flex items-center justify-between gap-2">
-                                        <span>
-                                            {{ Str::limit($subcategory->name, 30) }}
-                                            --
-                                            {{ Str::limit($subcategory->description, 30) }}
-                                        </span>
+                                        <div class="flex flex-col">
+                                            <span>
+                                                {{ Str::limit($subcategory->name, 30) }}
+                                            </span>
+                                            <span class="text-xs opacity-60 font-semibold">
+                                                {{ Str::limit($subcategory->description, 30) }}
+                                            </span>
+                                        </div>
                                         @if(Auth::user()->group?->is_admin)
                                             <x-subcategories_editdelete :subcategory="$subcategory" />
                                         @endif
@@ -191,7 +197,7 @@
                         @endforeach
                         <div class="flex justify-between collapse-content text-sm">
                             <a class="btn btn-md bg-base-300 shadow-md mt-2" href="{{ route('categories') }}">
-                                Back to categories
+                                Back to all categories
                             </a>
                             {{ $posts->links() }}
                         </div>
