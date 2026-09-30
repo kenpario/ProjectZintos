@@ -2,9 +2,12 @@
 
 <li class="list-row">
     <div class="flex flex-col gap-2 list-col-grow">
-        <div>
+        <div class="flex gap-1">
             <div class="font-bold">Posted in <a class="link link-hover"
                     href="/categories/{{ $hot_topic->category->id }}/posts">{{ Str::limit($hot_topic->category->name, 40) }}</a>
+            </div>
+            <div>-</div>
+            <div class="font-bold"> {{ Str::limit($hot_topic->subcategory->name, 40) }}
             </div>
         </div>
         <div class="flex justify-between">

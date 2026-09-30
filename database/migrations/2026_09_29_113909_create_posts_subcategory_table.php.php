@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
         });
         Schema::table('posts', function (Blueprint $table) {
-            $table->boolean('post_subcategory_id')->constrained('post_subcategories')->cascadeOnDelete();
+            $table->foreignId('post_subcategory_id')->constrained('post_subcategories')->cascadeOnDelete();
         });
     }
 

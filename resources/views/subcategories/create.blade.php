@@ -8,7 +8,7 @@
             @csrf
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
                 <legend class="fieldset-legend">Add Subcategory</legend>
-                <label class="label">Category</label>
+                <label class="label">Parent category</label>
                 <select class="select w-full" name="post_category_id">
                     <option value="">Select a parent category</option>
                     @foreach ($categories as $category)

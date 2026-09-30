@@ -86,6 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/subcategories', [SubcategoryController::class, 'store'])->middleware(['throttle:5,1']);
     Route::get('/subcategories/{subcategory}/edit', [SubcategoryController::class, 'edit'])->name('edit_subcategories');
     Route::put('/subcategories/{subcategory}', [SubcategoryController::class, 'update'])->middleware(['throttle:10,1']);
+    Route::delete('/subcategories/{subcategory}', [SubcategoryController::class, 'destroy'])->middleware(['throttle:10,1']);
 
     Route::get('/users/administration', [UserController::class, 'administration'])->name('user_administration');
     Route::get('/users/team', [UserController::class, 'team'])->name('team');

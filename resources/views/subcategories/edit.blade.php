@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Edit Subcategory
+        Edit {{ $subcategory->name }} Subcategory
     </x-slot:title>
     <div class="min-h-full w-full">
         <form method="POST" action="/subcategories/{{ $subcategory->id }}" class="mx-auto w-full max-w-md"
@@ -10,7 +10,7 @@
             @method('PUT')
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
                 <legend class="fieldset-legend">Add Subcategory</legend>
-                <label class="label">Category</label>
+                <label class="label">Parent category</label>
                 <select class="select w-full" name="post_category_id">
                     <option value="">Select a parent category</option>
                     @foreach ($categories as $category)

@@ -166,10 +166,16 @@
                         </div>
                         <div class="shadow-md rounded-box p-2 mt-2 bg-base-100">
                             <div class="flex justify-between gap-2 m-2">
-                                <span class="text-xs uppercase font-semibold opacity-60"> Posted in <a
-                                        class="link link-hover" href="/categories/{{ $post->category->id }}/posts">
-                                        {{ $post->category?->name }}</a>
-                                </span>
+                                <div class="flex gap-1">
+                                    <span class="text-xs uppercase font-semibold opacity-60"> Posted in <a
+                                            class="link link-hover" href="/categories/{{ $post->category->id }}/posts">
+                                            {{ $post->category?->name }}</a>
+                                    </span>
+                                    <span class="text-xs uppercase font-semibold opacity-60">-</span>
+                                    <span class="text-xs uppercase font-semibold opacity-60">
+                                        {{ $post->subcategory?->name }}
+                                    </span>
+                                </div>
                                 <span class="text-xs uppercase font-semibold opacity-60"> Posted
                                     {{ $post->created_at->diffForHumans() }}
                                 </span>
