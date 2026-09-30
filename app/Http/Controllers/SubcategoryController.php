@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Like;
 use App\Models\Post_Category;
 use App\Models\Post;
+use App\Models\Subcategory;
 use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -106,13 +107,13 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->group?->is_admin) {
-            return view('subcategories.create', [
-                'backUrl' => url()->previous(),
-            ]);
-        } else {
+        if (! Auth::user()->group?->is_admin) {
             abort(403, 'Unauthorized Action!');
         }
+
+        $categories = Post_Category::query()->get();
+
+        return view('subcategories.create', ['categories' => $categories, 'backUrl' => url()->previous()]);
     }
 
     /**
@@ -120,30 +121,30 @@ class SubcategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // if (! Auth::user()->group?->is_admin) {
-        //     abort(403, 'Unauthorized Action!');
-        // }
+        if (! Auth::user()->group?->is_admin) {
+            abort(403, 'Unauthorized Action!');
+        }
 
-        // $formFields = $request->validate(
-        //     [
-        //         'name' => 'required|string|max:30|min:5',
-        //         'description' => 'required|string|max:30|min:5',
-        //         'can_comment' => 'required|boolean'
-        //     ],
-        //     [
-        //         'name.required' => 'Please write a name!',
-        //         'name.max' => 'Name must be 30 characters or less.',
-        //         'description.required' => 'Please write a description!',
-        //         'description.max' => 'Name must be 30 characters or less.'
+        $formFields = $request->validate(
+            [
+                'name' => 'required|string|max:30|min:5',
+                'description' => 'required|string|max:30|min:5',
+                'post_category_id' => 'required|integer|exists:post_categories,id',
+            ],
+            [
+                'name.required' => 'Please write a name!',
+                'name.max' => 'Name must be 30 characters or less.',
+                'description.required' => 'Please write a description!',
+                'description.max' => 'Name must be 30 characters or less.'
 
-        //     ]
-        // );
+            ]
+        );
 
-        // $formFields['user_id'] = Auth::user()->id;
+        $formFields['user_id'] = Auth::user()->id;
 
-        // Post_Category::create($formFields);
+        Subcategory::create($formFields);
 
-        // return redirect('/categories')->with('success', 'Your Category has been added!');
+        return redirect('/dashboard')->with('success', 'Your subcategory has been added!');
     }
 
     /**
@@ -157,55 +158,59 @@ class SubcategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post_Category $category)
+    public function edit(Subcategory $subcategory)
     {
         if (! Auth::user()->group?->is_admin) {
             abort(403, 'Unauthorized Action!');
         }
+
+        $categories = Post_Category::all();
+
         return view('subcategories.edit', [
-            'category' => $category,
+            'subcategory' => $subcategory,
             'backUrl' => url()->previous(),
+            'categories' => $categories,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post_Category $category)
+    public function update(Request $request, Subcategory $subcategory)
     {
-        // if (! Auth::user()->group?->is_admin) {
-        //     abort(403, 'Unauthorized Action!');
-        // }
-        // $formFields = $request->validate(
-        //     [
-        //         'name' => 'required|string|max:30|min:5',
-        //         'description' => 'required|string|max:30|min:5',
-        //         'can_comment' => 'required|boolean'
-        //     ],
-        //     [
-        //         'name.required' => 'Please write a name!',
-        //         'name.max' => 'Name must be 30 characters or less.',
-        //         'description.required' => 'Please write a description!',
-        //         'description.max' => 'Name must be 30 characters or less.'
+        if (! Auth::user()->group?->is_admin) {
+            abort(403, 'Unauthorized Action!');
+        }
+        $formFields = $request->validate(
+            [
+                'name' => 'required|string|max:30|min:5',
+                'description' => 'required|string|max:30|min:5',
+                'post_category_id' => 'required|integer|exists:post_categories,id',
+            ],
+            [
+                'name.required' => 'Please write a name!',
+                'name.max' => 'Name must be 30 characters or less.',
+                'description.required' => 'Please write a description!',
+                'description.max' => 'Name must be 30 characters or less.'
 
-        //     ]
-        // );
+            ]
+        );
 
-        // $category->update($formFields);
+        $subcategory->update($formFields);
 
-        // return redirect('/categories')->with('success', 'Your Category has been updated!');
+        return redirect('/dashboard')->with('success', 'Your subcategory has been updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post_Category $category)
+    public function destroy(Subcategory $subcategory)
     {
         if (! Auth::user()->group?->is_admin) {
             abort(403, 'Unauthorized Action!');
         }
-        $category->delete();
+        $subcategory->delete();
 
-        return redirect('/dashboard')->with('success', 'Your Category has been deleted!');
+        return redirect('/dashboard')->with('success', 'Your Subcategory has been deleted!');
     }
 }

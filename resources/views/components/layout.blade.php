@@ -57,8 +57,11 @@
                                                     </li>
                                                 @endforeach
                                                 @if(Auth::user()->group?->is_admin)
-                                                    <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a>
+                                                    <li class="mt-1"><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a>
                                                     </li>
+                                                    <li class="mt-1"><a class="skeleton" href="{{ route('add_subcategories') }}">Add
+                                                            Subcategory</a></li>
+
                                                 @endif
                                             </ul>
                                         </details>
@@ -163,6 +166,7 @@
                             @endforeach
                             @if(Auth::user()->group?->is_admin)
                                 <li><a class="skeleton" href="{{ route('add_categories') }}">Add Category</a></li>
+                                <li><a class="skeleton" href="{{ route('add_subcategories') }}">Add Subcategory</a></li>
                             @endif
                         </ul>
                     </div>

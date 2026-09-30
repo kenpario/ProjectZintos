@@ -8,6 +8,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Socialite;
@@ -72,13 +73,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-    Route::get('/categories/{category}/posts', [CategoryController::class, 'posts'])->name('categories_posts');
+
     Route::get('/categories/add', [CategoryController::class, 'create'])->name('add_categories');
     Route::post('/categories', [CategoryController::class, 'store'])->middleware(['throttle:5,1']);
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+    Route::get('/categories/{category}/posts', [CategoryController::class, 'posts'])->name('categories_posts');
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('edit_categories');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->middleware(['throttle:10,1']);
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->middleware(['throttle:10,1']);
+
+    Route::get('/subcategories/add', [SubcategoryController::class, 'create'])->name('add_subcategories');
+    Route::post('/subcategories', [SubcategoryController::class, 'store'])->middleware(['throttle:5,1']);
+    Route::get('/subcategories/{subcategory}/edit', [SubcategoryController::class, 'edit'])->name('edit_subcategories');
+    Route::put('/subcategories/{subcategory}', [SubcategoryController::class, 'update'])->middleware(['throttle:10,1']);
 
     Route::get('/users/administration', [UserController::class, 'administration'])->name('user_administration');
     Route::get('/users/team', [UserController::class, 'team'])->name('team');
@@ -120,7 +127,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::get('/cookies', function () {
-    return view('cookies');
+    return view('cookies_info');
 });
 
 Route::get('/privacy', function () {

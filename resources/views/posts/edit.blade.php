@@ -31,7 +31,7 @@
                     </div>
                 @enderror
                 <label class="label">Category</label>
-                <select class="select w-full" name="post_category_id">
+                <select id="category_select" class="select w-full" name="post_category_id">
                     <option value="">Select a Category</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" @selected(old('post_category_id', $post->post_category_id) == $category->id)>
@@ -40,6 +40,20 @@
                     @endforeach
                 </select>
                 @error('post_category_id')
+                    <div class="label">
+                        <span class="label-text-alt text-error">{{ $message }}</span>
+                    </div>
+                @enderror
+                <label class="label">Subcategory</label>
+                <select id="subcategory_select" class="select w-full" name="post_subcategory_id">
+                    <option value="">Select a Subcategory</option>
+                    @foreach ($subcategories as $subcategory)
+                        <option value="{{ $subcategory->id }}" @selected(old('post_subcategory_id', $post->post_subcategory_id) == $subcategory->id)>
+                            {{ $subcategory->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('post_subcategory_id')
                     <div class="label">
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
@@ -53,37 +67,56 @@
                     </div>
                 @enderror
                 <label class="label">Content</label>
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        if (window.tinymce) {
-                            initEditor();
-                        } else {
-                            document.addEventListener('tinymce:ready', initEditor, { once: true });
-                        }
-                    });
-
-                    function initEditor() {
-                        tinymce.init({
-                            selector: '#post_message',
-                            license_key: 'gpl',
-                            promotion: false,
-                            branding: false,
-                            onboarding: false,
-                            plugins: 'autolink lists link table code codesample wordcount',
-                            toolbar: 'undo redo | blocks | bold italic underline | bullist numlist | link table hr | codesample | code',
-                            convert_unsafe_embeds: true,
-                            sandbox_iframes: true,
-                            setup: function (editor) {
-                                editor.on('init', function () {
-                                    const textarea = document.getElementById('post_message');
-                                    textarea.removeAttribute('hidden');
-                                    textarea.removeAttribute('disabled');
-                                });
+                @push('js')
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            if (window.tinymce) {
+                                initEditor();
+                            } else {
+                                document.addEventListener('tinymce:ready', initEditor, { once: true });
                             }
                         });
-                    }
-                </script>
+
+                        function initEditor() {
+                            tinymce.init({
+                                selector: '#post_message',
+                                license_key: 'gpl',
+                                promotion: false,
+                                branding: false,
+                                onboarding: false,
+                                plugins: 'autolink lists link table code codesample wordcount',
+                                toolbar: 'undo redo | blocks | bold italic underline | bullist numlist | link table hr | codesample | code',
+                                convert_unsafe_embeds: true,
+                                sandbox_iframes: true,
+                                setup: function (editor) {
+                                    editor.on('init', function () {
+                                        const textarea = document.getElementById('post_message');
+                                        textarea.removeAttribute('hidden');
+                                        textarea.removeAttribute('disabled');
+                                    });
+                                }
+                            });
+                        }
+
+                        const subcategoriesByParent = @json(
+                            $allsubcategories->groupBy('post_category_id')->map->map(fn($s) => ['id' => $s->id, 'name' => $s->name])
+                        );
+
+                        const categorySelect = document.getElementById('category_select');
+                        const subSelect = document.getElementById('subcategory_select');
+
+                        categorySelect.addEventListener('change', function () {
+                            const subs = subcategoriesByParent[this.value] || [];
+                            subSelect.innerHTML = '<option value="">Select a Subcategory</option>';
+                            subs.forEach((sub) => {
+                                const option = document.createElement('option');
+                                option.value = sub.id;
+                                option.textContent = sub.name;
+                                subSelect.appendChild(option);
+                            });
+                        });
+                    </script>
+                @endpush
 
                 <textarea id="post_message" class="textarea h-32 w-full max-w-full" placeholder="Content" hidden
                     disabled name="message">{{ old('message', $post->message) }}</textarea>
@@ -93,9 +126,9 @@
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
                 @enderror
-                <button type="submit" class="btn bg-base-300 shadow-md mt-4">Update</button>
+                <button type="submit" class="btn bg-base-300 shadow-md mt-4">Update thread</button>
                 <input type="hidden" name="back_url" value="{{ old('back_url', $backUrl) }}">
-                <a class="btn" href="{{ old('back_url', $backUrl) }}">Back</a>
+                <a class="btn shadow-md" href="{{ old('back_url', $backUrl) }}">Back</a>
             </fieldset>
         </form>
     </div>
