@@ -53,7 +53,7 @@ class DashboardController extends Controller
 
         $post_subcategories = Subcategory::all();
 
-        $membersCount = User::query()->count();
+        $membersCount = User::query()->count('id');
         $latestMember = User::query()->latest()->first(['id', 'name']);
 
         return view('dashboard', ['latest_posts' => $latest_posts, 'hot_topics' => $hot_topics, 'post_categories' => $post_categories, 'post_subcategories' => $post_subcategories, 'all_posts' => $all_posts, 'all_pinned_posts' => $all_pinned_posts, 'statistics_posts' => $statistics_posts, 'members_count' => $membersCount, 'latest_member' => $latestMember]);

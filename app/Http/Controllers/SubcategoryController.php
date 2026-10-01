@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SubcategoryController extends Controller
 {
@@ -156,6 +157,15 @@ class SubcategoryController extends Controller
         if (! Auth::user()->group?->is_admin) {
             abort(404);
         }
+
+        $subcategory->posts()
+            ->whereNotNull('media')
+            ->chunkById(100, function ($posts): void {
+                foreach ($posts as $post) {
+                    Storage::disk('public')->delete($post->media);
+                }
+            });
+
         $subcategory->delete();
 
         return redirect('/dashboard')->with('success', 'Your Subcategory has been deleted!');

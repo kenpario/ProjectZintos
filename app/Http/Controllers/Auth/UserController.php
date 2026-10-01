@@ -235,11 +235,13 @@ class UserController extends Controller
             Storage::disk('public')->delete($user->avatar);
         }
 
-        foreach ($user->posts as $post) {
-            if ($post->media) {
+        $user->posts()
+            ->whereNotNull('media')
+            ->chunkById(100, function ($posts): void {
+                foreach ($posts as $post) {
                 Storage::disk('public')->delete($post->media);
-            }
-        }
+                }
+            });
 
         User::destroy($user->id);
 

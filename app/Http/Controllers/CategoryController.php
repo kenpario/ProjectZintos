@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -202,6 +203,15 @@ class CategoryController extends Controller
         if (! Auth::user()->group?->is_admin) {
             abort(404);
         }
+
+        $category->posts()
+            ->whereNotNull('media')
+            ->chunkById(100, function ($posts): void {
+                foreach ($posts as $post) {
+                    Storage::disk('public')->delete($post->media);
+                }
+            });
+
         $category->delete();
 
         return redirect('/categories')->with('success', 'Your Category has been deleted!');

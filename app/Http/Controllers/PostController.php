@@ -31,11 +31,15 @@ class PostController extends Controller
 
         $post->load(['user', 'category']);
 
+        $isModerator = Auth::user()->group?->is_mod || Auth::user()->group?->is_admin;
+
         $post_comments = Comment::query()
             ->with('user')
             ->where('post_id', $post->id)
+            ->when(! $isModerator, fn ($query) => $query->where('is_approved', true))
             ->latest()
-            ->get();
+            ->paginate(20)
+            ->withQueryString();
 
         $post_likes = Like::query()
             ->with('user')

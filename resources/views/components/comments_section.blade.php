@@ -127,4 +127,5 @@
             <div class="divider p-2"></div>
         @endif
     @endforeach
+    {{ $post_comments->links() }}
 </div>
