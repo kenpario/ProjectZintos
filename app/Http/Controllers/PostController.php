@@ -19,7 +19,7 @@ class PostController extends Controller
     public function index(Post $post)
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin || $post->is_approved)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         if (Auth::user() && $post->is_approved) {
@@ -59,7 +59,7 @@ class PostController extends Controller
         $search = $request->string('search')->trim()->toString();
 
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
         $all_unapproved_posts = Post::query()
             ->with(['user', 'category'])
@@ -81,7 +81,7 @@ class PostController extends Controller
     public function approve(Post $post)
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $post->update([
@@ -95,7 +95,7 @@ class PostController extends Controller
     public function pin(Post $post)
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $post->update([
@@ -109,7 +109,7 @@ class PostController extends Controller
     public function unpin(Post $post)
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $post->update([
@@ -202,7 +202,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         if (Auth::user()->group?->is_admin) {
@@ -228,7 +228,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         $media = $request->file('media');
@@ -299,7 +299,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         if ($post->media) {

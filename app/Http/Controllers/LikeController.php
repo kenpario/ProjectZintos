@@ -28,7 +28,7 @@ class LikeController extends Controller
     public function store(Request $request, Post $post)
     {
         if (! $post->is_approved) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $formFields = $request->validate([]);
@@ -66,8 +66,8 @@ class LikeController extends Controller
      */
     public function destroy(Like $like)
     {
-        if (! Auth::user()->id === $like->user_id) {
-            abort(403, 'Unauthorized Action!');
+        if (Auth::user()->id !== $like->user_id) {
+            abort(403);
         }
 
         $postId = $like->post_id;

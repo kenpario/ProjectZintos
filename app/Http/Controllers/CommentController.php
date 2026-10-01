@@ -27,7 +27,7 @@ class CommentController extends Controller
         $search = $request->string('search')->trim()->toString();
 
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $all_unapproved_comments = Comment::query()
@@ -50,7 +50,7 @@ class CommentController extends Controller
     public function approve(Comment $comment)
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $comment->update([
@@ -69,7 +69,7 @@ class CommentController extends Controller
         $isModerator = Auth::user()->group?->is_mod || Auth::user()->group?->is_admin;
 
         if (! $post->category?->can_comment || (! $post->is_approved && ! $isModerator)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         $formFields = $request->validate(
@@ -115,7 +115,7 @@ class CommentController extends Controller
     public function edit(Comment $comment)
     {
         if (! (Auth::user()->id === $comment->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         return view('comments.edit', ['comment' => $comment, 'backUrl' => url()->previous()]);
@@ -128,7 +128,7 @@ class CommentController extends Controller
     {
 
         if (! (Auth::user()->id === $comment->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         $formFields = $request->validate(
@@ -166,7 +166,7 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         if (! (Auth::user()->id === $comment->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         $postId = $comment->post_id;

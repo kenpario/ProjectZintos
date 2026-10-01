@@ -45,7 +45,7 @@ class GroupController extends Controller
     {
 
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $groups_data = Group::query()
@@ -58,7 +58,7 @@ class GroupController extends Controller
     public function edit(Group $group)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         return view('groups.edit', ['group' => $group, 'backUrl' => url()->previous()]);
@@ -70,7 +70,7 @@ class GroupController extends Controller
     public function update(Request $request, Group $group)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $formFields = $request->validate(

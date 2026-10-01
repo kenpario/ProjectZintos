@@ -120,7 +120,7 @@ class CategoryController extends Controller
                 'backUrl' => url()->previous(),
             ]);
         } else {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
     }
 
@@ -130,7 +130,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $formFields = $request->validate(
@@ -169,7 +169,7 @@ class CategoryController extends Controller
     public function edit(Post_Category $category)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
         return view('categories.edit', [
             'category' => $category,
@@ -183,7 +183,7 @@ class CategoryController extends Controller
     public function update(Request $request, Post_Category $category)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
         $formFields = $request->validate(
             [
@@ -211,7 +211,7 @@ class CategoryController extends Controller
     public function destroy(Post_Category $category)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
         $category->delete();
 

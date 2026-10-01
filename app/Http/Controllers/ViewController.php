@@ -28,7 +28,7 @@ class ViewController extends Controller
     public function store(Request $request, Post $post)
     {
         if (! $post->is_approved || ! Auth::user()) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $formFields = $request->validate([]);

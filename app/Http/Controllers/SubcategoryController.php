@@ -61,7 +61,7 @@ class SubcategoryController extends Controller
     public function create()
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $categories = Post_Category::query()->get();
@@ -75,7 +75,7 @@ class SubcategoryController extends Controller
     public function store(Request $request)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $formFields = $request->validate(
@@ -114,7 +114,7 @@ class SubcategoryController extends Controller
     public function edit(Subcategory $subcategory)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $categories = Post_Category::all();
@@ -132,7 +132,7 @@ class SubcategoryController extends Controller
     public function update(Request $request, Subcategory $subcategory)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
         $formFields = $request->validate(
             [
@@ -160,7 +160,7 @@ class SubcategoryController extends Controller
     public function destroy(Subcategory $subcategory)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
         $subcategory->delete();
 
