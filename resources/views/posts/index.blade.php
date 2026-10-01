@@ -42,7 +42,7 @@
                                 {{ $total_likes }}
                             </p>
                             <p>
-                                Posts made:
+                                Threads made:
                                 {{ $total_posts }}
                             </p>
                         </div>
@@ -155,7 +155,7 @@
                                         </dialog>
 
                                         <form id="delete_post_form_{{ $post->id }}" method="POST"
-                                            action="/posts/{{ $post->id }}"
+                                            action="/threads/{{ $post->id }}"
                                             onsubmit="const button = document.getElementById('delete_post_confirm_{{ $post->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Deleting...';">
                                             @csrf
                                             @method('DELETE')
@@ -168,12 +168,12 @@
                             <div class="flex justify-between gap-2 m-2">
                                 <div class="flex gap-1">
                                     <span class="text-xs uppercase font-semibold opacity-60"> Posted in <a
-                                            class="link link-hover" href="/categories/{{ $post->category->id }}/posts">
+                                            class="link link-hover" href="/categories/{{ $post->category->id }}/threads">
                                             {{ $post->category?->name }}</a>
                                     </span>
                                     <span class="text-xs uppercase font-semibold opacity-60">-</span>
                                     <span class="text-xs uppercase font-semibold opacity-60"><a class="link link-hover"
-                                            href="/subcategories/{{ $post->subcategory->id }}/posts">
+                                            href="/subcategories/{{ $post->subcategory->id }}/threads">
                                             {{ $post->subcategory?->name }}</a>
                                     </span>
                                 </div>

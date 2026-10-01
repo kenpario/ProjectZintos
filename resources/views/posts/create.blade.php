@@ -1,9 +1,9 @@
 <x-layout>
     <x-slot:title>
-        Add Post
+        New Thread
     </x-slot:title>
     <div class="min-h-full w-full">
-        <form method="POST" action="/posts" class="mx-auto w-full max-w-4xl" enctype="multipart/form-data"
+        <form method="POST" action="/threads" class="mx-auto w-full max-w-4xl" enctype="multipart/form-data"
             onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Adding...';">
             @csrf
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
@@ -112,7 +112,7 @@
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
                 @enderror
-                <button type="submit" class="btn bg-base-300 shadow-md mt-4">Add thread</button>
+                <button type="submit" class="btn bg-base-300 shadow-md mt-4">Add Thread</button>
                 <input type="hidden" name="back_url" value="{{ old('back_url', $backUrl) }}">
                 <a class="btn shadow-md" href="{{ old('back_url', $backUrl) }}">Back</a>
             </fieldset>

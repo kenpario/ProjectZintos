@@ -70,10 +70,10 @@
                                                                 class="size-10 rounded-box" /></a></div>
                                                     <div>
                                                         <div><a class="link link-hover"
-                                                                href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
+                                                                href="/threads/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
                                                         </div>
                                                         <div class="text-xs font-semibold opacity-60"><a
-                                                                class="link link-hover" href="/posts/{{ $post->id }}">
+                                                                class="link link-hover" href="/threads/{{ $post->id }}">
                                                                 {{ Str::limit(strip_tags($post->message), 50) }}</a>
                                                         </div>
                                                         <div>by <a class="link link-hover"
@@ -122,10 +122,10 @@
                                                 </div>
                                                 <div class="min-w-0 break-words">
                                                     <div><a class="link link-hover"
-                                                            href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
+                                                            href="/threads/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
                                                     </div>
                                                     <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
-                                                            href="/posts/{{ $post->id }}">
+                                                            href="/threads/{{ $post->id }}">
                                                             {{ Str::limit(strip_tags($post->message), 50) }}</a>
                                                     </div>
                                                     <div>by <a class="link link-hover"

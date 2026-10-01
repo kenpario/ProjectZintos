@@ -3,7 +3,7 @@
         Edit {{ $post->title }}
     </x-slot:title>
     <div class="min-h-full w-full">
-        <form method="POST" action="/posts/{{ $post->id }}" class="mx-auto w-full max-w-4xl"
+        <form method="POST" action="/threads/{{ $post->id }}" class="mx-auto w-full max-w-4xl"
             enctype="multipart/form-data"
             onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Updating...';">
             @csrf
@@ -126,7 +126,7 @@
                         <span class="label-text-alt text-error">{{ $message }}</span>
                     </div>
                 @enderror
-                <button type="submit" class="btn bg-base-300 shadow-md mt-4">Update thread</button>
+                <button type="submit" class="btn bg-base-300 shadow-md mt-4">Update Thread</button>
                 <input type="hidden" name="back_url" value="{{ old('back_url', $backUrl) }}">
                 <a class="btn shadow-md" href="{{ old('back_url', $backUrl) }}">Back</a>
             </fieldset>

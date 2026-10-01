@@ -29,7 +29,7 @@
                             <div class=" shadow-md rounded-box p-2 mt-2 bg-base-100 w-full">
                                 <div class="flex justify-between gap-2 p-2">
                                     <span class="text-xs uppercase font-semibold opacity-60">Submitted for <a
-                                            class="link link-hover" href="/posts/{{ $comment->post->id }}">
+                                            class="link link-hover" href="/threads/{{ $comment->post->id }}">
                                             {{ Str::limit($comment->post->title, 30)}}</a>
                                     </span>
                                     <span class="text-xs uppercase font-semibold opacity-60"> Submitted
@@ -49,7 +49,7 @@
                                                 {{ $comment->user->name }}</a></span>
                                         <div class="text-xs opacity-60 font-semibold">
                                             <a class="link link-hover"
-                                                href="/posts/{{ $comment->post_id }}">{{ Str::limit($comment->message, 50) }}</a>
+                                                href="/threads/{{ $comment->post_id }}">{{ Str::limit($comment->message, 50) }}</a>
                                         </div>
                                     </div>
                                 </div>

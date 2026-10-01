@@ -40,7 +40,7 @@
                                 {{ $total_likes }}
                             </p>
                             <p>
-                                Posts made:
+                                Threads made:
                                 {{ $user_posts->count() }}
                             </p>
                         </div>
@@ -57,10 +57,10 @@
                                     <div
                                         class="flex justify-between gap-2 bg-base-100 rounded-box shadow-md p-2 sm:gap-4 sm:p-4">
                                         <div class="flex min-w-0 flex-1 flex-col">
-                                            <div> <a class="link link-hover" href="/posts/{{ $post->id }}">
+                                            <div> <a class="link link-hover" href="/threads/{{ $post->id }}">
                                                     {{ Str::limit($post->title, 20) }} </a> </div>
                                             <div class="text-xs font-semibold opacity-60"> <a class="link link-hover"
-                                                    href="/posts/{{ $post->id }}">
+                                                    href="/threads/{{ $post->id }}">
                                                     {{ Str::limit(strip_tags($post->message), 50) }} </a> </div>
                                         </div>
                                         <div class="flex shrink-0 gap-2">

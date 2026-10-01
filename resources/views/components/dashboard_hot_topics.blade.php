@@ -4,11 +4,11 @@
     <div class="flex flex-col gap-2 list-col-grow">
         <div class="flex gap-1">
             <div class="font-bold">Posted in <a class="link link-hover"
-                    href="/categories/{{ $hot_topic->category->id }}/posts">{{ Str::limit($hot_topic->category->name, 40) }}</a>
+                    href="/categories/{{ $hot_topic->category->id }}/threads">{{ Str::limit($hot_topic->category->name, 40) }}</a>
             </div>
             <div>-</div>
             <div class="font-bold"><a class="link link-hover"
-                    href="/subcategories/{{ $hot_topic->subcategory->id }}/posts">{{ Str::limit($hot_topic->subcategory->name, 40) }}</a>
+                    href="/subcategories/{{ $hot_topic->subcategory->id }}/threads">{{ Str::limit($hot_topic->subcategory->name, 40) }}</a>
             </div>
         </div>
         <div class="flex justify-between">
@@ -18,9 +18,9 @@
                             alt="{{ $hot_topic->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
                     <div><a class="link link-hover"
-                            href="/posts/{{ $hot_topic->id }}">{{ Str::limit($hot_topic->title, 20) }}</a></div>
+                            href="/threads/{{ $hot_topic->id }}">{{ Str::limit($hot_topic->title, 20) }}</a></div>
                     <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
-                            href="/posts/{{ $hot_topic->id }}">{{ Str::limit(strip_tags($hot_topic->message), 50)}}</a>
+                            href="/threads/{{ $hot_topic->id }}">{{ Str::limit(strip_tags($hot_topic->message), 50)}}</a>
                     </div>
                     <div>by <a class="link link-hover"
                             href="/users/{{ $hot_topic->user->id }}">{{ $hot_topic->user?->name }}</a>

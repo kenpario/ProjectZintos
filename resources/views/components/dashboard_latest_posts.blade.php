@@ -4,11 +4,11 @@
     <div class="flex flex-col gap-2 list-col-grow">
         <div class="flex gap-1">
             <div class="font-bold">Posted in <a class="link link-hover"
-                    href="/categories/{{ $latest_post->category->id }}/posts">{{ Str::limit($latest_post->category->name, 40) }}</a>
+                    href="/categories/{{ $latest_post->category->id }}/threads">{{ Str::limit($latest_post->category->name, 40) }}</a>
             </div>
             <div>-</div>
             <div class="font-bold"><a class="link link-hover"
-                    href="/subcategories/{{ $latest_post->subcategory->id }}/posts">{{ Str::limit($latest_post->subcategory->name, 40) }}</a>
+                    href="/subcategories/{{ $latest_post->subcategory->id }}/threads">{{ Str::limit($latest_post->subcategory->name, 40) }}</a>
             </div>
         </div>
         <div class="flex justify-between">
@@ -18,9 +18,9 @@
                             alt="{{ $latest_post->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
                     <div><a class="link link-hover"
-                            href="/posts/{{ $latest_post->id }}">{{ Str::limit($latest_post->title, 20) }}</a></div>
+                            href="/threads/{{ $latest_post->id }}">{{ Str::limit($latest_post->title, 20) }}</a></div>
                     <div class="text-xs font-semibold opacity-60"><a class="link link-hover"
-                            href="/posts/{{ $latest_post->id }}">{{ Str::limit(strip_tags($latest_post->message), 50)}}</a>
+                            href="/threads/{{ $latest_post->id }}">{{ Str::limit(strip_tags($latest_post->message), 50)}}</a>
                     </div>
                     <div>by <a class="link link-hover"
                             href="/users/{{ $latest_post->user->id }}">{{ $latest_post->user?->name }}</a>
