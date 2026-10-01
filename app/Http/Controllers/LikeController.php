@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Like;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
@@ -25,19 +24,16 @@ class LikeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Post $post)
+    public function store(Post $post)
     {
         if (! $post->is_approved) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
-        $formFields = $request->validate([]);
-
-        $formFields['user_id'] = Auth::user()->id;
-
-        $formFields['post_id'] = $post->id;
-
-        Like::create($formFields);
+        Like::firstOrCreate([
+            'user_id' => Auth::id(),
+            'post_id' => $post->id,
+        ]);
 
         return redirect()->route('posts', ['post' => $post])
             ->with('success', 'You liked this post!');
@@ -66,8 +62,8 @@ class LikeController extends Controller
      */
     public function destroy(Like $like)
     {
-        if (! Auth::user()->id === $like->user_id) {
-            abort(403, 'Unauthorized Action!');
+        if (Auth::user()->id !== $like->user_id) {
+            abort(403);
         }
 
         $postId = $like->post_id;

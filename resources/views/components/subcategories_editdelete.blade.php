@@ -1,6 +1,6 @@
 <div class="flex justify-end gap-1">
-    <a href="{{ route('edit_categories', ['category' => $category]) }}">
-        <button class="btn btn-square" aria-label="Edit category" title="Edit category">
+    <a href="{{ route('edit_subcategories', ['subcategory' => $subcategory]) }}">
+        <button class="btn btn-square" aria-label="Edit subsubcategory" title="Edit subsubcategory">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                 stroke="currentColor" class="size-[1.2em]">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -9,8 +9,9 @@
         </button>
     </a>
     <div onclick="event.stopPropagation()">
-        <button type="button" onclick="document.getElementById('delete_category_modal_{{ $category->id }}').showModal()"
-            class="btn btn-square" aria-label="Delete category" title="Delete category">
+        <button type="button"
+            onclick="document.getElementById('delete_subcategory_modal_{{ $subcategory->id }}').showModal()"
+            class="btn btn-square" aria-label="Delete subcategory" title="Delete subcategory">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                 stroke="currentColor" class="size-[1.2em]">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -18,19 +19,19 @@
             </svg>
         </button>
 
-        <dialog id="delete_category_modal_{{ $category->id }}" class="modal">
+        <dialog id="delete_subcategory_modal_{{ $subcategory->id }}" class="modal">
             <div class="modal-box">
                 <form method="dialog">
                     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                <h3 class="text-lg font-bold">Delete category?</h3>
-                <p class="py-4">This will permanently delete "{{ $category->name }}". This can't be undone.</p>
+                <h3 class="text-lg font-bold">Delete subcategory?</h3>
+                <p class="py-4">This will permanently delete "{{ $subcategory->name }}". This can't be undone.</p>
                 <div class="modal-action">
                     <form method="dialog">
                         <button class="btn">Cancel</button>
                     </form>
-                    <button type="submit" form="delete_form_{{ $category->id }}" id="delete_confirm_{{ $category->id }}"
-                        class="btn btn-error">Delete</button>
+                    <button type="submit" form="delete_form_{{ $subcategory->id }}"
+                        id="delete_confirm_{{ $subcategory->id }}" class="btn btn-error">Delete</button>
                 </div>
             </div>
             <form method="dialog" class="modal-backdrop">
@@ -38,8 +39,8 @@
             </form>
         </dialog>
 
-        <form id="delete_form_{{ $category->id }}" method="POST" action="/categories/{{ $category->id }}"
-            onsubmit="const button = document.getElementById('delete_confirm_{{ $category->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Deleting...';">
+        <form id="delete_form_{{ $subcategory->id }}" method="POST" action="/subcategories/{{ $subcategory->id }}"
+            onsubmit="const button = document.getElementById('delete_confirm_{{ $subcategory->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Deleting...';">
             @csrf
             @method('DELETE')
         </form>

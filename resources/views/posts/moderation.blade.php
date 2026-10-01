@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Posts Moderation
+        Threads Moderation
     </x-slot:title>
     <div class="max-w-full py-12 p-2">
         <div class="mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -29,7 +29,7 @@
                             <div class="shadow-md rounded-box p-2 mt-2 bg-base-100 w-full">
                                 <div class="flex justify-between gap-2 p-2">
                                     <span class="text-xs uppercase font-semibold opacity-60">Submitted for <a
-                                            class="link link-hover" href="/categories/{{ $post->category->id }}/posts">
+                                            class="link link-hover" href="/categories/{{ $post->category->id }}/threads">
                                             {{ $post->category?->name }}</a>
                                     </span>
                                     <span class="text-xs uppercase font-semibold opacity-60"> Submitted
@@ -38,21 +38,21 @@
                                 </div>
                                 <div class="flex gap-2 items-center">
                                     <div>
-                                        <a href="/users/{{ $post->user->id }}"><img
+                                        <a href="/members/{{ $post->user->id }}"><img
                                                 src="{{ $post->user->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                 alt="{{ $post->user->name }}'s avatar"
                                                 class="size-10 rounded-box w-[36px] h-[36px]" /></a>
                                     </div>
                                     <div class="flex flex-col w-full">
                                         <div class="text-xs font-semibold">Submitted by <a class="link link-hover"
-                                                href="/users/{{ $post->user->id }}">
+                                                href="/members/{{ $post->user->id }}">
                                                 {{ $post->user->name }}</a></div>
                                         <div class="text-xs opacity-60 font-semibold"><a class="link link-hover"
-                                                href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 30) }}</a>
+                                                href="/threads/{{ $post->id }}">{{ Str::limit($post->title, 30) }}</a>
                                         </div>
                                         <div class="text-xs opacity-60 font-semibold">
                                             <a class="link link-hover"
-                                                href="/posts/{{ $post->id }}">{{ Str::limit(strip_tags($post->message), 50) }}</a>
+                                                href="/threads/{{ $post->id }}">{{ Str::limit(strip_tags($post->message), 50) }}</a>
                                         </div>
                                     </div>
                                 </div>

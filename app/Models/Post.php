@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
 {
-    protected $fillable = ['user_id', 'title', 'message', 'post_category_id', 'likes', 'views', 'is_approved', 'media', 'is_pinned'];
+    protected $fillable = ['user_id', 'title', 'message', 'post_category_id', 'likes', 'views', 'is_approved', 'media', 'is_pinned', 'post_subcategory_id'];
     protected $hidden = ['user_id', 'likes', 'views'];
     protected $casts = ['is_approved' => 'boolean', 'is_pinned' => 'boolean'];
 
@@ -22,6 +22,11 @@ class Post extends Model
         return $this->belongsTo(Post_Category::class, 'post_category_id');
     }
 
+    public function subcategory(): BelongsTo
+    {
+        return $this->belongsTo(Subcategory::class, 'post_subcategory_id');
+    }
+
     public function comment(): HasMany
     {
         return $this->hasMany(Comment::class);
@@ -30,6 +35,11 @@ class Post extends Model
     public function like(): HasMany
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function view(): HasMany
+    {
+        return $this->hasMany(View::class);
     }
 
     protected static array $videoExtensions = ['mp4'];

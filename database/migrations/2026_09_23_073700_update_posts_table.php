@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('is_pinned');
+            $table->dropColumn('is_pinned');
         });
     }
 };

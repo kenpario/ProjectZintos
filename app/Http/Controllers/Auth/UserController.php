@@ -26,26 +26,37 @@ class UserController extends Controller
             ->where('is_approved', true)
             ->paginate(10);
 
+        $postIds = $user_posts->getCollection()->modelKeys();
+
         $post_likes = Like::query()
             ->with('user')
-            ->whereIn('post_id', $user->posts()->pluck('id'))
+            ->whereIn('post_id', $postIds)
             ->get();
 
         $post_views = View::query()
             ->with('user')
-            ->whereIn('post_id', $user->posts()->pluck('id'))
+            ->whereIn('post_id', $postIds)
             ->get();
 
-        $total_likes =  Like::query()->whereIn('post_id', $user_posts->where('user_id', $user->id)->pluck('id'))->count();
+        $total_likes = Like::query()
+            ->whereHas('post', function ($query) use ($user) {
+                $query->where('user_id', $user->id)
+                    ->where('is_approved', true);
+            })
+            ->count();
 
-        return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes]);
+        $total_posts = $user->posts()
+            ->where('is_approved', true)
+            ->count();
+
+        return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes, 'total_posts' => $total_posts]);
     }
 
     public function administration(Request $request)
     {
 
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $search = $request->string('search')->trim()->toString();
@@ -133,7 +144,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         if (! (Auth::user()->id === $user->id || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         $groups = Group::where('is_admin', false)->where('is_premium', false)->get();
@@ -147,7 +158,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         if (! (Auth::user()->id === $user->id || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         $avatar = $request->file('avatar');
@@ -213,11 +224,11 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if (! (Auth::user()->id === $user->id || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         if ($user->group?->is_admin) {
-            abort(403, 'Administrators cannot be deleted.');
+            abort(403);
         }
 
         if ($user->avatar) {

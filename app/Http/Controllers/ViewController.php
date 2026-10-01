@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\View;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ViewController extends Controller
@@ -25,22 +24,18 @@ class ViewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Post $post)
+    public function store(Post $post)
     {
-        if (! $post->is_approved || ! Auth::user()) {
-            abort(403, 'Unauthorized Action!');
+        if (! $post->is_approved) {
+            abort(404);
         }
 
-        $formFields = $request->validate([]);
+        View::firstOrCreate([
+            'user_id' => Auth::id(),
+            'post_id' => $post->id,
+        ]);
 
-        $formFields['user_id'] = Auth::user()->id;
-
-        $formFields['post_id'] = $post->id;
-
-        View::create($formFields);
-
-        return redirect()->route('posts', ['post' => $post])
-            ->with('success', 'Your liked this post!');
+        return redirect()->route('posts', ['post' => $post]);
     }
 
     /**

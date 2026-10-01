@@ -41,6 +41,11 @@
                 <div class="flex justify-center">
                     <x-turnstile />
                 </div>
+                @error('cf-turnstile-response')
+                    <div class="label">
+                        <span class="label-text-alt text-error">{{ $message }}</span>
+                    </div>
+                @enderror
                 <div class="form-control mt-8">
                     <button type="submit" class="btn skeleton btn-md w-full">
                         Login

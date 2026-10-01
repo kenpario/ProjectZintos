@@ -6,10 +6,12 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Post_Category;
+use App\Models\Subcategory;
 use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Mews\Purifier\Facades\Purifier;
 
 class PostController extends Controller
@@ -17,7 +19,7 @@ class PostController extends Controller
     public function index(Post $post)
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin || $post->is_approved)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         if (Auth::user() && $post->is_approved) {
@@ -45,9 +47,16 @@ class PostController extends Controller
             ->where('post_id', $post->id)
             ->get();
 
-        $total_likes = Like::query()->whereIn('post_id', Post::query()->where('user_id', $post->user->id)->pluck('id'))->count();
+        $total_likes = Like::query()
+            ->whereHas('post', function ($query) use ($post) {
+                $query->where('user_id', $post->user_id)
+                    ->where('is_approved', true);
+            })
+            ->count();
 
-        $total_posts = Post::query()->where('is_approved', 'true')->pluck('id')->count();
+        $total_posts = $post->user->posts()
+            ->where('is_approved', true)
+            ->count();
 
         return view('posts.index', ['post' => $post, 'post_comments' => $post_comments, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes, 'total_posts' => $total_posts]);
     }
@@ -57,7 +66,7 @@ class PostController extends Controller
         $search = $request->string('search')->trim()->toString();
 
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
         $all_unapproved_posts = Post::query()
             ->with(['user', 'category'])
@@ -79,7 +88,7 @@ class PostController extends Controller
     public function approve(Post $post)
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $post->update([
@@ -87,13 +96,13 @@ class PostController extends Controller
         ]);
 
         return redirect()->route('mod_posts', ['post' => $post])
-            ->with('success', 'The post has been approved!');
+            ->with('success', 'This thread has been approved!');
     }
 
     public function pin(Post $post)
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $post->update([
@@ -101,13 +110,13 @@ class PostController extends Controller
         ]);
 
         return redirect()->route('posts', ['post' => $post])
-            ->with('success', 'The post has been pinned!');
+            ->with('success', 'This thread has been pinned!');
     }
 
     public function unpin(Post $post)
     {
         if (! (Auth::user()->group?->is_mod || Auth::user()->group?->is_admin)) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
 
         $post->update([
@@ -115,7 +124,7 @@ class PostController extends Controller
         ]);
 
         return redirect()->route('posts', ['post' => $post])
-            ->with('success', 'The post has been unpinned!');
+            ->with('success', 'This thread has been unpinned!');
     }
 
     /**
@@ -131,7 +140,13 @@ class PostController extends Controller
                 ->get();
         }
 
-        return view('posts.create', ['categories' => $categories, 'backUrl' => url()->previous()]);
+        $subcategories = collect();
+
+        $allsubcategories = Subcategory::query()
+            ->whereIn('post_category_id', $categories->pluck('id'))
+            ->get();
+
+        return view('posts.create', ['categories' => $categories, 'subcategories' => $subcategories, 'allsubcategories' => $allsubcategories, 'backUrl' => url()->previous()]);
     }
 
     /**
@@ -139,19 +154,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $categoryRule = Rule::exists('post_categories', 'id');
+
+        if (! Auth::user()->group?->is_admin) {
+            $categoryRule->where('can_comment', true);
+        }
+
         $formFields = $request->validate(
             [
                 'title' => 'required|string|max:50|min:5',
                 'message' => 'required|string|max:8000|min:5',
-                'post_category_id' => 'required|integer|exists:post_categories,id',
+                'post_category_id' => ['required', 'integer', $categoryRule],
+                'post_subcategory_id' => ['required', 'integer', Rule::exists('post_subcategories', 'id')->where('post_category_id', $request->post_category_id),],
                 'media' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:5120',
             ],
             [
                 'title.required' => 'Please write a title!',
-                'name.max' => 'Name must be 50 characters or less.',
+                'tile.max' => 'Title must be 50 characters or less.',
                 'message.required' => 'Please write a message!',
                 'message.max' => 'Message must be 8000 characters or less.',
                 'post_category_id.required' => 'Please select a category!',
+                'post_subcategory_id.required' => 'Please select a subcategory!',
                 'media.mimes' => 'The media must be a JPG, PNG, GIF or MP4 file.',
                 'media.max' => 'The media must be 5 MB or smaller.',
                 'media.uploaded' => 'The media must be 5 MB or smaller.',
@@ -175,10 +198,10 @@ class PostController extends Controller
 
         Post::create($formFields);
 
-        if (Auth::user()->group?->is_admin || Auth::user()->group->is_mod) {
-            return redirect('/categories')->with('success', 'Your Post has been added!');
+        if (Auth::user()->group?->is_admin || Auth::user()->group?->is_mod) {
+            return redirect('/categories')->with('success', 'Your thread has been added!');
         }
-        return redirect('/categories')->with('success', 'Your post is waiting for approval!');
+        return redirect('/categories')->with('success', 'Your thread is waiting for approval!');
     }
 
     /**
@@ -192,12 +215,24 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
-        $categories = Post_Category::all();
+        if (Auth::user()->group?->is_admin) {
+            $categories = Post_Category::query()->get();
+        } else {
+            $categories = Post_Category::query()
+                ->where('can_comment', true)
+                ->get();
+        }
 
-        return view('posts.edit', ['post' => $post, 'categories' => $categories, 'backUrl' => url()->previous()]);
+        $allsubcategories = Subcategory::query()
+            ->whereIn('post_category_id', $categories->pluck('id'))
+            ->get();
+
+        $subcategories = Subcategory::query()->where('post_category_id', $post->post_category_id)->get();
+
+        return view('posts.edit', ['post' => $post, 'categories' => $categories, 'subcategories' => $subcategories, 'allsubcategories' => $allsubcategories, 'backUrl' => url()->previous()]);
     }
 
     /**
@@ -206,7 +241,13 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
+        }
+
+        $categoryRule = Rule::exists('post_categories', 'id');
+
+        if (! Auth::user()->group?->is_admin) {
+            $categoryRule->where('can_comment', true);
         }
 
         $media = $request->file('media');
@@ -215,15 +256,17 @@ class PostController extends Controller
             [
                 'title' => 'required|string|max:50|min:5',
                 'message' => 'required|string|max:8000|min:5',
-                'post_category_id' => 'required|integer|exists:post_categories,id',
+                'post_category_id' => ['required', 'integer', $categoryRule],
+                'post_subcategory_id' => ['required', 'integer', Rule::exists('post_subcategories', 'id')->where('post_category_id', $request->post_category_id),],
                 'media' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:5120',
             ],
             [
                 'title.required' => 'Please write a title!',
-                'name.max' => 'Name must be 50 characters or less.',
+                'title.max' => 'Name must be 50 characters or less.',
                 'message.required' => 'Please write a message!',
                 'message.max' => 'Message must be 8000 characters or less.',
                 'post_category_id.required' => 'Please select a category!',
+                'post_subcategory_id.required' => 'Please select a subcategory!',
                 'media.mimes' => 'The media must be a JPG, PNG, GIF or MP4 file.',
                 'media.max' => 'The media must be 5 MB or smaller.',
                 'media.uploaded' => 'The media must be 5 MB or smaller.',
@@ -262,11 +305,11 @@ class PostController extends Controller
         }
 
 
-        if (Auth::user()->group?->is_admin || Auth::user()->group->is_mod) {
+        if (Auth::user()->group?->is_admin || Auth::user()->group?->is_mod) {
             return redirect()->route('posts', ['post' => $post])
-                ->with('success', 'The post has been updated!');
+                ->with('success', 'The thread has been updated!');
         }
-        return redirect('/categories')->with('success', 'Your post is waiting for approval!');
+        return redirect('/categories')->with('success', 'Your thread has been updated and is waiting for approval!');
     }
 
     /**
@@ -275,7 +318,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         if (! (Auth::user()->id === $post->user_id || Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)) {
-            abort(403, 'Unauthorized Action!');
+            abort(403);
         }
 
         if ($post->media) {
@@ -284,6 +327,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect('/dashboard')->with('success', 'Your post has been deleted!');
+        return redirect('/dashboard')->with('success', 'Your thread has been deleted!');
     }
 }

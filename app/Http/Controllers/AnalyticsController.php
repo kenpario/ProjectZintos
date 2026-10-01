@@ -19,7 +19,7 @@ class AnalyticsController extends Controller
     public function index(Request $request)
     {
         if (! Auth::user()->group?->is_admin) {
-            abort(403, 'Unauthorized Action!');
+            abort(404);
         }
         // 1. Get and process the selected date range
         $range = $request->input('date_range', 'weekly');

@@ -26,12 +26,12 @@
                     @foreach ($team_group['members'] as $team_member)
                         <div class="card bg-base-100 w-64 max-w-full shadow-md items-center mt-1 mb-1 p-2">
                             <figure>
-                                <a href="/users/{{ $team_member->id }}"><img
+                                <a href="/members/{{ $team_member->id }}"><img
                                         src="{{ $team_member->avatar ? asset('storage/' . $team_member->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                         alt="{{ $team_member->name }}'s avatar" class="rounded-xl shadow-md w-63 h-63 object-cover" /></a>
                             </figure>
                             <div class="card-body flex flex-col items-center">
-                                <a class="link-hover" href="/users/{{ $team_member->id }}"><span
+                                <a class="link-hover" href="/members/{{ $team_member->id }}"><span
                                         class="card-title text-md font-bold">{{ $team_member->name }}</span></a>
                                 @if ($team_member->group?->is_admin)
                                     <div class="aura aura-rainbow m-2">

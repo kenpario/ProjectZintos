@@ -6,7 +6,7 @@
         <div class="mx-auto w-full max-w-md">
             <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-6 shadow-md">
                 <legend class="fieldset-legend">Edit {{ $user->name }}'s Profile</legend>
-                <form class="flex flex-col gap-1" method="POST" action="/users/{{ $user->id }}" enctype="multipart/form-data"
+                <form class="flex flex-col gap-1" method="POST" action="/members/{{ $user->id }}" enctype="multipart/form-data"
                     onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Updating...';">
                     @csrf
                     @method('PUT')
@@ -100,7 +100,7 @@
                         </form>
                     </dialog>
 
-                    <form id="delete_user_{{ $user->id }}" method="POST" action="/users/{{ $user->id }}"
+                    <form id="delete_user_{{ $user->id }}" method="POST" action="/members/{{ $user->id }}"
                         onsubmit="const button = document.getElementById('delete_user_confirm_{{ $user->id }}'); button.disabled = true; button.classList.add('btn-disabled');">
                         @csrf
                         @method('DELETE')

@@ -29,7 +29,7 @@
                             <div class=" shadow-md rounded-box p-2 mt-2 bg-base-100 w-full">
                                 <div class="flex justify-between gap-2 p-2">
                                     <span class="text-xs uppercase font-semibold opacity-60">Submitted for <a
-                                            class="link link-hover" href="/posts/{{ $comment->post->id }}">
+                                            class="link link-hover" href="/threads/{{ $comment->post->id }}">
                                             {{ Str::limit($comment->post->title, 30)}}</a>
                                     </span>
                                     <span class="text-xs uppercase font-semibold opacity-60"> Submitted
@@ -38,18 +38,18 @@
                                 </div>
                                 <div class="flex gap-2 items-center">
                                     <div>
-                                        <a href="/users/{{ $comment->user->id }}"><img
+                                        <a href="/members/{{ $comment->user->id }}"><img
                                                 src="{{ $comment->user->avatar ? asset('storage/' . $comment->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                 alt="{{ $comment->user->name }}'s avatar"
                                                 class="size-10 w-[36px] h-[36px] rounded-box" /></a>
                                     </div>
                                     <div class="flex flex-col w-full">
                                         <span class="text-xs font-semibold">Submitted
-                                            by <a class="link link-hover" href="/users/{{ $comment->user->id }}">
+                                            by <a class="link link-hover" href="/members/{{ $comment->user->id }}">
                                                 {{ $comment->user->name }}</a></span>
                                         <div class="text-xs opacity-60 font-semibold">
                                             <a class="link link-hover"
-                                                href="/posts/{{ $comment->post_id }}">{{ Str::limit($comment->message, 50) }}</a>
+                                                href="/threads/{{ $comment->post_id }}">{{ Str::limit($comment->message, 50) }}</a>
                                         </div>
                                     </div>
                                 </div>

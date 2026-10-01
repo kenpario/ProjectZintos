@@ -96,7 +96,7 @@
                                 </dialog>
 
                                 <form id="delete_comment_{{ $post_comment->id }}" method="POST"
-                                    action="/comments/{{ $post_comment->id }}"
+                                    action="/replies/{{ $post_comment->id }}"
                                     onsubmit="const button = document.getElementById('delete_comment_confirm_{{ $post_comment->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Deleting...';">
                                     @csrf
                                     @method('DELETE')
@@ -107,14 +107,14 @@
                 </div>
                 <div class="flex gap-2 items-center bg-base-100 rounded-md shadow-md p-4">
                     <div>
-                        <a href="/users/{{ $post_comment->user->id }}"><img
+                        <a href="/members/{{ $post_comment->user->id }}"><img
                                 src="{{ $post_comment->user->avatar ? asset('storage/' . $post_comment->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                 alt="{{ $post_comment->user->name }}'s avatar" class="size-10 rounded-box" /></a>
                     </div>
                     <div class="flex items-center w-full">
                         <div class="flex flex-col text-xs font-semibold gap-2 w-full">
                             <div class="flex justify-between text-xs gap-2 opacity-60">
-                                <span>by <a class="link link-hover" href="/users/{{ $post_comment->user->id }}">
+                                <span>by <a class="link link-hover" href="/members/{{ $post_comment->user->id }}">
                                         {{ $post_comment->user->name }}</a></span>
                                 <span>Replied
                                     {{ $post_comment->created_at->diffForHumans() }}

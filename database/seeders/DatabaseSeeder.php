@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
 
         foreach ($groupNames as $index => $group) {
             $groupId = DB::table('groups')->insertGetId([
-                'user_id' => NULL,
                 'name' => $group['name'],
                 'description' => $group['description'],
                 'is_admin' => $group['is_admin'],

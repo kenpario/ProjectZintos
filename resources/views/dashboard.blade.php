@@ -10,9 +10,9 @@
                 <li class="list-row">
                     <div class="flex flex-col gap-1">
                         <div class="opacity-60 text-xs font-semibold">{{ $statistics_posts }} Posts</div>
-                        <div class="opacity-60 text-xs font-semibold">{{ $users->count() }} Members</div>
+                        <div class="opacity-60 text-xs font-semibold">{{ $members_count }} Members</div>
                         <div class="opacity-60 text-xs font-semibold">Latest Member: <a class="link-hover"
-                                href="/users/{{ $users->sortByDesc('created_at')->first()?->id }}">{{ $users->sortByDesc('created_at')->first()?->name }}</a>
+                            href="/members/{{ $latest_member?->id }}">{{ $latest_member?->name }}</a>
                         </div>
                     </div>
                 </li>
@@ -23,8 +23,7 @@
                     Latest
                     Threads</li>
                 @forelse ($latest_posts as $latest_post)
-                    <x-dashboard_latest_posts :latest_post="$latest_post" :post_likes="$post_likes"
-                        :post_views="$post_views" />
+                    <x-dashboard_latest_posts :latest_post="$latest_post" />
                 @empty
                     <li class="p-4">
                         <div class="flex justify-center bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
@@ -41,7 +40,7 @@
                 <li class="p-4 pb-2 text-s font-semibold opacity-90 tracking-wide bg-base-300 rounded-md shadow-md">Hot
                     Topics</li>
                 @forelse ($hot_topics as $hot_topic)
-                    <x-dashboard_hot_topics :hot_topic="$hot_topic" :post_likes="$post_likes" :post_views="$post_views" />
+                    <x-dashboard_hot_topics :hot_topic="$hot_topic" />
                 @empty
                     <li class="p-4">
                         <div class="flex justify-center bg-base-100 rounded-box shadow-md p-0 sm:gap-4 sm:p-4 gap-2">
@@ -87,35 +86,59 @@
                         name="{{ $post_category->name }}" open>
                         <summary class="collapse-title font-semibold bg-base-300 rounded-box shadow-md">
                             <div class="flex items-center justify-between gap-2">
-                                <span>
-                                    {{ Str::limit($post_category->name, 30) }} --
-                                    {{ Str::limit($post_category->description, 30) }}
-                                </span>
+                                <div class="flex flex-col gap-1">
+                                    <span>
+                                        {{ Str::limit($post_category->name, 30) }}
+                                    </span>
+                                    <span class="text-xs opacity-60 font-semibold">
+                                        {{ Str::limit($post_category->description, 30) }}
+                                    </span>
+                                </div>
                                 @if(Auth::user()->group?->is_admin)
                                     <x-categories_editdelete :category="$post_category" />
                                 @endif
                             </div>
                         </summary>
-                        <div class="collapse-content text-sm mt-2 sm:p-4">
-                            <ul class="list gap-2 mx-2 mb-2">
-                                @foreach($all_pinned_posts->where('post_category_id', $post_category->id) as $post)
-                                    <x-dashboard_pinned :post="$post" :post_likes="$post_likes" :post_views="$post_views" />
-                                @endforeach
-                            </ul>
-                            <ul class="list gap-2 mx-2">
-                                @forelse($all_posts->where('post_category_id', $post_category->id) as $post)
-                                    <x-dashboard_categories :post="$post" :post_likes="$post_likes" :post_views="$post_views" />
-                                @empty
-                                    <li class="w-full gap-2">
-                                        <div class="flex justify-center bg-base-100 rounded-box shadow-md gap-4 p-4">
-                                            <div class="text-s font-semibold opacity-60">
-                                                Nothing here.
-                                            </div>
+                        @foreach($post_subcategories->where('post_category_id', $post_category->id) as $post_subcategory)
+                            <details class="collapse collapse-arrow bg-base-200 border border-base-300 mb-2 p-2"
+                                name="{{ $post_subcategory->name }}" open>
+                                <summary class="collapse-title font-semibold bg-base-300 rounded-box shadow-md">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <div class="flex flex-col gap-1">
+                                            <span>
+                                                {{ Str::limit($post_subcategory->name, 30) }}
+                                            </span>
+                                            <span class="text-xs opacity-60 font-semibold">
+                                                {{ Str::limit($post_subcategory->description, 30) }}
+                                            </span>
                                         </div>
-                                    </li>
-                                @endforelse
-                            </ul>
-                        </div>
+                                        @if(Auth::user()->group?->is_admin)
+                                            <x-subcategories_editdelete :subcategory="$post_subcategory" />
+                                        @endif
+                                    </div>
+                                </summary>
+                                <div class="collapse-content text-sm mt-2 sm:p-4">
+                                    <ul class="list gap-2 mx-2 mb-2">
+                                        @foreach($all_pinned_posts->where('post_subcategory_id', $post_subcategory->id) as $post)
+                                            <x-dashboard_pinned :post="$post" />
+                                        @endforeach
+                                    </ul>
+                                    <ul class="list gap-2 mx-2">
+                                        @forelse($all_posts->where('post_subcategory_id', $post_subcategory->id) as $post)
+                                            <x-dashboard_categories :post="$post" />
+                                        @empty
+                                            <li class="w-full gap-2">
+                                                <div class="flex justify-center bg-base-100 rounded-box shadow-md gap-4 p-4">
+                                                    <div class="text-s font-semibold opacity-60">
+                                                        Nothing here.
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforelse
+                                    </ul>
+                                </div>
+                            </details>
+                        @endforeach
                     </details>
                 @endforeach
             </div>

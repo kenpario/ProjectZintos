@@ -43,6 +43,11 @@
                 <div class="flex justify-center">
                     <x-turnstile />
                 </div>
+                @error('cf-turnstile-response')
+                    <div class="label">
+                        <span class="label-text-alt text-error">{{ $message }}</span>
+                    </div>
+                @enderror
                 <button type="submit" class="btn bg-base-300 shadow-md w-full">Reset password</button>
             </fieldset>
         </form>

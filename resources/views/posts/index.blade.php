@@ -8,9 +8,9 @@
                 <div class="flex justify-center max-sm:w-full w-80">
                     <div class="flex flex-col items-center shadow-md rounded-md p-2 text-center bg-base-300 w-full">
                         <h1 class="m-2 text-xl font-semibold"><a class="link link-hover"
-                                href="/users/{{ $post->user->id }}">{{ $post->user?->name }}</a></h1>
+                                href="/members/{{ $post->user->id }}">{{ $post->user?->name }}</a></h1>
                         <div class="divider"></div>
-                        <a href="/users/{{ $post->user->id }}"><img
+                        <a href="/members/{{ $post->user->id }}"><img
                                 src="{{ $post->user?->avatar ? asset('storage/' . $post->user?->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                 alt="{{ $post->user?->name }}'s avatar"
                                 class="w-[150px] h-[150px] object-cover rounded-full shadow-md m-2" /></a>
@@ -42,7 +42,7 @@
                                 {{ $total_likes }}
                             </p>
                             <p>
-                                Posts made:
+                                Threads made:
                                 {{ $total_posts }}
                             </p>
                         </div>
@@ -155,7 +155,7 @@
                                         </dialog>
 
                                         <form id="delete_post_form_{{ $post->id }}" method="POST"
-                                            action="/posts/{{ $post->id }}"
+                                            action="/threads/{{ $post->id }}"
                                             onsubmit="const button = document.getElementById('delete_post_confirm_{{ $post->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Deleting...';">
                                             @csrf
                                             @method('DELETE')
@@ -166,10 +166,17 @@
                         </div>
                         <div class="shadow-md rounded-box p-2 mt-2 bg-base-100">
                             <div class="flex justify-between gap-2 m-2">
-                                <span class="text-xs uppercase font-semibold opacity-60"> Posted in <a
-                                        class="link link-hover" href="/categories/{{ $post->category->id }}/posts">
-                                        {{ $post->category?->name }}</a>
-                                </span>
+                                <div class="flex gap-1">
+                                    <span class="text-xs uppercase font-semibold opacity-60"> Posted in <a
+                                            class="link link-hover" href="/categories/{{ $post->category->id }}/threads">
+                                            {{ $post->category?->name }}</a>
+                                    </span>
+                                    <span class="text-xs uppercase font-semibold opacity-60">-</span>
+                                    <span class="text-xs uppercase font-semibold opacity-60"><a class="link link-hover"
+                                            href="/subcategories/{{ $post->subcategory->id }}/threads">
+                                            {{ $post->subcategory?->name }}</a>
+                                    </span>
+                                </div>
                                 <span class="text-xs uppercase font-semibold opacity-60"> Posted
                                     {{ $post->created_at->diffForHumans() }}
                                 </span>
@@ -225,7 +232,7 @@
                         <span class="text-sm font-bold m-2">Liked by:</span>
                         @foreach ($post_likes as $post_like)
                             <a class="link link-hover"
-                                href="/users/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}
+                                href="/members/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}
                             </a>
                         @endforeach
                     </div>
@@ -235,7 +242,7 @@
                         <span class="text-sm font-bold m-2">Viewed by:</span>
                         @foreach ($post_views as $post_view)
                             <a class="link link-hover"
-                                href="/users/{{ $post_view->user?->id }}">{{ $post_view->user?->name }}
+                                href="/members/{{ $post_view->user?->id }}">{{ $post_view->user?->name }}
                             </a>
                         @endforeach
                     </div>
