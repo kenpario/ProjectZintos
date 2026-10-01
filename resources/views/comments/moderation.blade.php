@@ -38,14 +38,14 @@
                                 </div>
                                 <div class="flex gap-2 items-center">
                                     <div>
-                                        <a href="/users/{{ $comment->user->id }}"><img
+                                        <a href="/members/{{ $comment->user->id }}"><img
                                                 src="{{ $comment->user->avatar ? asset('storage/' . $comment->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                 alt="{{ $comment->user->name }}'s avatar"
                                                 class="size-10 w-[36px] h-[36px] rounded-box" /></a>
                                     </div>
                                     <div class="flex flex-col w-full">
                                         <span class="text-xs font-semibold">Submitted
-                                            by <a class="link link-hover" href="/users/{{ $comment->user->id }}">
+                                            by <a class="link link-hover" href="/members/{{ $comment->user->id }}">
                                                 {{ $comment->user->name }}</a></span>
                                         <div class="text-xs opacity-60 font-semibold">
                                             <a class="link link-hover"

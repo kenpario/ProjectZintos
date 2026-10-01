@@ -8,9 +8,9 @@
                 <div class="flex justify-center max-sm:w-full w-80">
                     <div class="flex flex-col items-center shadow-md rounded-md p-2 text-center bg-base-300 w-full">
                         <h1 class="m-2 text-xl font-semibold"><a class="link link-hover"
-                                href="/users/{{ $post->user->id }}">{{ $post->user?->name }}</a></h1>
+                                href="/members/{{ $post->user->id }}">{{ $post->user?->name }}</a></h1>
                         <div class="divider"></div>
-                        <a href="/users/{{ $post->user->id }}"><img
+                        <a href="/members/{{ $post->user->id }}"><img
                                 src="{{ $post->user?->avatar ? asset('storage/' . $post->user?->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                 alt="{{ $post->user?->name }}'s avatar"
                                 class="w-[150px] h-[150px] object-cover rounded-full shadow-md m-2" /></a>
@@ -232,7 +232,7 @@
                         <span class="text-sm font-bold m-2">Liked by:</span>
                         @foreach ($post_likes as $post_like)
                             <a class="link link-hover"
-                                href="/users/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}
+                                href="/members/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}
                             </a>
                         @endforeach
                     </div>
@@ -242,7 +242,7 @@
                         <span class="text-sm font-bold m-2">Viewed by:</span>
                         @foreach ($post_views as $post_view)
                             <a class="link link-hover"
-                                href="/users/{{ $post_view->user?->id }}">{{ $post_view->user?->name }}
+                                href="/members/{{ $post_view->user?->id }}">{{ $post_view->user?->name }}
                             </a>
                         @endforeach
                     </div>

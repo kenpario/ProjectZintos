@@ -91,7 +91,7 @@
                                                         </div>
                                                         <div class="flex justify-between">
                                                             <div class="flex gap-4 items-center">
-                                                                <div><a href="/users/{{ $post->user->id }}"><img
+                                                                <div><a href="/members/{{ $post->user->id }}"><img
                                                                             src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                                             alt="{{ $post->user?->name }}'s avatar"
                                                                             class="size-10 rounded-box" /></a></div>
@@ -104,7 +104,7 @@
                                                                             {{ Str::limit(strip_tags($post->message), 50) }}</a>
                                                                     </div>
                                                                     <div>by <a class="link link-hover"
-                                                                            href="/users/{{ $post->user->id }}">{{ $post->user?->name }}</a>
+                                                                            href="/members/{{ $post->user->id }}">{{ $post->user?->name }}</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -142,7 +142,7 @@
                                                 <li class="w-full gap-2 hover-3d">
                                                     <div class="flex justify-between bg-base-100 rounded-box shadow-md gap-4 p-2">
                                                         <div class="flex gap-4 items-center">
-                                                            <div><a href="/users/{{ $post->user->id }}"><img
+                                                            <div><a href="/members/{{ $post->user->id }}"><img
                                                                         src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                                         alt="{{ $post->user?->name }}'s avatar"
                                                                         class="size-10 rounded-box" /></a>
@@ -156,7 +156,7 @@
                                                                         {{ Str::limit(strip_tags($post->message), 50) }}</a>
                                                                 </div>
                                                                 <div>by <a class="link link-hover"
-                                                                        href="/users/{{ $post->user->id }}">{{ $post->user?->name }}</a>
+                                                                        href="/members/{{ $post->user->id }}">{{ $post->user?->name }}</a>
                                                                 </div>
                                                             </div>
                                                         </div>

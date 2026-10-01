@@ -13,7 +13,7 @@
         </div>
         <div class="flex justify-between">
             <div class="flex gap-4 items-center">
-                <div><a href="/users/{{ $hot_topic->user->id }}"><img
+                <div><a href="/members/{{ $hot_topic->user->id }}"><img
                             src="{{ $hot_topic->user?->avatar ? asset('storage/' . $hot_topic->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                             alt="{{ $hot_topic->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
@@ -23,7 +23,7 @@
                             href="/threads/{{ $hot_topic->id }}">{{ Str::limit(strip_tags($hot_topic->message), 50)}}</a>
                     </div>
                     <div>by <a class="link link-hover"
-                            href="/users/{{ $hot_topic->user->id }}">{{ $hot_topic->user?->name }}</a>
+                            href="/members/{{ $hot_topic->user->id }}">{{ $hot_topic->user?->name }}</a>
                     </div>
                 </div>
             </div>

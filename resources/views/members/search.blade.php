@@ -33,17 +33,17 @@
                         @forelse($user_data as $user)
                             <tr>
                                 <th>@if ($user->avatar)
-                                    <a href="/users/{{ $user->id }}"><img src="{{ asset('storage/' . $user->avatar) }}"
+                                    <a href="/members/{{ $user->id }}"><img src="{{ asset('storage/' . $user->avatar) }}"
                                             alt="{{ $user->name }}'s avatar"
                                             class="avatar object-cover rounded w-8 shadow-md m-2 w-[36px] h-[36px]" /></a>
                                 @else
-                                        <a href="/users/{{ $user->id }}"><img
+                                        <a href="/members/{{ $user->id }}"><img
                                                 src="https://img.daisyui.com/images/profile/demo/superperson@192.webp"
                                                 alt="{{ $user->name }}'s avatar"
                                                 class="avatar object-cover rounded w-8 shadow-md m-2 w-[36px] h-[36px]" /></a>
                                     @endif
                                 </th>
-                                <td><a class="link-hover" href="/users/{{ $user->id }}">{{ $user->name }}</a></td>
+                                <td><a class="link-hover" href="/members/{{ $user->id }}">{{ $user->name }}</a></td>
                             </tr>
                         @empty
                             <tr>

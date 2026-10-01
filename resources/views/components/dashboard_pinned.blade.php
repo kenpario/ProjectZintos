@@ -15,7 +15,7 @@
         </div>
         <div class="flex justify-between">
             <div class="flex gap-4 items-center">
-                <div><a href="/users/{{ $post->user->id }}"><img
+                <div><a href="/members/{{ $post->user->id }}"><img
                             src="{{ $post->user?->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                             alt="{{ $post->user?->name }}'s avatar" class="size-10 rounded-box" /></a></div>
                 <div>
@@ -25,7 +25,7 @@
                             href="/threads/{{ $post->id }}">
                             {{ Str::limit(strip_tags($post->message), 50) }}</a>
                     </div>
-                    <div>by <a class="link link-hover" href="/users/{{ $post->user->id }}">{{ $post->user?->name }}</a>
+                    <div>by <a class="link link-hover" href="/members/{{ $post->user->id }}">{{ $post->user?->name }}</a>
                     </div>
                 </div>
             </div>

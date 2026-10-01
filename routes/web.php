@@ -100,13 +100,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/subcategories/{subcategory}/threads', [SubcategoryController::class, 'posts'])->name('subcategories_posts');
 
-    Route::get('/users/administration', [UserController::class, 'administration'])->name('user_administration');
-    Route::get('/users/team', [UserController::class, 'team'])->name('team');
-    Route::get('/users/search', [UserController::class, 'search'])->name('user_search');
-    Route::get('users/{user}', [UserController::class, 'index'])->name('user_profile');
-    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('edit_user_profile');
-    Route::put('/users/{user}', [UserController::class, 'update'])->middleware(['throttle:10,1']);
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])->middleware(['throttle:10,1']);
+    Route::get('/members/administration', [UserController::class, 'administration'])->name('user_administration');
+    Route::get('/members/team', [UserController::class, 'team'])->name('team');
+    Route::get('/members/search', [UserController::class, 'search'])->name('user_search');
+    Route::get('/members/{user}', [UserController::class, 'index'])->name('user_profile');
+    Route::get('/members/{user}/edit', [UserController::class, 'edit'])->name('edit_user_profile');
+    Route::put('/members/{user}', [UserController::class, 'update'])->middleware(['throttle:10,1']);
+    Route::delete('/members/{user}', [UserController::class, 'destroy'])->middleware(['throttle:10,1']);
 
     Route::get('/groups/administration', [GroupController::class, 'administration'])->name('group_administration');
     Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])->name('edit_groups');

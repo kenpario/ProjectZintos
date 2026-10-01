@@ -38,14 +38,14 @@
                                 </div>
                                 <div class="flex gap-2 items-center">
                                     <div>
-                                        <a href="/users/{{ $post->user->id }}"><img
+                                        <a href="/members/{{ $post->user->id }}"><img
                                                 src="{{ $post->user->avatar ? asset('storage/' . $post->user->avatar) : 'https://img.daisyui.com/images/profile/demo/superperson@192.webp' }}"
                                                 alt="{{ $post->user->name }}'s avatar"
                                                 class="size-10 rounded-box w-[36px] h-[36px]" /></a>
                                     </div>
                                     <div class="flex flex-col w-full">
                                         <div class="text-xs font-semibold">Submitted by <a class="link link-hover"
-                                                href="/users/{{ $post->user->id }}">
+                                                href="/members/{{ $post->user->id }}">
                                                 {{ $post->user->name }}</a></div>
                                         <div class="text-xs opacity-60 font-semibold"><a class="link link-hover"
                                                 href="/threads/{{ $post->id }}">{{ Str::limit($post->title, 30) }}</a>

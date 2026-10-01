@@ -12,7 +12,7 @@
                         <div class="opacity-60 text-xs font-semibold">{{ $statistics_posts }} Posts</div>
                         <div class="opacity-60 text-xs font-semibold">{{ $members_count }} Members</div>
                         <div class="opacity-60 text-xs font-semibold">Latest Member: <a class="link-hover"
-                            href="/users/{{ $latest_member?->id }}">{{ $latest_member?->name }}</a>
+                            href="/members/{{ $latest_member?->id }}">{{ $latest_member?->name }}</a>
                         </div>
                     </div>
                 </li>

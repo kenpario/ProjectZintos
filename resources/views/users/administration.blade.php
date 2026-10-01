@@ -37,18 +37,18 @@
                         <tr>
                             <th>{{ $user->id }}</th>
                             <th>@if ($user->avatar)
-                                <a href="/users/{{ $user->id }}"><img src="{{ asset('storage/' . $user->avatar) }}"
+                                <a href="/members/{{ $user->id }}"><img src="{{ asset('storage/' . $user->avatar) }}"
                                         alt="{{ $user->name }}'s avatar"
                                         class="avatar object-cover rounded w-[36px] h-[36px] shadow-md m-2" /></a>
                             @else
-                                    <a href="/users/{{ $user->id }}"><img
+                                    <a href="/members/{{ $user->id }}"><img
                                             src="https://img.daisyui.com/images/profile/demo/superperson@192.webp"
                                             alt="{{ $user->name }}'s avatar"
                                             class="avatar object-cover rounded w-[36px] h-[36px] shadow-md m-2" /></a>
                                 @endif
                             </th>
-                            <td><a class="link-hover" href="/users/{{ $user->id }}">{{ $user->name }}</a></td>
-                            <td><a class="link-hover" href="/users/{{ $user->id }}">{{ $user->email }}</a></td>
+                            <td><a class="link-hover" href="/members/{{ $user->id }}">{{ $user->name }}</a></td>
+                            <td><a class="link-hover" href="/members/{{ $user->id }}">{{ $user->email }}</a></td>
                             <td>
                                 @if ($user->group?->is_admin)
                                     <div class="aura aura-rainbow">
@@ -111,7 +111,7 @@
                                                 </form>
                                             </dialog>
 
-                                            <form id="delete_user_{{ $user->id }}" method="POST" action="/users/{{ $user->id }}"
+                                            <form id="delete_user_{{ $user->id }}" method="POST" action="/members/{{ $user->id }}"
                                                 onsubmit="const button = document.getElementById('delete_user_confirm_{{ $user->id }}'); button.disabled = true; button.classList.add('btn-disabled');">
                                                 @csrf
                                                 @method('DELETE')
