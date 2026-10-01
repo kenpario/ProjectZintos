@@ -3,7 +3,7 @@
         Edit reply
     </x-slot:title>
     <div class="min-h-full w-full">
-        <form method="POST" action="/comments/{{ $comment->id }}" class="mx-auto w-full max-w-md"
+        <form method="POST" action="/replies/{{ $comment->id }}" class="mx-auto w-full max-w-md"
             enctype="multipart/form-data"
             onsubmit="const button = this.querySelector('button[type=submit]'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Updating...';">
             @csrf

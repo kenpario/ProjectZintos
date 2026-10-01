@@ -114,12 +114,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/threads/{post}', [PostController::class, 'update'])->middleware(['throttle:10,1']);
     Route::delete('/threads/{post}', [PostController::class, 'destroy'])->middleware(['throttle:10,1']);
 
-    Route::post('/threads/{post}/comment', [CommentController::class, 'store'])->name('comment_posts')->middleware(['throttle:10,1']);
-    Route::get('/comments/moderation', [CommentController::class, 'moderation'])->name('mod_comments');
-    Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('approve_comments')->middleware(['throttle:10,1']);
-    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->middleware(['throttle:10,1']);
-    Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('edit_comments');
-    Route::put('/comments/{comment}', [CommentController::class, 'update'])->middleware(['throttle:10,1']);
+    Route::post('/threads/{post}/reply', [CommentController::class, 'store'])->name('comment_posts')->middleware(['throttle:10,1']);
+    Route::get('/replies/moderation', [CommentController::class, 'moderation'])->name('mod_comments');
+    Route::put('/replies/{comment}/approve', [CommentController::class, 'approve'])->name('approve_comments')->middleware(['throttle:10,1']);
+    Route::delete('/replies/{comment}', [CommentController::class, 'destroy'])->middleware(['throttle:10,1']);
+    Route::get('/replies/{comment}/edit', [CommentController::class, 'edit'])->name('edit_comments');
+    Route::put('/replies/{comment}', [CommentController::class, 'update'])->middleware(['throttle:10,1']);
 
     Route::post('/threads/{post}/like', [LikeController::class, 'store'])->name('like_posts')->middleware(['throttle:10,1']);
     Route::delete('/likes/{like}', [LikeController::class, 'destroy'])->middleware(['throttle:10,1']);

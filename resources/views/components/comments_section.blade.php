@@ -96,7 +96,7 @@
                                 </dialog>
 
                                 <form id="delete_comment_{{ $post_comment->id }}" method="POST"
-                                    action="/comments/{{ $post_comment->id }}"
+                                    action="/replies/{{ $post_comment->id }}"
                                     onsubmit="const button = document.getElementById('delete_comment_confirm_{{ $post_comment->id }}'); button.disabled = true; button.classList.add('btn-disabled'); button.textContent = 'Deleting...';">
                                     @csrf
                                     @method('DELETE')
