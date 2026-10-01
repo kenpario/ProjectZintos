@@ -1,4 +1,4 @@
-@props(['post', 'post_likes', 'post_views'])
+@props(['post'])
 
 <li class="w-full gap-2 hover-3d">
     <div class="flex flex-col justify-between bg-base-100 rounded-box shadow-md p-2">
@@ -31,7 +31,7 @@
             </div>
             <div class="flex gap-2">
                 <div class="flex items-center gap-1">
-                    <span>{{ $post_likes->where('post_id', $post->id)->count() }}</span>
+                    <span>{{ $post->like_count }}</span>
                     <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Likes">
                         <path
                             d="M7 10v10H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3Zm0 10h9.5a2 2 0 0 0 1.94-1.53l1.5-6A2 2 0 0 0 18 10h-4.11l.58-3.48A2.98 2.98 0 0 0 11.53 3L7 10v10Z"
@@ -39,7 +39,7 @@
                     </svg>
                 </div>
                 <div class="flex items-center gap-1">
-                    <span>{{ $post_views->where('post_id', $post->id)->count() }}</span>
+                    <span>{{ $post->view_count }}</span>
                     <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Views">
                         <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none"
                             stroke="currentColor" stroke-linejoin="round" stroke-width="2" />

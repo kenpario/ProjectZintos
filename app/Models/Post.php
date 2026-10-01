@@ -37,6 +37,11 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
+    public function view(): HasMany
+    {
+        return $this->hasMany(View::class);
+    }
+
     protected static array $videoExtensions = ['mp4'];
 
     public function isVideo(): bool

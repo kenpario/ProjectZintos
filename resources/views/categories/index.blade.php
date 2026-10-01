@@ -110,7 +110,7 @@
                                                             </div>
                                                             <div class="flex gap-2">
                                                                 <div class="flex items-center gap-1">
-                                                                    <span>{{ $post_likes->where('post_id', $post->id)->count() }}</span>
+                                                                    <span>{{ $post->like_count }}</span>
                                                                     <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg"
                                                                         viewBox="0 0 24 24" aria-label="Likes">
                                                                         <path
@@ -120,7 +120,7 @@
                                                                     </svg>
                                                                 </div>
                                                                 <div class="flex items-center gap-1">
-                                                                    <span>{{ $post_views->where('post_id', $post->id)->count() }}</span>
+                                                                    <span>{{ $post->view_count }}</span>
                                                                     <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg"
                                                                         viewBox="0 0 24 24" aria-label="Views">
                                                                         <path
@@ -162,7 +162,7 @@
                                                         </div>
                                                         <div class="flex gap-2">
                                                             <div class="flex items-center gap-1">
-                                                                <span>{{ $post_likes->where('post_id', $post->id)->count() }}</span>
+                                                                <span>{{ $post->like_count }}</span>
                                                                 <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg"
                                                                     viewBox="0 0 24 24" aria-label="Likes">
                                                                     <path
@@ -172,7 +172,7 @@
                                                                 </svg>
                                                             </div>
                                                             <div class="flex items-center gap-1">
-                                                                <span>{{ $post_views->where('post_id', $post->id)->count() }}</span>
+                                                                <span>{{ $post->view_count }}</span>
                                                                 <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg"
                                                                     viewBox="0 0 24 24" aria-label="Views">
                                                                     <path

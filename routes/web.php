@@ -29,32 +29,42 @@ Route::middleware('guest')->group(function () {
         try {
             $googleUser = Socialite::driver('google')->user();
 
+            if (data_get($googleUser, 'user.email_verified') !== true) {
+                return redirect('/')->with('error', 'Google sign-in requires a verified email address.');
+            }
+
+            $googleId = $googleUser->getId();
+            $googleName = $googleUser->getName();
+            $googleEmail = $googleUser->getEmail();
+            $googleToken = data_get($googleUser, 'token');
+            $googleRefreshToken = data_get($googleUser, 'refreshToken');
+
             $user = User::query()
-                ->where('google_id', $googleUser->id)
-                ->orWhere('email', $googleUser->email)
+                ->where('google_id', $googleId)
+                ->orWhere('email', $googleEmail)
                 ->first();
 
             if (! $user) {
                 $user = User::create([
-                    'name' => $googleUser->name,
-                    'email' => $googleUser->email,
-                    'google_token' => $googleUser->token,
-                    'google_refresh_token' => $googleUser->refreshToken,
+                    'name' => $googleName,
+                    'email' => $googleEmail,
+                    'google_token' => $googleToken,
+                    'google_refresh_token' => $googleRefreshToken,
                     'group_id' => 4,
                     'email_verified_at' => now(),
                 ]);
             }
 
-            $tokenFields = ['google_token' => $googleUser->token];
+            $tokenFields = ['google_token' => $googleToken];
 
-            if ($googleUser->refreshToken !== null) {
-                $tokenFields['google_refresh_token'] = $googleUser->refreshToken;
+            if ($googleRefreshToken !== null) {
+                $tokenFields['google_refresh_token'] = $googleRefreshToken;
             }
 
             $user->update([
                 ...$tokenFields,
-                'google_id' => $googleUser->id,
-                'email' => $googleUser->email,
+                'google_id' => $googleId,
+                'email' => $googleEmail,
                 'email_verified_at' => $user->email_verified_at ?? now(),
             ]);
 
@@ -124,7 +134,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/threads/{post}/like', [LikeController::class, 'store'])->name('like_posts')->middleware(['throttle:10,1']);
     Route::delete('/likes/{like}', [LikeController::class, 'destroy'])->middleware(['throttle:10,1']);
 
-    Route::post('/threads/{post}/view', [ViewController::class, 'store'])->name('view_posts');
+    Route::post('/threads/{post}/view', [ViewController::class, 'store'])->name('view_posts')->middleware(['throttle:30,1']);
 
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
 });

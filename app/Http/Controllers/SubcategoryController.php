@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Like;
 use App\Models\Post_Category;
 use App\Models\Post;
 use App\Models\Subcategory;
-use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,6 +17,7 @@ class SubcategoryController extends Controller
 
         $posts = $subcategory->posts()
             ->with('user')
+            ->withCount(['like', 'view'])
             ->where('is_approved', true)
             ->where('is_pinned', false)
             ->when($search !== '', function ($query) use ($search) {
@@ -34,6 +33,7 @@ class SubcategoryController extends Controller
             ->withQueryString();
 
         $pinned_posts = Post::with('user')
+            ->withCount(['like', 'view'])
             ->where('is_approved', true)
             ->where('is_pinned', true)
             ->when($search !== '', function ($query) use ($search) {
@@ -47,13 +47,7 @@ class SubcategoryController extends Controller
             ->orderBy('id', 'asc')
             ->get();
 
-        $post_likes = Like::with(['user', 'post'])
-            ->get();
-
-        $post_views = View::with(['user', 'post'])
-            ->get();
-
-        return view('subcategories.posts', ['subcategory' => $subcategory, 'posts' => $posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'pinned_posts' => $pinned_posts]);
+        return view('subcategories.posts', ['subcategory' => $subcategory, 'posts' => $posts, 'pinned_posts' => $pinned_posts]);
     }
     /**
      * Show the form for creating a new resource.

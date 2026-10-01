@@ -41,7 +41,7 @@
                             </p>
                             <p>
                                 Threads made:
-                                {{ $user_posts->count() }}
+                                {{ $total_posts }}
                             </p>
                         </div>
                     </div>

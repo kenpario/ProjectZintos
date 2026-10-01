@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Like;
 use App\Models\Post;
 use App\Models\Post_Category;
 use App\Models\Subcategory;
 use App\Models\User;
-use App\Models\View;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,19 +16,21 @@ class DashboardController extends Controller
     public function index()
     {
         $latest_posts = Post::with(['user', 'category', 'subcategory'])
+            ->withCount(['like', 'view'])
             ->where('is_approved', true)
             ->latest()
             ->take(5)
             ->get();
 
         $hot_topics = Post::with(['user', 'category', 'subcategory'])
-            ->withCount('like')
+            ->withCount(['like', 'view'])
             ->where('is_approved', true)
             ->orderByDesc('like_count')
             ->take(5)
             ->get();
 
         $all_posts = Post::with(['user', 'category', 'subcategory'])
+            ->withCount(['like', 'view'])
             ->where('is_approved', true)
             ->where('is_pinned', false)
             ->latest()
@@ -38,11 +38,14 @@ class DashboardController extends Controller
             ->get();
 
         $all_pinned_posts = Post::with(['user', 'category', 'subcategory'])
+            ->withCount(['like', 'view'])
             ->where('is_approved', true)
             ->where('is_pinned', true)
+            ->latest()
+            ->take(10)
             ->get();
 
-        $statistics_posts = Post::with(['user', 'category', 'subcategory'])
+        $statistics_posts = Post::query()
             ->where('is_approved', true)
             ->count();
 
@@ -50,13 +53,10 @@ class DashboardController extends Controller
 
         $post_subcategories = Subcategory::all();
 
-        $post_likes = Like::with(['user', 'post'])->get();
+        $membersCount = User::query()->count();
+        $latestMember = User::query()->latest()->first(['id', 'name']);
 
-        $post_views = View::with(['user', 'post'])->get();
-
-        $users = User::all();
-
-        return view('dashboard', ['latest_posts' => $latest_posts, 'hot_topics' => $hot_topics, 'post_categories' => $post_categories, 'post_subcategories' => $post_subcategories, 'all_posts' => $all_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'users' => $users, 'all_pinned_posts' => $all_pinned_posts, 'statistics_posts' => $statistics_posts]);
+        return view('dashboard', ['latest_posts' => $latest_posts, 'hot_topics' => $hot_topics, 'post_categories' => $post_categories, 'post_subcategories' => $post_subcategories, 'all_posts' => $all_posts, 'all_pinned_posts' => $all_pinned_posts, 'statistics_posts' => $statistics_posts, 'members_count' => $membersCount, 'latest_member' => $latestMember]);
     }
 
     /**

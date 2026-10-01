@@ -47,9 +47,16 @@ class PostController extends Controller
             ->where('post_id', $post->id)
             ->get();
 
-        $total_likes = Like::query()->whereIn('post_id', Post::query()->where('user_id', $post->user->id)->pluck('id'))->count();
+        $total_likes = Like::query()
+            ->whereHas('post', function ($query) use ($post) {
+                $query->where('user_id', $post->user_id)
+                    ->where('is_approved', true);
+            })
+            ->count();
 
-        $total_posts = Post::query()->where('is_approved', 'true')->pluck('id')->count();
+        $total_posts = $post->user->posts()
+            ->where('is_approved', true)
+            ->count();
 
         return view('posts.index', ['post' => $post, 'post_comments' => $post_comments, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes, 'total_posts' => $total_posts]);
     }
@@ -147,11 +154,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $categoryRule = Rule::exists('post_categories', 'id');
+
+        if (! Auth::user()->group?->is_admin) {
+            $categoryRule->where('can_comment', true);
+        }
+
         $formFields = $request->validate(
             [
                 'title' => 'required|string|max:50|min:5',
                 'message' => 'required|string|max:8000|min:5',
-                'post_category_id' => 'required|integer|exists:post_categories,id',
+                'post_category_id' => ['required', 'integer', $categoryRule],
                 'post_subcategory_id' => ['required', 'integer', Rule::exists('post_subcategories', 'id')->where('post_category_id', $request->post_category_id),],
                 'media' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:5120',
             ],
@@ -231,13 +244,19 @@ class PostController extends Controller
             abort(403);
         }
 
+        $categoryRule = Rule::exists('post_categories', 'id');
+
+        if (! Auth::user()->group?->is_admin) {
+            $categoryRule->where('can_comment', true);
+        }
+
         $media = $request->file('media');
 
         $formFields = $request->validate(
             [
                 'title' => 'required|string|max:50|min:5',
                 'message' => 'required|string|max:8000|min:5',
-                'post_category_id' => 'required|integer|exists:post_categories,id',
+                'post_category_id' => ['required', 'integer', $categoryRule],
                 'post_subcategory_id' => ['required', 'integer', Rule::exists('post_subcategories', 'id')->where('post_category_id', $request->post_category_id),],
                 'media' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:5120',
             ],

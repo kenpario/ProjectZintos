@@ -26,19 +26,30 @@ class UserController extends Controller
             ->where('is_approved', true)
             ->paginate(10);
 
+        $postIds = $user_posts->getCollection()->modelKeys();
+
         $post_likes = Like::query()
             ->with('user')
-            ->whereIn('post_id', $user->posts()->pluck('id'))
+            ->whereIn('post_id', $postIds)
             ->get();
 
         $post_views = View::query()
             ->with('user')
-            ->whereIn('post_id', $user->posts()->pluck('id'))
+            ->whereIn('post_id', $postIds)
             ->get();
 
-        $total_likes =  Like::query()->whereIn('post_id', $user_posts->where('user_id', $user->id)->pluck('id'))->count();
+        $total_likes = Like::query()
+            ->whereHas('post', function ($query) use ($user) {
+                $query->where('user_id', $user->id)
+                    ->where('is_approved', true);
+            })
+            ->count();
 
-        return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes]);
+        $total_posts = $user->posts()
+            ->where('is_approved', true)
+            ->count();
+
+        return view('users.index', ['user' => $user, 'user_posts' => $user_posts, 'post_likes' => $post_likes, 'post_views' => $post_views, 'total_likes' => $total_likes, 'total_posts' => $total_posts]);
     }
 
     public function administration(Request $request)
