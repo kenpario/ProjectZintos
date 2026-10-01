@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Users Administration
+        Members Administration
     </x-slot:title>
     <div class="rounded-box bg-base-200 shadow-md m-2 p-4">
         <form method="GET" action="{{ route('user_administration') }}">
@@ -20,7 +20,7 @@
         </form>
         <div class="overflow-x-auto rounded-box shadow-md m-2 bg-base-100">
             <table class="table table-zebra">
-                <span class="flex justify-center text-sm font-bold p-4">Users Table</span>
+                <span class="flex justify-center text-sm font-bold p-4">Members Table</span>
                 <div class="divider p-2"></div>
                 <thead>
                     <tr>

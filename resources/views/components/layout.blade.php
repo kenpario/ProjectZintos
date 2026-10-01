@@ -105,7 +105,7 @@
                                                 <summary>Administration</summary>
                                                 <ul>
                                                     <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
-                                                    <li><a href="{{ route('user_administration')}}">User Administration</a></li>
+                                                    <li><a href="{{ route('user_administration')}}">Member Administration</a></li>
                                                     <li><a href="{{ route('group_administration')}}">Group Administration</a></li>
                                                 </ul>
                                             </details>
@@ -251,7 +251,7 @@
                                         <summary>Administration</summary>
                                         <ul>
                                             <li><a href="{{ route('analytics')}}">Google Analytics</a></li>
-                                            <li><a href="{{ route('user_administration')}}">User Administration</a></li>
+                                            <li><a href="{{ route('user_administration')}}">Member Administration</a></li>
                                             <li><a href="{{ route('group_administration')}}">Group Administration</a></li>
                                         </ul>
                                     </details>
