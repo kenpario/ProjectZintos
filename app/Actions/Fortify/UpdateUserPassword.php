@@ -28,6 +28,7 @@ class UpdateUserPassword implements UpdatesUserPasswords
             'password' => $this->passwordRules(),
         ], [
             'current_password.current_password' => __('The provided password does not match your current password.'),
+            'cf-turnstile-response.required' => 'You need to complete the verification!'
         ])->validateWithBag('updatePassword');
 
         $user->forceFill([

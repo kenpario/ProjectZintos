@@ -25,7 +25,7 @@ class ResetUserPassword implements ResetsUserPasswords
         Validator::make($input, [
             'cf-turnstile-response' => ['required', new Turnstile],
             'password' => $this->passwordRules(),
-        ])->validate();
+        ], ['cf-turnstile-response.required' => 'You need to complete the verification!'])->validate();
 
         $user->forceFill([
             'password' => Hash::make($input['password']),

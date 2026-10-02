@@ -127,3 +127,11 @@ img.bg-image {
         pointer-events: none;
     }
 }
+
+.password-validator-hint {
+    display: none;
+}
+
+.password-validator:has(:user-invalid) + .password-validator-hint {
+    display: block;
+}

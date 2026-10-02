@@ -36,6 +36,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ], [
             'name.min' => 'Name must be at least 5 characters.',
+            'cf-turnstile-response.required' => 'You need to complete the verification!'
         ])->validate();
 
         return User::create([

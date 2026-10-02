@@ -15,7 +15,7 @@ class Login extends Controller
             'cf-turnstile-response' => ['required', new Turnstile],
             'email' => 'required|email',
             'password' => 'required',
-        ]);
+        ], ['cf-turnstile-response.required' => 'You need to complete the verification!']);
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
