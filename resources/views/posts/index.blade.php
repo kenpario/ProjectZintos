@@ -168,7 +168,8 @@
                             <div class="flex justify-between gap-2 m-2">
                                 <div class="flex gap-1">
                                     <span class="text-xs uppercase font-semibold opacity-60"> Posted in <a
-                                            class="link link-hover" href="/categories/{{ $post->category->id }}/threads">
+                                            class="link link-hover"
+                                            href="/categories/{{ $post->category->id }}/threads">
                                             {{ $post->category?->name }}</a>
                                     </span>
                                     <span class="text-xs uppercase font-semibold opacity-60">-</span>
@@ -226,27 +227,29 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col gap-2 bg-base-200 p-4 sm:p-8 shadow-md rounded-md">
-                <div class="rounded-box p-1 shadow-md bg-base-100">
-                    <div class="m-2">
-                        <span class="text-sm font-bold m-2">Liked by:</span>
-                        @foreach ($post_likes as $post_like)
-                            <a class="link link-hover"
-                                href="/members/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}
-                            </a>
-                        @endforeach
+            @if(Auth::user()->group?->is_admin || Auth::user()->group?->is_mod)
+                <div class="flex flex-col gap-2 bg-base-200 p-4 sm:p-8 shadow-md rounded-md">
+                    <div class="rounded-box p-1 shadow-md bg-base-100">
+                        <div class="m-2">
+                            <span class="text-sm font-bold m-2">Liked by:</span>
+                            @foreach ($post_likes as $post_like)
+                                <a class="link link-hover"
+                                    href="/members/{{ $post_like->user?->id }}">{{ $post_like->user?->name }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="rounded-box p-1 shadow-md bg-base-100">
+                        <div class="m-2">
+                            <span class="text-sm font-bold m-2">Viewed by:</span>
+                            @foreach ($post_views as $post_view)
+                                <a class="link link-hover"
+                                    href="/members/{{ $post_view->user?->id }}">{{ $post_view->user?->name }}
+                                </a>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-                <div class="rounded-box p-1 shadow-md bg-base-100">
-                    <div class="m-2">
-                        <span class="text-sm font-bold m-2">Viewed by:</span>
-                        @foreach ($post_views as $post_view)
-                            <a class="link link-hover"
-                                href="/members/{{ $post_view->user?->id }}">{{ $post_view->user?->name }}
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
+            @endif
         </div>
 </x-layout>

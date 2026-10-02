@@ -126,14 +126,14 @@ class CategoryController extends Controller
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',
-                'description' => 'required|string|max:30|min:5',
+                'description' => 'required|string|max:50|min:5',
                 'can_comment' => 'required|boolean'
             ],
             [
                 'name.required' => 'Please write a name!',
                 'name.max' => 'Name must be 30 characters or less.',
                 'description.required' => 'Please write a description!',
-                'description.max' => 'Name must be 30 characters or less.'
+                'description.max' => 'Description must be 50 characters or less.'
 
             ]
         );
@@ -178,14 +178,14 @@ class CategoryController extends Controller
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',
-                'description' => 'required|string|max:30|min:5',
+                'description' => 'required|string|max:50|min:5',
                 'can_comment' => 'required|boolean'
             ],
             [
                 'name.required' => 'Please write a name!',
                 'name.max' => 'Name must be 30 characters or less.',
                 'description.required' => 'Please write a description!',
-                'description.max' => 'Name must be 30 characters or less.'
+                'description.max' => 'Description must be 50 characters or less.'
 
             ]
         );

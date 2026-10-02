@@ -47,8 +47,8 @@
                             </tr>
                         @empty
                             <tr>
-                                <th>Nothing Here</th>
-                                <th>Nothing Here</th>
+                                <th>Nothing here.</th>
+                                <th>Nothing here.</th>
                             </tr>
                         @endforelse
                     </tbody>

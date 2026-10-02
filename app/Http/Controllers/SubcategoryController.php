@@ -76,14 +76,14 @@ class SubcategoryController extends Controller
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',
-                'description' => 'required|string|max:30|min:5',
+                'description' => 'required|string|max:50|min:5',
                 'post_category_id' => 'required|integer|exists:post_categories,id',
             ],
             [
                 'name.required' => 'Please write a name!',
                 'name.max' => 'Name must be 30 characters or less.',
                 'description.required' => 'Please write a description!',
-                'description.max' => 'Name must be 30 characters or less.'
+                'description.max' => 'Description must be 50 characters or less.'
 
             ]
         );
@@ -132,14 +132,14 @@ class SubcategoryController extends Controller
         $formFields = $request->validate(
             [
                 'name' => 'required|string|max:30|min:5',
-                'description' => 'required|string|max:30|min:5',
+                'description' => 'required|string|max:50|min:5',
                 'post_category_id' => 'required|integer|exists:post_categories,id',
             ],
             [
                 'name.required' => 'Please write a name!',
                 'name.max' => 'Name must be 30 characters or less.',
                 'description.required' => 'Please write a description!',
-                'description.max' => 'Name must be 30 characters or less.'
+                'description.max' => 'Description must be 50 characters or less.'
 
             ]
         );

@@ -20,6 +20,15 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('post_subcategories', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('post_category_id')->constrained('post_categories')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('name', 30);
+            $table->string('description', 50);
+            $table->timestamps();
+        });
+
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
@@ -27,6 +36,7 @@ return new class extends Migration
             $table->string('message', 8000);
             $table->string('media')->nullable();
             $table->foreignId('post_category_id')->constrained('post_categories')->cascadeOnDelete();
+            $table->foreignId('post_subcategory_id')->constrained('post_categories')->cascadeOnDelete();
             $table->boolean('is_approved')->default('0');
             $table->timestamps();
         });
@@ -64,6 +74,7 @@ return new class extends Migration
         Schema::dropIfExists('post_views');
         Schema::dropIfExists('post_comments');
         Schema::dropIfExists('posts');
+        Schema::dropIfExists('post_subcategories');
         Schema::dropIfExists('post_categories');
     }
 };
