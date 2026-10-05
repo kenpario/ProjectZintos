@@ -10,8 +10,8 @@
             <div class="max-w-md">
                 <h1 class="mb-5 text-5xl font-bold"><span class="text-rotate text-7xl">
                         <span class="justify-items-center">
-                            <span>Project</span>
-                            <span>Zintos</span>
+                            <span>Your</span>
+                            <span>Forum</span>
                         </span>
                     </span></h1>
                 <p class="mb-5">
