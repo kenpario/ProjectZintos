@@ -28,7 +28,7 @@ An open-source forum built with Laravel: categories, moderation, Google sign-in 
 
 ## About
 
-Your App Name is an open-source forum and community platform built on [Laravel](https://laravel.com). Members organise discussions into categories and subcategories, write rich-text posts with images, GIFs, video and code blocks, comment on each other's posts, and build up a profile. Moderators review new content before it goes public, and administrators manage users, groups and site analytics from the same interface.
+Project Zintos is an open-source forum and community platform built on [Laravel](https://laravel.com). Members organise discussions into categories and subcategories, write rich-text posts with images, GIFs, video and code blocks, comment on each other's posts, and build up a profile. Moderators review new content before it goes public, and administrators manage users, groups and site analytics from the same interface.
 
 It is designed to be easy to self-host. Everything it needs, from the web server to Google sign-in and transactional email, is covered step by step in the [deployment guide](#deployment) below.
 
